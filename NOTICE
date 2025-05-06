@@ -1,0 +1,11 @@
+MatrixGame-V1
+
+Copyright (c) 2025  SkyworkAI and contributors
+
+This project includes code from the following open source projects:
+
+This software contains code derived from Diffusers (https://github.com/huggingface/diffusers), available under the Apache License 2.0.
+
+This software contains code derived from HunyuanVideo (https://github.com/Tencent/HunyuanVideo). Notice: Tencent Hunyuan is licensed under the Tencent Hunyuan Community License Agreement, Copyright © 2024 Tencent. All Rights Reserved. The trademark rights of “Tencent Hunyuan” are owned by Tencent or its affiliate.
+
+This software contains code derived from Open-Sora-Plan (https://github.com/PKU-YuanGroup/Open-Sora-Plan). Copyright (c) 2025 PKU-YUAN-Lab (袁粒课题组-北大信工)
