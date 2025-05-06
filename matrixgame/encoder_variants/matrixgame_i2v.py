@@ -598,7 +598,6 @@ class MatrixGameEncoderWrapperI2V(ModelMixin):
     def __init__(self, model_path, weight_dtype, task='i2v', i2v_type = 'concat'):
         super().__init__()
         text_encoder_type_1 = "llm-i2v" 
-        # weight_dtype = torch.float16 # overwrite，这里是默认如此，先跑通再说
         tokenizer_type_1 = "llm-i2v" 
         prompt_template = {'template': PROMPT_TEMPLATE_ENCODE_I2V, 'crop_start': 36, "image_emb_start": 5,"image_emb_end": 581,"image_emb_len": 576,
         "double_return_token_id": 271}
