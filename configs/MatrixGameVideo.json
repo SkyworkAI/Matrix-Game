@@ -1,0 +1,51 @@
+{
+  "_class_name": "MGVideoDiffusionTransformerI2V",
+  "_diffusers_version": "0.32.2",
+  "guidance_embed": false,
+  "heads_num": 24,
+  "hidden_size": 3072,
+  "in_channels": 33,
+  "mlp_act_type": "gelu_tanh",
+  "mlp_width_ratio": 4,
+  "mm_double_blocks_depth": 20,
+  "mm_single_blocks_depth": 40,
+  "out_channels": 16,
+  "patch_size": [
+    1,
+    2,
+    2
+  ],
+  "qk_norm": true,
+  "qk_norm_type": "rms",
+  "qkv_bias": true,
+  "rope_dim_list": [
+    16,
+    56,
+    56
+  ],
+  "rope_theta":256,
+  "text_projection": "single_refiner",
+  "text_states_dim": 4096,
+  "text_states_dim_2": 768,
+  "use_attention_mask": true,
+  "action_config":{
+    "mouse_dim_in": 2,
+    "keyboard_dim_in": 6,
+    "hidden_size": 128,
+    "img_hidden_size": 3072,
+    "vae_time_compression_ratio": 4, 
+    "windows_size":3,
+    "heads_num": 24,
+    "patch_size": [1, 2, 2],
+    "mlp_act_type": "gelu_tanh",
+    "qk_norm": "True",
+    "qk_norm_type": "rms",
+    "qkv_bias": "False",
+    "rope_dim_list": [16, 56, 56],
+    "rope_theta":256,
+    "mouse_qk_dim_list":[16, 56, 56],
+    "enable_mouse": true, 
+    "enable_keyboard": true
+  },
+  "i2v_condition_type": "token_replace"
+}
