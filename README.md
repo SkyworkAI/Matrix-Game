@@ -67,7 +67,7 @@ We welcome contributions! Please see our [contributing guidelines](CONTRIBUTING.
 We would like to express our gratitude to:
 
 - [Diffusers](https://github.com/huggingface/diffusers) for their excellent diffusion model framework
-- [HunyuanDiT](https://github.com/Tencent/HunyuanVideo) for their strong base model
+- [HunyuanVideo](https://github.com/Tencent/HunyuanVideo) for their strong base model
 
 We are grateful to the broader research community for their open exploration and contributions to the field of interactive world generation.
 
