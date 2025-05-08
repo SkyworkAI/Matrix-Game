@@ -3,13 +3,13 @@
 <!-- markdownlint-disable no-duplicate-header -->
 
 # Matrix-Game-V1: Interactive World Foundation Model
-<font size=7><div align='center' >  [[🤗 MatrixGame-V1](todo)] [[📖 MatrixGame-V1 Report](todo)] </div></font>
+<font size=7><div align='center' >  [[🤗 Matrix-Game-V1](todo)] [[📖 Matrix-Game-V1 Report](todo)] </div></font>
 
 
 ![teaser](xxx.png)
 
 ## 📝 Overview
-**MatrixGame** is a 17B-parameter Diffusion Transformer for generating high-resolution, physics-consistent videos in interactive game environments. Trained on large-scale data from Minecraft and Unreal Engine, it understands game physics like collisions, destruction, and item placement. MatrixGame supports real-time, action-conditioned generation, adapting video content dynamically to user input.
+**Matrix-Game** is a 17B-parameter Diffusion Transformer for generating high-resolution, physics-consistent videos in interactive game environments. Trained on large-scale data from Minecraft and Unreal Engine, it understands game physics like collisions, destruction, and item placement. Matrix-Game supports real-time, action-conditioned generation, adapting video content dynamically to user input.
 
 You can find more visualizations on our [website](#).
 
@@ -27,7 +27,7 @@ You can find more visualizations on our [website](#).
 
 ## 🔥 Latest Updates
 
-* [2025-05] 🎉 Initial release of MatrixGame-V1
+* [2025-05] 🎉 Initial release of Matrix-Game-V1
 
 ## 🚀 Performance Comparison
 ### GameWorld Score Benchmark Comparison
@@ -128,15 +128,15 @@ You can find more visualizations on our [website](#).
 </table>
 
 > Double-blind human evaluation by two independent groups across four key dimensions: **Overall Quality**, **Controllability**, **Visual Quality**, and **Temporal Consistency**.  
-> Scores represent the percentage of pairwise comparisons in which each method was preferred. MatrixGame consistently outperforms prior models across all metrics and both groups.
+> Scores represent the percentage of pairwise comparisons in which each method was preferred. Matrix-Game consistently outperforms prior models across all metrics and both groups.
 
 
 ## 🛠️ Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/SkyworkAI/MatrixGame-V1.git
-cd MatrixGame-V1
+git clone https://github.com/SkyworkAI/Matrix-Game-V1.git
+cd Matrix-Game-V1
 ```
 
 2. Install dependencies:
