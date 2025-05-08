@@ -46,11 +46,99 @@ You can find more visualizations on our [website](#).
 - **3D Cons.**: Geometric stability and physical plausibility over time
 
 ### Human Evaluation
-![Win Rate Comparison](assets/imgs/human_win_rate.png)
+### 🧑‍⚖️ Human Evaluation Results (Double-Blind)
+<table style="border-collapse: collapse; width: 100%; font-family: Arial, sans-serif;">
+  <thead>
+    <tr style="background-color: #f6f8fa;">
+      <th style="border: 1px solid #d0d7de; padding: 8px; text-align: left;">Group</th>
+      <th style="border: 1px solid #d0d7de; padding: 8px; text-align: left;">Method</th>
+      <th style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">Overall Quality (%)</th>
+      <th style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">Controllability (%)</th>
+      <th style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">Visual Quality (%)</th>
+      <th style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">Temporal Consistency (%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="background-color: #ffffff;">
+      <td style="border: 1px solid #d0d7de; padding: 8px;">Group A</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px;">Oasis</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.16</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.33</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.00</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.16</td>
+    </tr>
+    <tr style="background-color: #fcfcfc;">
+      <td style="border: 1px solid #d0d7de; padding: 8px;"></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px;">MineWorld</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">3.78</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">5.58</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">1.32</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">13.82</td>
+    </tr>
+    <tr style="background-color: #ffffff; font-weight: bold;">
+      <td style="border: 1px solid #d0d7de; padding: 8px;"> </td>
+      <td style="border: 1px solid #d0d7de; padding: 8px;"><strong>Ours</strong></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>96.05</strong></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>94.09</strong></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>98.68</strong></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>86.02</strong></td>
+    </tr>
 
-> Double-blind human evaluation across four dimensions: **Overall Quality**, **Controllability**, **Visual Quality**, and **Temporal Consistency**.  
-> The win rate represents how often each method was rated best in pairwise comparisons.  
-> **MatrixGame** outperforms Oasis and MineWorld by a large margin, achieving **96.3% in Overall Quality**, **93.8% in Controllability**, **98.2% in Visual Quality**, and **89.6% in Temporal Consistency**—demonstrating superior realism and user control.
+    <tr style="background-color: #fcfcfc;">
+      <td style="border: 1px solid #d0d7de; padding: 8px;">Group B</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px;">Oasis</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.66</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.82</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.75</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.66</td>
+    </tr>
+    <tr style="background-color: #ffffff;">
+      <td style="border: 1px solid #d0d7de; padding: 8px;"></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px;">MineWorld</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">2.79</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">5.76</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">1.48</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">6.25</td>
+    </tr>
+    <tr style="background-color: #fcfcfc; font-weight: bold;">
+      <td style="border: 1px solid #d0d7de; padding: 8px;"></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px;"><strong>Ours</strong></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>96.55</strong></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>93.42</strong></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>97.77</strong></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>93.09</strong></td>
+    </tr>
+
+    <tr style="background-color: #ffffff;">
+      <td style="border: 1px solid #d0d7de; padding: 8px;">Average</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px;">Oasis</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.41</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.58</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.38</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.41</td>
+    </tr>
+    <tr style="background-color: #fcfcfc;">
+      <td style="border: 1px solid #d0d7de; padding: 8px;"></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px;">MineWorld</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">3.29</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">5.67</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">1.40</td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">10.04</td>
+    </tr>
+    <tr style="background-color: #ffffff; font-weight: bold;">
+      <td style="border: 1px solid #d0d7de; padding: 8px;"></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px;"><strong>Ours</strong></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>96.30</strong></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>93.76</strong></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>98.23</strong></td>
+      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>89.56</strong></td>
+    </tr>
+  </tbody>
+</table>
+> Double-blind human evaluation by two independent groups across four key dimensions: **Overall Quality**, **Controllability**, **Visual Quality**, and **Temporal Consistency**.  
+> Scores represent the percentage of pairwise comparisons in which each method was preferred. MatrixGame consistently outperforms prior models across all metrics and both groups.
+
+
 ## 🛠️ Installation
 
 1. Clone the repository:
