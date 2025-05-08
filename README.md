@@ -47,94 +47,19 @@ You can find more visualizations on our [website](#).
 
 ### Human Evaluation
 ### 🧑‍⚖️ Human Evaluation Results (Double-Blind)
-<table style="border-collapse: collapse; width: 100%; font-family: Arial, sans-serif;">
-  <thead>
-    <tr style="background-color: #f6f8fa;">
-      <th style="border: 1px solid #d0d7de; padding: 8px; text-align: left;">Group</th>
-      <th style="border: 1px solid #d0d7de; padding: 8px; text-align: left;">Method</th>
-      <th style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">Overall Quality (%)</th>
-      <th style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">Controllability (%)</th>
-      <th style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">Visual Quality (%)</th>
-      <th style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">Temporal Consistency (%)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="background-color: #ffffff;">
-      <td style="border: 1px solid #d0d7de; padding: 8px;">Group A</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px;">Oasis</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.16</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.33</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.00</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.16</td>
-    </tr>
-    <tr style="background-color: #fcfcfc;">
-      <td style="border: 1px solid #d0d7de; padding: 8px;"></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px;">MineWorld</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">3.78</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">5.58</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">1.32</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">13.82</td>
-    </tr>
-    <tr style="background-color: #ffffff; font-weight: bold;">
-      <td style="border: 1px solid #d0d7de; padding: 8px;"> </td>
-      <td style="border: 1px solid #d0d7de; padding: 8px;"><strong>Ours</strong></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>96.05</strong></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>94.09</strong></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>98.68</strong></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>86.02</strong></td>
-    </tr>
 
-    <tr style="background-color: #fcfcfc;">
-      <td style="border: 1px solid #d0d7de; padding: 8px;">Group B</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px;">Oasis</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.66</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.82</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.75</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.66</td>
-    </tr>
-    <tr style="background-color: #ffffff;">
-      <td style="border: 1px solid #d0d7de; padding: 8px;"></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px;">MineWorld</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">2.79</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">5.76</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">1.48</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">6.25</td>
-    </tr>
-    <tr style="background-color: #fcfcfc; font-weight: bold;">
-      <td style="border: 1px solid #d0d7de; padding: 8px;"></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px;"><strong>Ours</strong></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>96.55</strong></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>93.42</strong></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>97.77</strong></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>93.09</strong></td>
-    </tr>
+| Group     | Method      | Overall Quality (%) | Controllability (%) | Visual Quality (%) | Temporal Consistency (%) |
+|-----------|-------------|---------------------|----------------------|---------------------|---------------------------|
+| Group A   | Oasis       | 0.16                | 0.33                 | 0.00                | 0.16                      |
+|           | MineWorld   | 3.78                | 5.58                 | 1.32                | 13.82                     |
+|           | **Ours**    | **96.05**           | **94.09**            | **98.68**           | **86.02**                 |
+| Group B   | Oasis       | 0.66                | 0.82                 | 0.75                | 0.66                      |
+|           | MineWorld   | 2.79                | 5.76                 | 1.48                | 6.25                      |
+|           | **Ours**    | **96.55**           | **93.42**            | **97.77**           | **93.09**                 |
+| Average   | Oasis       | 0.41                | 0.58                 | 0.38                | 0.41                      |
+|           | MineWorld   | 3.29                | 5.67                 | 1.40                | 10.04                     |
+|           | **Ours**    | **96.30**           | **93.76**            | **98.23**           | **89.56**                 |
 
-    <tr style="background-color: #ffffff;">
-      <td style="border: 1px solid #d0d7de; padding: 8px;">Average</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px;">Oasis</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.41</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.58</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.38</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">0.41</td>
-    </tr>
-    <tr style="background-color: #fcfcfc;">
-      <td style="border: 1px solid #d0d7de; padding: 8px;"></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px;">MineWorld</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">3.29</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">5.67</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">1.40</td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;">10.04</td>
-    </tr>
-    <tr style="background-color: #ffffff; font-weight: bold;">
-      <td style="border: 1px solid #d0d7de; padding: 8px;"></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px;"><strong>Ours</strong></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>96.30</strong></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>93.76</strong></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>98.23</strong></td>
-      <td style="border: 1px solid #d0d7de; padding: 8px; text-align: right;"><strong>89.56</strong></td>
-    </tr>
-  </tbody>
-</table>
 > Double-blind human evaluation by two independent groups across four key dimensions: **Overall Quality**, **Controllability**, **Visual Quality**, and **Temporal Consistency**.  
 > Scores represent the percentage of pairwise comparisons in which each method was preferred. MatrixGame consistently outperforms prior models across all metrics and both groups.
 
