@@ -126,6 +126,7 @@ You can find more visualizations on our [website](#).
     </tr>
   </tbody>
 </table>
+
 > Double-blind human evaluation by two independent groups across four key dimensions: **Overall Quality**, **Controllability**, **Visual Quality**, and **Temporal Consistency**.  
 > Scores represent the percentage of pairwise comparisons in which each method was preferred. MatrixGame consistently outperforms prior models across all metrics and both groups.
 
