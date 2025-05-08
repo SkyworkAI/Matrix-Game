@@ -3,15 +3,15 @@
 <!-- markdownlint-disable no-duplicate-header -->
 
 # MatrixGame-V1: Interactive World Foundation Model
-<font size=7><div align='center' >  [[🤗 MatrixGame-V1](todo)] [[📖 MatrixGame-V1 Report](todo)]  </div></font>
+<font size=7><div align='center' >  [[🤗 MatrixGame-V1](todo)] [[📖 MatrixGame-V1 Report](todo)] </div></font>
 
 
 ![teaser](xxx.png)
 
 ## 📝 Overview
-MatrixGame-V1 is an interactive world foundation model, xxxx
+**MatrixGame** is a 17B-parameter Diffusion Transformer for generating high-resolution, physics-consistent videos in interactive game environments. Trained on large-scale data from Minecraft and Unreal Engine, it understands game physics like collisions, destruction, and item placement. MatrixGame supports real-time, action-conditioned generation, adapting video content dynamically to user input.
 
-
+You can find more visualizations on our [website](#).
 
 ## ✨ Key Features
 
@@ -29,6 +29,28 @@ MatrixGame-V1 is an interactive world foundation model, xxxx
 
 * [2025-05] 🎉 Initial release of MatrixGame-V1
 
+## 🚀 Performance Comparison
+### GameWorld Score Benchmark Comparison
+
+| Model     | Image Quality ↑ | Aesthetic ↑ | Temporal Cons. ↑ | Motion Smooth. ↑ | Keyboard Acc. ↑ | Mouse Acc. ↑ | 3D Cons. ↑ |
+|-----------|------------------|-------------|-------------------|-------------------|------------------|---------------|-------------|
+| Oasis     | 0.65             | 0.48        | 0.94              | **0.98**          | 0.77             | 0.56          | 0.56        |
+| MineWorld | 0.69             | 0.47        | 0.95              | **0.98**          | 0.86             | 0.64          | 0.51        |
+| **Ours**  | **0.72**         | **0.49**    | **0.97**          | **0.98**          | **0.95**         | **0.95**      | **0.76**    |
+
+**Metric Descriptions**:
+
+- **Image Quality** / **Aesthetic**: Visual fidelity and perceptual appeal of generated frames  
+- **Temporal Cons.** / **Motion Smooth.**: Temporal coherence and smoothness between frames  
+- **Keyboard Acc.** / **Mouse Acc.**: Accuracy in following user control signals  
+- **3D Cons.**: Geometric stability and physical plausibility over time
+
+### Human Evaluation
+![Win Rate Comparison](assets/imgs/human_win_rate.png)
+
+> Double-blind human evaluation across four dimensions: **Overall Quality**, **Controllability**, **Visual Quality**, and **Temporal Consistency**.  
+> The win rate represents how often each method was rated best in pairwise comparisons.  
+> **MatrixGame** outperforms Oasis and MineWorld by a large margin, achieving **96.3% in Overall Quality**, **93.8% in Controllability**, **98.2% in Visual Quality**, and **89.6% in Temporal Consistency**—demonstrating superior realism and user control.
 ## 🛠️ Installation
 
 1. Clone the repository:
