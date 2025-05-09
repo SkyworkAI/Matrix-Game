@@ -3,7 +3,7 @@
 <!-- markdownlint-disable no-duplicate-header -->
 
 # Matrix-Game: Interactive World Foundation Model
-<font size=7><div align='center' >  [[🤗 Matrix-Game](todo)] [[📖 Matrix-Game Report](todo)] </div></font>
+<font size=7><div align='center' >  [[🤗 Matrix-Game](https://huggingface.co/Skywork/Matrix-Game)] [[📖 Matrix-Game Report](todo)] </div></font>
 
 <div align="center">
   <img src="assets/videos/demo.gif" alt="teaser" />
