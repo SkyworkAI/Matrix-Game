@@ -78,3 +78,14 @@ We are grateful to the broader research community for their open exploration and
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📎 Citation
+If you find this project useful, please cite our paper:
+```bibtex
+@article{zhang2025matrixgame,
+  title     = {Matrix-Game: Interactive World Foundation Model},
+  author    = {Yifan Zhang and Chunli Peng and Boyang Wang and Puyi Wang and Qingcheng Zhu and Zedong Gao and Eric Li and Yang Liu and Yahui Zhou},
+  journal   = {arXiv},
+  year      = {2025}
+}
+```
