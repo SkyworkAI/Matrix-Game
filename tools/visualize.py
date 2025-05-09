@@ -18,15 +18,7 @@ def parse_config(config):
     space_frames = set()
     key, mouse = config
 
-    # print("key", key)
-    # print("mouse", mouse)
-    # 遍历配置的每一段
     for i in range(len(mouse)):
-        # end_frame, action = config[i]
-        #w, s, a, d, shift, ctrl, _ = key[i]
-         
-        # print("key[i]", key[i])
-        # print("len(key[i])", len(key[i]))
 
         if  len(key[i])==7:
             w, s, a, d, space, attack, _ = key[i]
@@ -49,7 +41,7 @@ def parse_config(config):
         if i == 0:
             mouse_data[i] = (320, 176)  # 默认初始位置
         else:
-            global_scale_factor = 0.02
+            global_scale_factor = 0.2
             mouse_scale_x = 15 * global_scale_factor
             mouse_scale_y = 15 * 4 * global_scale_factor
             mouse_data[i] = (
@@ -89,7 +81,6 @@ def draw_keys_on_frame(frame, keys, key_size=(80, 50), spacing=20, bottom_margin
         "D": (w // 2 + key_size[0] - 5 - horison_shift - horizon_shift_all+ spacing* 2, h - bottom_margin - key_size[1] + vertical_shift),
         "Space": (w // 2 + key_size[0] * 2 + spacing * 4 - horison_shift - horizon_shift_all , h - bottom_margin - key_size[1] + vertical_shift),
         "Attack": (w // 2 + key_size[0] * 3 + spacing * 9 - horison_shift - horizon_shift_all, h - bottom_margin - key_size[1] + vertical_shift),
-        #"_": (w // 2 + key_size[0] * 4 + spacing * 12 - horison_shift - horizon_shift_all, h - bottom_margin - key_size[1] + vertical_shift),
     }
 
     for key, (x, y) in key_positions.items():
@@ -163,7 +154,6 @@ def overlay_icon(frame, icon, position, scale=1.0, rotation=0):
 # 处理视频
 def process_video(input_video, output_video, config, mouse_icon_path, mouse_scale=2.0, mouse_rotation=0,fps=16):
     key_data, mouse_data = parse_config(config)
-    # cap = cv2.VideoCapture(input_video)
     fps = fps
     frame_width = input_video[0].shape[1]
     frame_height = input_video[0].shape[0]
@@ -173,25 +163,15 @@ def process_video(input_video, output_video, config, mouse_icon_path, mouse_scal
     out_video = []
     frame_idx = 0
     for frame in input_video:
-        # ret, frame = cap.read()
-        # if not ret:
-        #     break
-
         keys = key_data.get(frame_idx, {"W": False, "A": False, "S": False, "D": False, "Space": False, "Attack": False})
-        #mouse_position = mouse_data.get(frame_idx, (frame_width // 2, frame_height // 2))
         raw_mouse_pos = mouse_data.get(frame_idx, (frame_width // 2 // 2, frame_height // 2 // 2))  # fallback 也用小分辨率中心
         mouse_position = (int(raw_mouse_pos[0] * 2), int(raw_mouse_pos[1] * 2))
-
-
         draw_keys_on_frame(frame, keys, key_size=(75, 75), spacing=10, bottom_margin=20)
         overlay_icon(frame, mouse_icon, mouse_position, scale=mouse_scale, rotation=mouse_rotation)
         out_video.append(frame / 255)
-        # out.write(frame)
         frame_idx += 1
         print(f"Processing frame {frame_idx}/{frame_count}", end="\r")
     export_to_video(out_video, output_video, fps=fps)
-    # cap.release()
-    # out.release()
     print("\nProcessing complete!")
 
 # 处理视频
@@ -200,15 +180,11 @@ def save_video(input_video, output_video, fps=16):
     frame_width = input_video[0].shape[1]
     frame_height = input_video[0].shape[0]
     frame_count = len(input_video)
-
     out_video = []
     frame_idx = 0
     for frame in input_video:
         out_video.append(frame / 255)
-        # out.write(frame)
         frame_idx += 1
         print(f"Processing frame {frame_idx}/{frame_count}", end="\r")
     export_to_video(out_video, output_video, fps=fps)
-    # cap.release()
-    # out.release()
     print("\nProcessing complete!")

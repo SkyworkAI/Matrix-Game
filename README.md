@@ -143,11 +143,12 @@ cd Matrix-Game
 ```bash
 pip install -r requirements.txt
 ```
+Our project also depends on [apex](https://github.com/NVIDIA/apex) and [FlashAttention-3](https://github.com/Dao-AILab/flash-attention)
 
 ## 🚀 Quick Start
 
 ```bash
-python xxxx
+bash run_inference.sh
 ```
 
 ## 💡 Usage Tips

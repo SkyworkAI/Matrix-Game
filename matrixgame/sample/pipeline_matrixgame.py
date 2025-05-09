@@ -845,9 +845,6 @@ class MatrixGameVideoPipeline(DiffusionPipeline):
 
 
         if initial_image is not None:
-            # initial_image = self.video_processor.preprocess(initial_image, height=height, width=width).to(
-            #     device, dtype=prompt_embeds.dtype
-            # )
             initial_image = initial_image.to(
                 device, dtype=prompt_embeds.dtype
             )

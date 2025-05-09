@@ -7,20 +7,6 @@ import torch.nn as nn
 from transformers import CLIPTextModel, CLIPTokenizer, AutoTokenizer, AutoModel, LlavaForConditionalGeneration, CLIPImageProcessor
 from transformers.utils import ModelOutput
 
-# from ..constants import TEXT_ENCODER_PATH, TOKENIZER_PATH
-# from ..constants import PRECISION_TO_TYPE
-
-
-# TEXT_ENCODER_PATH = {
-#     "clipL": f"{MODEL_BASE}/text_encoder_2",
-#     "llm": f"{MODEL_BASE}/text_encoder",
-# }
-
-# # Tokenizer
-# TOKENIZER_PATH = {
-#     "clipL": f"{MODEL_BASE}/text_encoder_2",
-#     "llm": f"{MODEL_BASE}/text_encoder",
-# }
 
 def use_default(value, default):
     return value if value is not None else default
@@ -33,8 +19,7 @@ def load_text_encoder(
     logger=None,
     device=None,
 ):
-    # if text_encoder_path is None:
-    #     text_encoder_path = TEXT_ENCODER_PATH[text_encoder_type]
+
     if text_encoder_type == 'clipL':
         text_encoder_path = f"{text_encoder_path}/text_encoder_2"
     elif text_encoder_type == 'llm':
@@ -635,24 +620,8 @@ class MatrixGameEncoderWrapperI2V(ModelMixin):
             image_embed_interleave = 2 if i2v_type == 'concat' else 4
         )
 
-        text_encoder_type_2 = "clipL"
-        text_len_2 = 77
-        tokenizer_2 = 'clipL'
-
-        text_encoder_2 = TextEncoder(
-                text_encoder_type=text_encoder_type_2,
-                max_length=text_len_2,
-                tokenizer_type=tokenizer_2,
-                text_encoder_precision=weight_dtype,
-                reproduce=reproduce,
-                logger=logger,
-                device=device,
-                text_encoder_path = model_path,
-                image_embed_interleave = 2 if i2v_type == 'concat' else 4
-            )
 
         self.text_encoder_1 = text_encoder_1
-        self.text_encoder_2 = text_encoder_2
 
     def encode_prompt(
         self,
@@ -734,14 +703,7 @@ class MatrixGameEncoderWrapperI2V(ModelMixin):
             text_encoder = self.text_encoder_1,
             semantic_images = semantic_images
         )
-        prompt_embeds_2, attention_mask_2 = self.encode_prompt(
-            caption,
-            device,
-            data_type = 'video', #TODO: 注意图像和视频需要使用不同的，因为llm里使用不同的template
-            text_encoder = self.text_encoder_2,
-            semantic_images = None
-        )
-        pooled_projections = None
-        return (prompt_embeds_1, prompt_embeds_2), (attention_mask_1, attention_mask_2), pooled_projections
+        
+        return (prompt_embeds_1, None), (attention_mask_1, None), None
 
         
