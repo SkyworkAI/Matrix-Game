@@ -2,8 +2,8 @@
 <!-- markdownlint-disable html -->
 <!-- markdownlint-disable no-duplicate-header -->
 
-# Matrix-Game-V1: Interactive World Foundation Model
-<font size=7><div align='center' >  [[🤗 Matrix-Game-V1](todo)] [[📖 Matrix-Game-V1 Report](todo)] </div></font>
+# Matrix-Game: Interactive World Foundation Model
+<font size=7><div align='center' >  [[🤗 Matrix-Game](todo)] [[📖 Matrix-Game Report](todo)] </div></font>
 
 
 ![teaser](xxx.png)
@@ -27,7 +27,7 @@ You can find more visualizations on our [website](#).
 
 ## 🔥 Latest Updates
 
-* [2025-05] 🎉 Initial release of Matrix-Game-V1
+* [2025-05] 🎉 Initial release of Matrix-Game
 
 ## 🚀 Performance Comparison
 ### GameWorld Score Benchmark Comparison
@@ -135,8 +135,8 @@ You can find more visualizations on our [website](#).
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/SkyworkAI/Matrix-Game-V1.git
-cd Matrix-Game-V1
+git clone https://github.com/SkyworkAI/Matrix-Game.git
+cd Matrix-Game
 ```
 
 2. Install dependencies:
