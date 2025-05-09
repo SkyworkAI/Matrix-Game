@@ -6,7 +6,9 @@
 <font size=7><div align='center' >  [[🤗 Matrix-Game](todo)] [[📖 Matrix-Game Report](todo)] </div></font>
 
 
-![teaser](xxx.png)
+<video src="assets/videos/demo.mp4" controls width="640" height="360">
+  Your browser does not support the video tag.
+</video>
 
 ## 📝 Overview
 **Matrix-Game** is a 17B-parameter Diffusion Transformer for generating high-resolution, physics-consistent videos in interactive game environments. Trained on large-scale data from Minecraft and Unreal Engine, it understands game physics like collisions, destruction, and item placement. Matrix-Game supports real-time, action-conditioned generation, adapting video content dynamically to user input.
@@ -15,15 +17,9 @@ You can find more visualizations on our [website](#).
 
 ## ✨ Key Features
 
-- 🎯 **Feature 1**: Description
-- 🚀 **Feature 2**: Description
-- 💡 **Feature 3**: Description
-
-## 🔬 Technical Highlights
-
-- **Technical Point 1**: Description
-- **Technical Point 2**: Description
-- **Technical Point 3**: Description
+- 🎯 **Feature 1**: **Core Model.** A diffusion-based image-to-world generator that turns user inputs (keyboard, mouse) into controllable, coherent interactive videos.
+- 🚀 **Feature 2**: **GameWorld Score.** A unified evaluation metric covering visual quality, temporal consistency, controllability, and physical plausibility.
+- 💡 **Feature 3**: **Matrix-Game Dataset.(Coming soon)** A large-scale Minecraft dataset with annotated action data for learning complex interactions.
 
 ## 🔥 Latest Updates
 
@@ -46,124 +42,30 @@ You can find more visualizations on our [website](#).
 - **3D Cons.**: Geometric stability and physical plausibility over time
 
 ### Human Evaluation
-<table>
-  <thead>
-    <tr>
-      <th>Group</th>
-      <th>Method</th>
-      <th>Overall Quality (%)</th>
-      <th>Controllability (%)</th>
-      <th>Visual Quality (%)</th>
-      <th>Temporal Consistency (%)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowspan="3">Group A</td>
-      <td>Oasis</td>
-      <td>0.16</td>
-      <td>0.33</td>
-      <td>0.00</td>
-      <td>0.16</td>
-    </tr>
-    <tr>
-      <td>MineWorld</td>
-      <td>3.78</td>
-      <td>5.58</td>
-      <td>1.32</td>
-      <td>13.82</td>
-    </tr>
-    <tr>
-      <td><strong>Ours</strong></td>
-      <td><strong>96.05</strong></td>
-      <td><strong>94.09</strong></td>
-      <td><strong>98.68</strong></td>
-      <td><strong>86.02</strong></td>
-    </tr>
-    <tr>
-      <td rowspan="3">Group B</td>
-      <td>Oasis</td>
-      <td>0.66</td>
-      <td>0.82</td>
-      <td>0.75</td>
-      <td>0.66</td>
-    </tr>
-    <tr>
-      <td>MineWorld</td>
-      <td>2.79</td>
-      <td>5.76</td>
-      <td>1.48</td>
-      <td>6.25</td>
-    </tr>
-    <tr>
-      <td><strong>Ours</strong></td>
-      <td><strong>96.55</strong></td>
-      <td><strong>93.42</strong></td>
-      <td><strong>97.77</strong></td>
-      <td><strong>93.09</strong></td>
-    </tr>
-    <tr>
-      <td rowspan="3">Average</td>
-      <td>Oasis</td>
-      <td>0.41</td>
-      <td>0.58</td>
-      <td>0.38</td>
-      <td>0.41</td>
-    </tr>
-    <tr>
-      <td>MineWorld</td>
-      <td>3.29</td>
-      <td>5.67</td>
-      <td>1.40</td>
-      <td>10.04</td>
-    </tr>
-    <tr>
-      <td><strong>Ours</strong></td>
-      <td><strong>96.30</strong></td>
-      <td><strong>93.76</strong></td>
-      <td><strong>98.23</strong></td>
-      <td><strong>89.56</strong></td>
-    </tr>
-  </tbody>
-</table>
+
+![Human Win Rate](assets/imgs/human_win_rate.png)
 
 > Double-blind human evaluation by two independent groups across four key dimensions: **Overall Quality**, **Controllability**, **Visual Quality**, and **Temporal Consistency**.  
 > Scores represent the percentage of pairwise comparisons in which each method was preferred. Matrix-Game consistently outperforms prior models across all metrics and both groups.
 
 
-## 🛠️ Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/SkyworkAI/Matrix-Game.git
-cd Matrix-Game
-```
-
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-Our project also depends on [apex](https://github.com/NVIDIA/apex) and [FlashAttention-3](https://github.com/Dao-AILab/flash-attention)
-
 ## 🚀 Quick Start
 
-```bash
-bash run_inference.sh
 ```
+# clone the repository:
+git clone https://github.com/SkyworkAI/Matrix-Game.git
+cd Matrix-Game
 
-## 💡 Usage Tips
+# install dependencies:
+pip install -r requirements.txt
 
-- Tip 1: Description
-- Tip 2: Description
-- Tip 3: Description
+# install apex and FlashAttention-3
+# Our project also depends on [apex](https://github.com/NVIDIA/apex) and [FlashAttention-3](https://github.com/Dao-AILab/flash-attention)
+```
 
 ## 📚 Documentation
 
-For detailed documentation, please visit our [documentation page](todo).
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [contributing guidelines](CONTRIBUTING.md) for more details.
+For detailed documentation, please visit our [website](todo).
 
 ## ⭐ Acknowledgements
 
