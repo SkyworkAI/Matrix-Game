@@ -6,9 +6,8 @@
 <font size=7><div align='center' >  [[🤗 Matrix-Game](todo)] [[📖 Matrix-Game Report](todo)] </div></font>
 
 
-<video src="assets/videos/demo.mp4" controls width="640" height="360">
-  Your browser does not support the video tag.
-</video>
+![teaser](assets/videos/demo.gif)
+
 
 ## 📝 Overview
 **Matrix-Game** is a 17B-parameter Diffusion Transformer for generating high-resolution, physics-consistent videos in interactive game environments. Trained on large-scale data from Minecraft and Unreal Engine, it understands game physics like collisions, destruction, and item placement. Matrix-Game supports real-time, action-conditioned generation, adapting video content dynamically to user input.
