@@ -5,9 +5,9 @@
 # Matrix-Game: Interactive World Foundation Model
 <font size=7><div align='center' >  [[🤗 Matrix-Game](todo)] [[📖 Matrix-Game Report](todo)] </div></font>
 
-
-![teaser](assets/videos/demo.gif)
-
+<div align="center">
+  <img src="assets/videos/demo.gif" alt="teaser" />
+</div>
 
 ## 📝 Overview
 **Matrix-Game** is a 17B-parameter Diffusion Transformer for generating high-resolution, physics-consistent videos in interactive game environments. Trained on large-scale data from Minecraft and Unreal Engine, it understands game physics like collisions, destruction, and item placement. Matrix-Game supports real-time, action-conditioned generation, adapting video content dynamically to user input.
