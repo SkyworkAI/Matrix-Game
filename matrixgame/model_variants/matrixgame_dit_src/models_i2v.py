@@ -58,9 +58,6 @@ class MMDoubleStreamBlock(nn.Module):
             act_layer=get_activation_layer("silu"),
             **factory_kwargs,
         )
-        # self.img_norm1 = nn.LayerNorm(
-        #     hidden_size, elementwise_affine=False, eps=1e-6, **factory_kwargs
-        # )
         self.img_norm1 = FusedLayerNorm(
             hidden_size, elementwise_affine=False, eps=1e-6, memory_efficient=True
         )
@@ -82,10 +79,6 @@ class MMDoubleStreamBlock(nn.Module):
         self.img_attn_proj = nn.Linear(
             hidden_size, hidden_size, bias=qkv_bias, **factory_kwargs
         )
-
-        # self.img_norm2 = nn.LayerNorm(
-        #     hidden_size, elementwise_affine=False, eps=1e-6, **factory_kwargs
-        # )
         self.img_norm2 = FusedLayerNorm(
             hidden_size, elementwise_affine=False, eps=1e-6, memory_efficient=True
         )
