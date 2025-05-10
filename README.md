@@ -12,7 +12,7 @@
 ## 📝 Overview
 **Matrix-Game** is a 17B-parameter Diffusion Transformer for generating high-resolution, physics-consistent videos in interactive game environments. Trained on large-scale data from Minecraft and Unreal Engine, it understands game physics like collisions, destruction, and item placement. Matrix-Game supports real-time, action-conditioned generation, adapting video content dynamically to user input.
 
-You can find more visualizations on our [website](#).
+You can find more visualizations on our [website](https://brycebywang.github.io/matrixgame.github.io/).
 
 ## ✨ Key Features
 
@@ -64,10 +64,6 @@ pip install -r requirements.txt
 # inference
 bash run_inference.sh
 ```
-
-## 📚 Documentation
-
-For detailed documentation, please visit our [website](todo).
 
 ## ⭐ Acknowledgements
 
