@@ -36,9 +36,9 @@ You can find more visualizations on our [website](#).
 **Metric Descriptions**:
 
 - **Image Quality** / **Aesthetic**: Visual fidelity and perceptual appeal of generated frames  
-- **Temporal Cons.** / **Motion Smooth.**: Temporal coherence and smoothness between frames  
-- **Keyboard Acc.** / **Mouse Acc.**: Accuracy in following user control signals  
-- **3D Cons.**: Geometric stability and physical plausibility over time
+- **Temporal Consistency** / **Motion Smoothness**: Temporal coherence and smoothness between frames  
+- **Keyboard Accuracy** / **Mouse Accuracy**: Accuracy in following user control signals  
+- **3D Consistency**: Geometric stability and physical plausibility over time
 
 ### Human Evaluation
 
@@ -60,6 +60,9 @@ pip install -r requirements.txt
 
 # install apex and FlashAttention-3
 # Our project also depends on [apex](https://github.com/NVIDIA/apex) and [FlashAttention-3](https://github.com/Dao-AILab/flash-attention)
+
+# inference
+bash run_inference.sh
 ```
 
 ## 📚 Documentation
@@ -72,6 +75,10 @@ We would like to express our gratitude to:
 
 - [Diffusers](https://github.com/huggingface/diffusers) for their excellent diffusion model framework
 - [HunyuanVideo](https://github.com/Tencent/HunyuanVideo) for their strong base model
+- [MineDojo](https://minedojo.org/knowledge_base) for their Minecraft video dataset
+- [MineRL](https://github.com/minerllabs/minerl) for their excellent gym framework
+- [Video-Pre-Training](https://github.com/openai/Video-Pre-Training) for their accurate Inverse Dynamics Model
+- [GameFactory](https://github.com/KwaiVGI/GameFactory) for their great control module idea
 
 We are grateful to the broader research community for their open exploration and contributions to the field of interactive world generation.
 
