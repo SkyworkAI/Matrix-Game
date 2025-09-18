@@ -47,6 +47,31 @@ class RealTimeMatrixGame:
         thread.start()
         return True
 
+    def _get_action_from_key(self, key):
+        """Helper to map single key to action dictionary"""
+        CAM_VALUE = 0.1
+        CAMERA_VALUE_MAP = {
+            "i":  [CAM_VALUE, 0], "k":  [-CAM_VALUE, 0], "j":  [0, -CAM_VALUE],
+            "l":  [0, CAM_VALUE], "u":  [0, 0]
+        }
+        KEYBOARD_IDX = {
+            "w": [1, 0, 0, 0], "s": [0, 1, 0, 0], "a": [0, 0, 1, 0], "d": [0, 0, 0, 1],
+            "q": [0, 0, 0, 0]
+        }
+
+        mouse_action = "u"
+        keyboard_action = "q"
+
+        if key in CAMERA_VALUE_MAP:
+            mouse_action = key
+        elif key in KEYBOARD_IDX:
+            keyboard_action = key
+
+        return {
+            "mouse": torch.tensor(CAMERA_VALUE_MAP[mouse_action]).cuda(),
+            "keyboard": torch.tensor(KEYBOARD_IDX[keyboard_action]).cuda()
+        }
+
     def generate_video_loop(self, image_path):
         """Main generation loop"""
         try:
@@ -85,15 +110,38 @@ class RealTimeMatrixGame:
                 "keyboard_cond": cond_data['keyboard_condition'].unsqueeze(0).to(device=self.pipeline.device, dtype=self.pipeline.weight_dtype)
             }
 
+            # Action generator
+            def action_generator():
+                while self.is_generating:
+                    try:
+                        action = self.action_queue.get(timeout=1.0)
+                        yield self._get_action_from_key(action)
+                    except queue.Empty:
+                        # Continue with default action if no new action is received
+                        yield self._get_action_from_key('q')
+
+
+            # Frame callback
+            def frame_callback(video_chunk):
+                from einops import rearrange
+                video = rearrange(video_chunk, "B T C H W -> T B C H W")
+                for frame_tensor in video:
+                    frame = ((frame_tensor[0].float() + 1) * 127.5).clip(0, 255).cpu().numpy().astype(np.uint8)
+                    frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR) # Convert to BGR for OpenCV
+                    if not self.frame_queue.full():
+                        self.frame_queue.put(frame)
+
             # Start generation
             with torch.no_grad():
-                videos = self.pipeline.pipeline.inference(
+                self.pipeline.pipeline.inference(
                     noise=sampled_noise,
                     conditional_dict=conditional_dict,
                     return_latents=False,
                     output_folder=self.pipeline.args.output_folder,
                     name="realtime",
-                    mode=self.mode
+                    mode=self.mode,
+                    action_generator=action_generator(),
+                    frame_callback=frame_callback
                 )
 
         except Exception as e:

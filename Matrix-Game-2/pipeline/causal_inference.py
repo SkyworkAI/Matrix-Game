@@ -476,7 +476,9 @@ class CausalInferenceStreamingPipeline(torch.nn.Module):
         return_latents: bool = False,
         output_folder = None,
         name = None,
-        mode = 'universal'
+        mode = 'universal',
+        action_generator=None,
+        frame_callback=None
     ) -> torch.Tensor:
         """
         Perform inference on the given noise and text prompts.
@@ -583,7 +585,10 @@ class CausalInferenceStreamingPipeline(torch.nn.Module):
             noisy_input = noise[
                 :, :, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
 
-            current_actions = get_current_action(mode=mode)
+            if action_generator:
+                current_actions = next(action_generator)
+            else:
+                current_actions = get_current_action(mode=mode)
             new_act, conditional_dict = cond_current(conditional_dict, current_start_frame, self.num_frame_per_block, replace=current_actions, mode=mode)
             # Step 3.1: Spatial denoising loop
 
@@ -647,9 +652,36 @@ class CausalInferenceStreamingPipeline(torch.nn.Module):
             denoised_pred = denoised_pred.transpose(1,2)
             video, vae_cache = self.vae_decoder(denoised_pred.half(), *vae_cache)
             videos += [video]
-            video = rearrange(video, "B T C H W -> B T H W C")
-            video = ((video.float() + 1) * 127.5).clip(0, 255).cpu().numpy().astype(np.uint8)[0]
-            video = np.ascontiguousarray(video)
+
+            if frame_callback:
+                frame_callback(video)
+
+            if not frame_callback:
+                video = rearrange(video, "B T C H W -> B T H W C")
+                video = ((video.float() + 1) * 127.5).clip(0, 255).cpu().numpy().astype(np.uint8)[0]
+                video = np.ascontiguousarray(video)
+                mouse_icon = 'assets/images/mouse.png'
+                if mode != 'templerun':
+                    config = (
+                        conditional_dict["keyboard_cond"][0, : 1 + 4 * (current_start_frame + self.num_frame_per_block-1)].float().cpu().numpy(),
+                        conditional_dict["mouse_cond"][0, : 1 + 4 * (current_start_frame + self.num_frame_per_block-1)].float().cpu().numpy(),
+                    )
+                else:
+                    config = (
+                        conditional_dict["keyboard_cond"][0, : 1 + 4 * (current_start_frame + self.num_frame_per_block-1)].float().cpu().numpy()
+                    )
+                process_video(video.astype(np.uint8), output_folder+f'/{name}_current.mp4', config, mouse_icon, mouse_scale=0.1, process_icon=False, mode=mode)
+
+            current_start_frame += current_num_frames
+
+            if not action_generator and input("Continue? (Press `n` to break)").strip() == "n":
+                break
+
+        if not frame_callback:
+            videos_tensor = torch.cat(videos, dim=1)
+            videos = rearrange(videos_tensor, "B T C H W -> B T H W C")
+            videos = ((videos.float() + 1) * 127.5).clip(0, 255).cpu().numpy().astype(np.uint8)[0]
+            video = np.ascontiguousarray(videos)
             mouse_icon = 'assets/images/mouse.png'
             if mode != 'templerun':
                 config = (
@@ -660,31 +692,13 @@ class CausalInferenceStreamingPipeline(torch.nn.Module):
                 config = (
                     conditional_dict["keyboard_cond"][0, : 1 + 4 * (current_start_frame + self.num_frame_per_block-1)].float().cpu().numpy()
                 )
-            process_video(video.astype(np.uint8), output_folder+f'/{name}_current.mp4', config, mouse_icon, mouse_scale=0.1, process_icon=False, mode=mode)
-            current_start_frame += current_num_frames
-
-            if input("Continue? (Press `n` to break)").strip() == "n":
-                break
-                
-        videos_tensor = torch.cat(videos, dim=1)
-        videos = rearrange(videos_tensor, "B T C H W -> B T H W C")
-        videos = ((videos.float() + 1) * 127.5).clip(0, 255).cpu().numpy().astype(np.uint8)[0]
-        video = np.ascontiguousarray(videos)
-        mouse_icon = 'assets/images/mouse.png'
-        if mode != 'templerun':
-            config = (
-                conditional_dict["keyboard_cond"][0, : 1 + 4 * (current_start_frame + self.num_frame_per_block-1)].float().cpu().numpy(),
-                conditional_dict["mouse_cond"][0, : 1 + 4 * (current_start_frame + self.num_frame_per_block-1)].float().cpu().numpy(),
-            )
-        else:
-            config = (
-                conditional_dict["keyboard_cond"][0, : 1 + 4 * (current_start_frame + self.num_frame_per_block-1)].float().cpu().numpy()
-            )
-        process_video(video.astype(np.uint8), output_folder+f'/{name}_icon.mp4', config, mouse_icon, mouse_scale=0.1, mode=mode)
-        process_video(video.astype(np.uint8), output_folder+f'/{name}.mp4', config, mouse_icon, mouse_scale=0.1, process_icon=False, mode=mode)
+            process_video(video.astype(np.uint8), output_folder+f'/{name}_icon.mp4', config, mouse_icon, mouse_scale=0.1, mode=mode)
+            process_video(video.astype(np.uint8), output_folder+f'/{name}.mp4', config, mouse_icon, mouse_scale=0.1, process_icon=False, mode=mode)
 
         if return_latents:
             return output
+        elif frame_callback:
+            return None # In streaming mode, there's no final video to return
         else:
             return video
 

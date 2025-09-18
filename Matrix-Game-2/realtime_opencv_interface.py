@@ -129,39 +129,92 @@ class RealTimeMatrixGameOpenCV:
         return True
 
     def generate_video_loop(self, image_path):
-        """Main generation loop - simplified version"""
+        """Main generation loop"""
         try:
-            print(f"Starting generation with image: {image_path}")
-
             # Load and preprocess image
             from diffusers.utils import load_image
+            from utils.conditions import Bench_actions_universal
+
             image = load_image(image_path)
             image = self.pipeline._resizecrop(image, 352, 640)
             image = self.pipeline.frame_process(image)[None, :, None, :, :].to(
                 dtype=self.pipeline.weight_dtype, device=self.pipeline.device)
 
-            # For demo purposes, create a simple video loop
-            # In real implementation, this would call the actual generation pipeline
-            frame_count = 0
-            while self.is_generating:
-                # Simulate frame generation
-                # In real implementation, this would be the actual generated frame
-                dummy_frame = np.random.randint(0, 255, (480, 640, 3), dtype=np.uint8)
+            # Encode image
+            padding_video = torch.zeros_like(image).repeat(1, 1, 4 * (self.pipeline.args.max_num_output_frames - 1), 1, 1)
+            img_cond = torch.concat([image, padding_video], dim=2)
+            tiler_kwargs = {"tiled": True, "tile_size": [44, 80], "tile_stride": [23, 38]}
+            img_cond = self.pipeline.vae.encode(img_cond, device=self.pipeline.device, **tiler_kwargs).to(self.pipeline.device)
 
-                # Add some visual effects to show it's working
-                cv2.putText(dummy_frame, f"Frame: {frame_count}", (50, 50),
-                           cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-                cv2.putText(dummy_frame, f"Mouse: {self.current_mouse_action}", (50, 100),
-                           cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
-                cv2.putText(dummy_frame, f"Keyboard: {self.current_keyboard_action}", (50, 130),
-                           cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
+            # Setup conditional inputs
+            mask_cond = torch.ones_like(img_cond)
+            mask_cond[:, :, 1:] = 0
+            cond_concat = torch.cat([mask_cond[:, :4], img_cond], dim=1)
+            visual_context = self.pipeline.vae.clip.encode_video(image)
 
-                # Put frame in queue
-                if not self.frame_queue.full():
-                    self.frame_queue.put(dummy_frame)
+            # Generate initial noise
+            sampled_noise = torch.randn([1, 16, self.pipeline.args.max_num_output_frames, 44, 80],
+                                      device=self.pipeline.device, dtype=self.pipeline.weight_dtype)
 
-                frame_count += 1
-                time.sleep(0.033)  # ~30 FPS
+            # Setup conditional dictionary
+            num_frames = (self.pipeline.args.max_num_output_frames - 1) * 4 + 1
+            cond_data = Bench_actions_universal(num_frames)
+
+            conditional_dict = {
+                "cond_concat": cond_concat.to(device=self.pipeline.device, dtype=self.pipeline.weight_dtype),
+                "visual_context": visual_context.to(device=self.pipeline.device, dtype=self.pipeline.weight_dtype),
+                "mouse_cond": cond_data['mouse_condition'].unsqueeze(0).to(device=self.pipeline.device, dtype=self.pipeline.weight_dtype),
+                "keyboard_cond": cond_data['keyboard_condition'].unsqueeze(0).to(device=self.pipeline.device, dtype=self.pipeline.weight_dtype)
+            }
+
+            # Action generator
+            def action_generator():
+                CAM_VALUE = 0.1
+                CAMERA_VALUE_MAP = {
+                    "i": [CAM_VALUE, 0], "k": [-CAM_VALUE, 0], "j": [0, -CAM_VALUE],
+                    "l": [0, CAM_VALUE], "u": [0, 0]
+                }
+                KEYBOARD_IDX = {
+                    "w": [1, 0, 0, 0], "s": [0, 1, 0, 0], "a": [0, 0, 1, 0], "d": [0, 0, 0, 1],
+                    "q": [0, 0, 0, 0]
+                }
+                while self.is_generating:
+                    try:
+                        # Non-blocking get from queue
+                        actions = self.action_queue.get_nowait()
+                        self.current_mouse_action = actions.get('mouse', self.current_mouse_action)
+                        self.current_keyboard_action = actions.get('keyboard', self.current_keyboard_action)
+                    except queue.Empty:
+                        pass # Keep previous action
+
+                    yield {
+                        "mouse": torch.tensor(CAMERA_VALUE_MAP[self.current_mouse_action]).cuda(),
+                        "keyboard": torch.tensor(KEYBOARD_IDX[self.current_keyboard_action]).cuda()
+                    }
+                    time.sleep(0.1) # Prevent busy-waiting
+
+            # Frame callback
+            def frame_callback(video_chunk):
+                from einops import rearrange
+                video = rearrange(video_chunk, "B T C H W -> T B C H W")
+                for frame_tensor in video:
+                    frame = ((frame_tensor[0].float() + 1) * 127.5).clip(0, 255).cpu().numpy().astype(np.uint8)
+                    frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR) # Convert to BGR for OpenCV
+                    if not self.frame_queue.full():
+                        self.frame_queue.put(frame)
+
+            # Start generation
+            with torch.no_grad():
+                self.pipeline.pipeline.inference(
+                    noise=sampled_noise,
+                    conditional_dict=conditional_dict,
+                    return_latents=False,
+                    output_folder=self.pipeline.args.output_folder,
+                    name="realtime_opencv",
+                    mode=self.mode,
+                    action_generator=action_generator(),
+                    frame_callback=frame_callback
+                )
 
         except Exception as e:
             print(f"Generation error: {e}")
