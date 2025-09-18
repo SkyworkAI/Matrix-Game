@@ -1,0 +1,23 @@
+# Web interface dependencies for Matrix-Game 2.0 Real-Time Interface
+# Add these to your existing requirements.txt
+
+# Web interface
+flask>=2.3.0
+flask-cors>=4.0.0
+
+# OpenCV interface (optional)
+opencv-python>=4.8.0
+
+# Additional dependencies for real-time processing
+pillow>=9.5.0
+numpy>=1.24.0
+
+# Existing Matrix-Game dependencies (already in requirements.txt)
+# torch>=2.0.0
+# diffusers>=0.21.0
+# transformers>=4.30.0
+# accelerate>=0.20.0
+# omegaconf>=2.3.0
+# einops>=0.6.0
+# safetensors>=0.3.0
+# flash-attn>=2.3.0
