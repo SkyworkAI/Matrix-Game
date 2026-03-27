@@ -428,7 +428,12 @@ class MatrixGame3Pipeline:
             total_frames = 0
             all_latents_list = []
             all_videos_list = []
-            
+            _wc_enable = getattr(args, 'worldcache', False)
+            _wc_thresh = getattr(args, 'worldcache_thresh', 0.40)
+            _wc_warmup = getattr(args, 'worldcache_warmup', 1)
+            _wc_total_skipped = 0
+            _wc_total_steps = 0
+
             for clip_idx in range(num_iterations):
                 first_clip = (clip_idx == 0)
                 if self.rank == 0:
@@ -568,6 +573,11 @@ class MatrixGame3Pipeline:
                     "predict_latent_idx": (latent_start_idx, latent_end_idx),
                 }
                     
+                _wc_prev_old = None
+                _wc_prev_new = None
+                _wc_step = 0
+                _wc_clip_skipped = 0
+
                 for _, t in enumerate(tqdm(timesteps, disable=(self.rank != 0))):
                     latent_model_input = latents
 
@@ -588,12 +598,32 @@ class MatrixGame3Pipeline:
                         "seq_len": max_seq_len,
                         **conditions_null
                     }
-                    if use_base_model:
-                        noise_pred_full = self.model(**model_kwargs)
-                        noise_pred_null = self.model(**model_kwargs_null)
-                        noise_pred = noise_pred_null + guide_scale * (noise_pred_full - noise_pred_null)
+                    _wc_skip = False
+                    if (_wc_enable and _wc_prev_old is not None and _wc_prev_new is not None
+                            and _wc_step >= _wc_warmup):
+                        _diff = (_wc_prev_new - _wc_prev_old).float()
+                        _ref = torch.nn.functional.avg_pool3d(
+                            _wc_prev_old.float().abs(), kernel_size=(1, 4, 4), stride=(1, 4, 4)
+                        ).mean() + 1e-8
+                        _delta = torch.nn.functional.avg_pool3d(
+                            _diff, kernel_size=(1, 4, 4), stride=(1, 4, 4)
+                        ).abs().mean() / _ref
+                        if _delta.item() < _wc_thresh:
+                            _wc_skip = True
+                            _wc_clip_skipped += 1
+
+                    if not _wc_skip:
+                        if use_base_model:
+                            noise_pred_full = self.model(**model_kwargs)
+                            noise_pred_null = self.model(**model_kwargs_null)
+                            noise_pred = noise_pred_null + guide_scale * (noise_pred_full - noise_pred_null)
+                        else:
+                            noise_pred = self.model(**model_kwargs)
+                        _wc_prev_old = _wc_prev_new
+                        _wc_prev_new = noise_pred.detach()
                     else:
-                        noise_pred = self.model(**model_kwargs)
+                        noise_pred = _wc_prev_new
+                    _wc_step += 1
 
                     if args is not None and getattr(args, 'use_int8', False) and getattr(args, 'verify_quant', False):
                         if _ == 0 and self.rank == 0:
@@ -603,6 +633,11 @@ class MatrixGame3Pipeline:
                         noise_pred, t, latents, return_dict=False)[0]
                     latents = torch.cat([img_cond, latents[:,:,img_cond.shape[2]:]], dim=2)
                                  
+                _wc_total_skipped += _wc_clip_skipped
+                _wc_total_steps += _wc_step
+                if _wc_enable and self.rank == 0:
+                    print(f" [WorldCache] clip {clip_idx}: skipped {_wc_clip_skipped}/{_wc_step} steps", flush=True)
+
                 img_cond = latents[:, :, -4:]
                 denoised_pred = latents if first_clip else latents[:, :, -10:]
 
@@ -654,6 +689,10 @@ class MatrixGame3Pipeline:
                 all_latents_list.append(denoised_pred)
                 current_frames = 57 if first_clip else 40
                 total_frames += current_frames
+
+            if _wc_enable and self.rank == 0 and _wc_total_steps > 0:
+                print(f" [WorldCache] total skipped {_wc_total_skipped}/{_wc_total_steps} steps "
+                      f"({100*_wc_total_skipped/_wc_total_steps:.1f}%)", flush=True)
 
             def denormalize_video(video):
                 return np.ascontiguousarray(

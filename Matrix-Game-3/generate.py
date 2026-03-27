@@ -76,6 +76,12 @@ def _parse_args():
     parser.add_argument('--fa_version', type=str, default=None, choices=['0', '2', '3'], help='Flash Attention version (2 or 3). Set to 0 to disable.')
     parser.add_argument("--interactive", action="store_true", help="Enable interactive inference.")
     parser.add_argument("--use_base_model", action="store_true", help="Enable base model inference.")
+    parser.add_argument("--worldcache", action="store_true", default=False,
+        help="Enable WorldCache denoising-step caching (disabled by default).")
+    parser.add_argument("--worldcache_thresh", type=float, default=0.40,
+        help="WorldCache skip threshold. Default: 0.40.")
+    parser.add_argument("--worldcache_warmup", type=int, default=1,
+        help="Steps before WorldCache skipping starts per clip. Default: 1.")
     args = parser.parse_args()
     _validate_args(args)
     return args
