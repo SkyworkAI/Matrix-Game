@@ -82,7 +82,7 @@ With multiple GPUs, you can pass `--use_async_vae --async_vae_warmup_iters 1` to
 
 ### WorldCache (Inference Speedup)
 
-WorldCache accelerates inference by caching DiT block outputs across denoising timesteps and skipping recomputation when the hidden-state drift is below a threshold. This is a training-free optimization.
+WorldCache ([github.com/umair1221/WorldCache](https://github.com/umair1221/WorldCache)) accelerates inference by caching DiT block outputs across denoising timesteps and skipping recomputation when the hidden-state drift is below a threshold. This is a training-free optimization.
 
 Enable with `--worldcache`:
 ``` sh
@@ -102,6 +102,7 @@ python generate.py --size 704*1280 --ckpt_dir Matrix-Game-3.0 --fa_version 3 --u
 Note: WorldCache effectiveness scales with `--num_inference_steps`. With the default distilled model (`--num_inference_steps 3`) there are few steps to cache across, so gains are modest. It is more effective with the base model (`--use_base_model --num_inference_steps 50`).
 
 ## ⭐ Acknowledgements
+- [WorldCache](https://github.com/umair1221/WorldCache) for the training-free denoising-step block caching technique
 - [Diffusers](https://github.com/huggingface/diffusers) for their excellent diffusion model framework
 - [Self-Forcing](https://github.com/guandeh17/Self-Forcing) for their excellent work
 - [GameFactory](https://github.com/KwaiVGI/GameFactory) for their idea of action control module

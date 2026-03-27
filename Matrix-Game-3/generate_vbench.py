@@ -32,7 +32,7 @@ from PIL import Image
 _SCRIPT_DIR        = os.path.dirname(os.path.abspath(__file__))
 _VBENCH_ROOT       = os.path.join(_SCRIPT_DIR, "..", "..", "VBench", "vbench2_beta_i2v")
 _DEFAULT_INFO_JSON = os.path.join(_VBENCH_ROOT, "vbench2_i2v_full_info.json")
-_DEFAULT_CROP_DIR  = os.path.join(_VBENCH_ROOT, "data", "crop")
+_DEFAULT_CROP_DIR  = os.path.join(_VBENCH_ROOT, "vbench2_beta_i2v", "data", "crop")
 
 
 def _safe(s: str) -> str:
@@ -61,13 +61,13 @@ def _parse_args():
 
     # Inference
     parser.add_argument("--num_iterations", type=int, default=12,
-        help="Autoregressive iterations. Frames = 57 + (N-1)*40. Default: 12 → 497 frames.")
+        help="Autoregressive iterations. Frames = 57 + (N-1)*40. Default: 12 -> 497 frames.")
     parser.add_argument("--num_inference_steps", type=int, default=3,
         help="Denoising steps per iteration. Distilled: 3, base: 50. Default: 3.")
     parser.add_argument("--sample_guide_scale", type=float, default=None,
-        help="CFG scale. None → use config default.")
+        help="CFG scale. None -> use config default.")
     parser.add_argument("--sample_shift", type=float, default=None,
-        help="Flow matching shift. None → use config default.")
+        help="Flow matching shift. None -> use config default.")
     parser.add_argument("--size", type=str, default="704*1280",
         help="Height*Width. Default: 704*1280.")
 
@@ -200,10 +200,10 @@ def vbench_batch(args):
 
     num_frames = 57 + (args.num_iterations - 1) * 40
     total = len(prompts) * args.num_samples
-    print(f"[vbench] {len(prompts)} prompts × {args.num_samples} samples = {total} total")
+    print(f"[vbench] {len(prompts)} prompts x {args.num_samples} samples = {total} total")
     print(f"[vbench] num_iterations={args.num_iterations}  frames/video={num_frames}")
-    print(f"[vbench] output → {out_dir}")
-    print(f"[vbench] stats  → {stats_path}")
+    print(f"[vbench] output -> {out_dir}")
+    print(f"[vbench] stats  -> {stats_path}")
 
     # Load pipeline once
     from wan.configs import MAX_AREA_CONFIGS, WAN_CONFIGS
@@ -228,7 +228,7 @@ def vbench_batch(args):
             use_base_model=args.use_base_model,
         )
     except Exception as exc:
-        print(f"[vbench] FATAL: model load failed — {type(exc).__name__}: {exc}")
+        print(f"[vbench] FATAL: model load failed -- {type(exc).__name__}: {exc}")
         traceback.print_exc()
         stats_f.close()
         return
@@ -245,7 +245,7 @@ def vbench_batch(args):
     for task_idx, (image_name, prompt) in enumerate(prompts):
         image_path = os.path.join(image_dir, image_name)
         if not os.path.isfile(image_path):
-            print(f"[vbench] skip task {task_idx}: image not found — {image_path}")
+            print(f"[vbench] skip task {task_idx}: image not found -- {image_path}")
             continue
 
         img = Image.open(image_path).convert("RGB")
@@ -297,7 +297,7 @@ def vbench_batch(args):
                     args=pipe_args,
                 )
             except SystemExit:
-                pass  # pipeline calls exit() after saving — this is expected
+                pass  # pipeline calls exit() after saving -- this is expected
             except Exception as exc:
                 ram_gb  = psutil.virtual_memory().used / 1024 ** 3
                 vram_gb = torch.cuda.memory_allocated() / 1024 ** 3 if torch.cuda.is_available() else 0.0
@@ -331,10 +331,10 @@ def vbench_batch(args):
 
     elapsed_total = time.time() - t_run_start
     stats_f.close()
-    print(f"\n[vbench] done — generated={generated}  skipped={skipped}  errors={errors}  elapsed={_fmt(elapsed_total)}")
+    print(f"\n[vbench] done -- generated={generated}  skipped={skipped}  errors={errors}  elapsed={_fmt(elapsed_total)}")
     if generated:
         print(f"[vbench] avg per video: {ok_total_s / generated / 60:.1f} min  ({ok_total_s / generated:.1f}s)")
-    print(f"[vbench] stats → {stats_path}")
+    print(f"[vbench] stats -> {stats_path}")
 
 
 if __name__ == "__main__":
