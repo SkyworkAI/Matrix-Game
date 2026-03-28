@@ -113,7 +113,8 @@ if "%WORLDCACHE%"=="1" set PY_ARGS=%PY_ARGS% --worldcache --worldcache_thresh %W
 
 echo.
 echo [MG3-VBench] Generating %NUM_SAMPLES% samples per prompt...
-python "%ROOT%\generate_vbench.py" %PY_ARGS% 2>&1 | powershell -Command "$input | Tee-Object -FilePath '%LOG_FILE%'; exit $LASTEXITCODE"
+chcp 65001 >nul
+python "%ROOT%\generate_vbench.py" %PY_ARGS% 2>&1 | powershell -Command "[Console]::InputEncoding = [System.Text.Encoding]::UTF8; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $input | Tee-Object -FilePath '%LOG_FILE%'; exit $LASTEXITCODE"
 set EXIT_CODE=%ERRORLEVEL%
 echo [MG3-VBench] Done. Exit: %EXIT_CODE%
 
