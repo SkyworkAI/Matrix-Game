@@ -58,14 +58,18 @@ if /i "%~1"=="--compile_vae" goto :arg_compile_vae
 if /i "%~1"=="--num_samples" goto :arg_num_samples
 if /i "%~1"=="--image_types" goto :arg_image_types
 if /i "%~1"=="--output_base" goto :arg_output_base
-:: fail on unknown --flags
-if "%~1:~0,2%"=="--" echo ERROR: Unknown flag: %~1 & exit /b 1
+:: fail on unknown --flags (use temp var for substring check)
+set _A1=%~1
+if "%_A1:~0,2%"=="--" echo ERROR: Unknown flag: %~1 & exit /b 1
 if not defined OUTPUT_BASE   goto :arg_pos_output
 if not defined NUM_SAMPLES   goto :arg_pos_samples
 if not defined IMAGE_TYPES   goto :arg_pos_types
 shift & goto :argloop
 :arg_worldcache
 set WORLDCACHE=1
+:: optional threshold value: --worldcache 0.45
+set _A2=%~2
+if not "%_A2%"=="" if not "%_A2:~0,2%"=="--" set WORLDCACHE_THRESH=%~2 & shift
 shift & goto :argloop
 :arg_compile_vae
 set COMPILE_VAE=1
