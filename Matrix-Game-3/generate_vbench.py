@@ -24,6 +24,14 @@ import warnings
 warnings.filterwarnings("ignore")
 os.environ.setdefault("TORCHDYNAMO_DISABLE", "1")
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
+os.environ.setdefault("PYTHONIOENCODING", "utf-8")
+
+# Ensure stdout/stderr can handle Unicode on Windows (cp1252 terminals)
+import io, sys
+if hasattr(sys.stdout, "buffer") and sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf8"):
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "buffer") and sys.stderr.encoding and sys.stderr.encoding.lower() not in ("utf-8", "utf8"):
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 import psutil
 import torch
