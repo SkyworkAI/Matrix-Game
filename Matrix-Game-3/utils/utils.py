@@ -92,7 +92,7 @@ def compute_next_pose_from_action(current_pose, keyboard_action, mouse_action):
     
     return np.array([new_x, new_y, new_z, new_pitch, new_yaw])
 
-def get_data(num_frames, height, width, pil_image, device=None, dtype=None):
+def get_data(num_frames, height, width, pil_image, device=None, dtype=None, key_strength=1.0):
     input_image = torch.from_numpy(np.array(pil_image)).unsqueeze(0)
     input_image = input_image.permute(0, 3, 1, 2)
     def normalize_to_neg_one_to_one(x):
@@ -102,7 +102,7 @@ def get_data(num_frames, height, width, pil_image, device=None, dtype=None):
     input_image = input_image.transpose(0, 1).unsqueeze(0) # b c t h w
 
     actions = Bench_actions_universal(num_frames)
-    keyboard_condition_all = actions['keyboard_condition']
+    keyboard_condition_all = actions['keyboard_condition'] * key_strength
     mouse_condition_all = actions['mouse_condition']
 
     first_pose = np.concatenate([np.zeros(3), np.zeros(2)], axis=0)

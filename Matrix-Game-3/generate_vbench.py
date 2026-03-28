@@ -78,6 +78,8 @@ def _parse_args():
         help="CFG scale. None -> use config default.")
     parser.add_argument("--sample_shift", type=float, default=None,
         help="Flow matching shift. None -> use config default.")
+    parser.add_argument("--key_strength", type=float, default=0.5,
+        help="Scale applied to keyboard action conditioning. 1.0=full, 0.5=half. Default: 0.5.")
     parser.add_argument("--size", type=str, default="704*1280",
         help="Height*Width. Default: 704*1280.")
 
@@ -160,6 +162,7 @@ class _PipeArgs:
         self.ckpt_dir              = args.ckpt_dir
         self.output_dir            = output_dir
         self.save_name             = save_name
+        self.key_strength          = getattr(args, 'key_strength', 1.0)
         self.worldcache            = getattr(args, 'worldcache', False)
         self.worldcache_thresh     = getattr(args, 'worldcache_thresh', 0.40)
         self.worldcache_warmup     = getattr(args, 'worldcache_warmup', 1)

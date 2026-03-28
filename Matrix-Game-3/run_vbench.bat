@@ -46,6 +46,7 @@ set WORLDCACHE_THRESH=0.40
 set WORLDCACHE_WARMUP=1
 set COMPILE_VAE=
 set FPS=24
+set KEY_STRENGTH=0.5
 :: ──────────────────────────────────────────────────────────────────────────
 
 :: Parse arguments — named flags anywhere, positional args fill OUTPUT_BASE / NUM_SAMPLES / IMAGE_TYPES
@@ -151,6 +152,7 @@ set PY_ARGS=%PY_ARGS% --vae_type %VAE_TYPE%
 set PY_ARGS=%PY_ARGS% --lightvae_pruning_rate %LIGHTVAE_PRUNING_RATE%
 set PY_ARGS=%PY_ARGS% --fa_version %FA_VERSION%
 set PY_ARGS=%PY_ARGS% --fps %FPS%
+set PY_ARGS=%PY_ARGS% --key_strength %KEY_STRENGTH%
 if "%USE_INT8%"=="1" set PY_ARGS=%PY_ARGS% --use_int8
 if defined WORLDCACHE  set PY_ARGS=%PY_ARGS% --worldcache --worldcache_thresh %WORLDCACHE_THRESH% --worldcache_warmup %WORLDCACHE_WARMUP%
 if defined COMPILE_VAE set PY_ARGS=%PY_ARGS% --compile_vae

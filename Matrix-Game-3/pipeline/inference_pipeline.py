@@ -392,7 +392,7 @@ class MatrixGame3Pipeline:
         generator = torch.Generator(device=self.device).manual_seed(seed)
         num_frames = first_clip_frame + (num_iterations - 1) * 40
 
-        current_image, extrinsics_all, keyboard_condition_all, mouse_condition_all = get_data(num_frames, height, width, pil_image, device=self.device, dtype=weight_dtype)
+        current_image, extrinsics_all, keyboard_condition_all, mouse_condition_all = get_data(num_frames, height, width, pil_image, device=self.device, dtype=weight_dtype, key_strength=getattr(args, 'key_strength', 1.0))
         cond = self.text_encoder([text], device = self.device)
         neg_cond = self.text_encoder([self.config.sample_neg_prompt], device = self.device)
 
