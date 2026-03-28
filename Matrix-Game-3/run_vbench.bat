@@ -156,7 +156,7 @@ if defined COMPILE_VAE set PY_ARGS=%PY_ARGS% --compile_vae
 echo.
 echo [MG3-VBench] Generating %NUM_SAMPLES% samples per prompt...
 chcp 65001 >nul
-python "%ROOT%\generate_vbench.py" %PY_ARGS% 2>&1 | powershell -Command "[Console]::InputEncoding = [System.Text.Encoding]::UTF8; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $input | Tee-Object -FilePath '%LOG_FILE%'; exit $LASTEXITCODE"
+python "%ROOT%\generate_vbench.py" %PY_ARGS% 2>&1 | powershell -Command "[Console]::InputEncoding = [System.Text.Encoding]::UTF8; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $input | Tee-Object -FilePath '%LOG_FILE%' -Encoding UTF8; exit $LASTEXITCODE"
 set EXIT_CODE=%ERRORLEVEL%
 echo [MG3-VBench] Done. Exit: %EXIT_CODE%
 
