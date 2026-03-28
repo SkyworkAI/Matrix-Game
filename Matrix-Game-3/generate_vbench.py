@@ -338,6 +338,10 @@ def vbench_batch(args):
             generated  += 1
             done       += 1
 
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+            import gc; gc.collect()
+
     elapsed_total = time.time() - t_run_start
     stats_f.close()
     print(f"\n[vbench] done -- generated={generated}  skipped={skipped}  errors={errors}  elapsed={_fmt(elapsed_total)}")

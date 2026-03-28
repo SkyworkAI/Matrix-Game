@@ -41,16 +41,22 @@ set VAE_TYPE=mg_lightvae_v2
 set LIGHTVAE_PRUNING_RATE=0.75
 set FA_VERSION=2
 set USE_INT8=1
-set WORLDCACHE=0
+set WORLDCACHE=
 set WORLDCACHE_THRESH=0.40
 set WORLDCACHE_WARMUP=1
 :: ──────────────────────────────────────────────────────────────────────────
 
+:: scan all args for --worldcache flag before positional parsing
+for %%A in (%*) do if /i "%%~A"=="--worldcache" set WORLDCACHE=1
+
 set OUTPUT_BASE=%~1
+if /i "%OUTPUT_BASE%"=="--worldcache" set OUTPUT_BASE=
 if "%OUTPUT_BASE%"=="" set OUTPUT_BASE=out\vbench
 set NUM_SAMPLES=%~2
+if /i "%NUM_SAMPLES%"=="--worldcache" set NUM_SAMPLES=
 if "%NUM_SAMPLES%"=="" set NUM_SAMPLES=5
 set IMAGE_TYPES=%~3
+if /i "%IMAGE_TYPES%"=="--worldcache" set IMAGE_TYPES=
 if "%IMAGE_TYPES%"=="" set IMAGE_TYPES=scenery,indoor
 
 set ROOT=%~dp0
@@ -89,7 +95,7 @@ echo   steps     : %NUM_INFERENCE_STEPS%
 echo   vae       : %VAE_TYPE%  pruning=%LIGHTVAE_PRUNING_RATE%
 echo   int8      : %USE_INT8%
 echo   fa        : %FA_VERSION%
-if "%WORLDCACHE%"=="1" (
+if defined WORLDCACHE (
     echo   worldcache: ON  thresh=%WORLDCACHE_THRESH%  warmup=%WORLDCACHE_WARMUP%
 ) else (
     echo   worldcache: OFF
@@ -109,7 +115,7 @@ set PY_ARGS=%PY_ARGS% --vae_type %VAE_TYPE%
 set PY_ARGS=%PY_ARGS% --lightvae_pruning_rate %LIGHTVAE_PRUNING_RATE%
 set PY_ARGS=%PY_ARGS% --fa_version %FA_VERSION%
 if "%USE_INT8%"=="1" set PY_ARGS=%PY_ARGS% --use_int8
-if "%WORLDCACHE%"=="1" set PY_ARGS=%PY_ARGS% --worldcache --worldcache_thresh %WORLDCACHE_THRESH% --worldcache_warmup %WORLDCACHE_WARMUP%
+if defined WORLDCACHE set PY_ARGS=%PY_ARGS% --worldcache --worldcache_thresh %WORLDCACHE_THRESH% --worldcache_warmup %WORLDCACHE_WARMUP%
 
 echo.
 echo [MG3-VBench] Generating %NUM_SAMPLES% samples per prompt...
