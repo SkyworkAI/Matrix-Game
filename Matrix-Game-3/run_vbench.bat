@@ -35,8 +35,8 @@ exit /b 0
 set PYTHONIOENCODING=utf-8
 :: ── configurable defaults ──────────────────────────────────────────────────
 set CKPT=Matrix-Game-3.0
-set NUM_ITERATIONS=12
-set NUM_INFERENCE_STEPS=3
+set NUM_ITERATIONS=4
+set NUM_INFERENCE_STEPS=5
 set VAE_TYPE=mg_lightvae_v2
 set LIGHTVAE_PRUNING_RATE=0.75
 set FA_VERSION=2

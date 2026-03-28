@@ -164,5 +164,5 @@ def process_video(input_video, output_video, config, mouse_icon_path, mouse_scal
         out_video.append(frame / 255)
         frame_idx += 1
         # print(f"Processing frame {frame_idx}/{frame_count}", end="\r")
-    export_to_video(out_video, output_video, fps=17)
+    export_to_video(out_video, output_video, fps=24)
     # print("\nProcessing complete!")
