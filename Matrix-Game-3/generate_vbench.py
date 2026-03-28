@@ -145,6 +145,7 @@ class _PipeArgs:
         self.use_async_vae         = False
         self.async_vae_warmup_iters = 0
         self.fa_version            = args.fa_version
+        self.ckpt_dir              = args.ckpt_dir
         self.output_dir            = output_dir
         self.save_name             = save_name
         self.worldcache            = getattr(args, 'worldcache', False)
