@@ -1327,11 +1327,15 @@ class Wan2_2_VAE:
             out (torch.Tensor): Decoded video frames.
             feat_cache (list): Updated feature cache.
         """
+        import sys as _sys
+        if compile_decoder and _sys.platform == "win32":
+            logging.warning("torch.compile VAE disabled on Windows (Triton inductor not supported).")
+            compile_decoder = False
         if compile_decoder and hasattr(self.model, "decoder") and not hasattr(self.model.decoder, "_is_compiled"):
             logging.info("Triggering torch.compile on VAE Decoder (Static Mode)...")
             self.model.decoder = torch.compile(
-                self.model.decoder, 
-                dynamic=False, 
+                self.model.decoder,
+                dynamic=False,
                 fullgraph=False
             )
             self.model.decoder._is_compiled = True
