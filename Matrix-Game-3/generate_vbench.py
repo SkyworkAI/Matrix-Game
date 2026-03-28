@@ -177,10 +177,12 @@ def vbench_batch(args):
         os.path.abspath(args.stats_file) if args.stats_file
         else os.path.join(os.path.dirname(out_dir), "vbench_stats.csv")
     )
-    stats_f = open(stats_path, "w", newline="", encoding="utf-8")
+    write_header = not os.path.isfile(stats_path) or os.path.getsize(stats_path) == 0
+    stats_f = open(stats_path, "a", newline="", encoding="utf-8")
     stats_w = csv.writer(stats_f)
-    stats_w.writerow(["task_idx", "prompt", "sample_idx",
-                      "duration_s", "gen_fps", "ram_gb", "vram_gb", "out_path", "status"])
+    if write_header:
+        stats_w.writerow(["task_idx", "prompt", "sample_idx",
+                          "duration_s", "gen_fps", "ram_gb", "vram_gb", "out_path", "status"])
 
     if not os.path.isfile(info_json):
         print(f"[vbench] ERROR: info JSON not found: {info_json}")
@@ -262,7 +264,7 @@ def vbench_batch(args):
         img = Image.open(image_path).convert("RGB")
 
         for sample_idx in range(args.num_samples):
-            seed = args.base_seed + sample_idx
+            seed = args.base_seed + task_idx * args.num_samples + sample_idx
             safe_prompt = _safe(prompt)
             out_path = os.path.join(out_dir, f"{safe_prompt}-{sample_idx}.mp4")
 
@@ -332,6 +334,7 @@ def vbench_batch(args):
 
             status = "ok" if os.path.exists(out_path) else "ok_nofile"
             print(f"[vbench]   {status}  {elapsed:.1f}s  {gen_fps:.2f} gen-fps  VRAM {vram_gb:.1f} GB (peak {vram_pk:.1f} GB)  RAM {ram_gb:.1f} GB")
+            print(f"[vbench]   saved -> {out_path}")
             stats_w.writerow([task_idx, prompt, sample_idx,
                                f"{elapsed:.2f}", f"{gen_fps:.2f}",
                                f"{ram_gb:.2f}", f"{vram_gb:.2f}", out_path, status])
