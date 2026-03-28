@@ -32,6 +32,7 @@ echo.
 exit /b 0
 
 :run
+set PYTHONIOENCODING=utf-8
 :: ── configurable defaults ──────────────────────────────────────────────────
 set CKPT=Matrix-Game-3.0
 set NUM_ITERATIONS=12
