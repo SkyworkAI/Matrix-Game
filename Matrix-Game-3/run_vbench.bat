@@ -47,26 +47,51 @@ set WORLDCACHE_WARMUP=1
 set COMPILE_VAE=
 :: ──────────────────────────────────────────────────────────────────────────
 
-:: Parse arguments — named flags anywhere, positional args fill in OUTPUT_BASE / NUM_SAMPLES / IMAGE_TYPES
+:: Parse arguments — named flags anywhere, positional args fill OUTPUT_BASE / NUM_SAMPLES / IMAGE_TYPES
 set OUTPUT_BASE=
 set NUM_SAMPLES=
 set IMAGE_TYPES=
 :argloop
 if "%~1"=="" goto :argdone
-if /i "%~1"=="--worldcache"   ( set WORLDCACHE=1            & shift & goto :argloop )
-if /i "%~1"=="--compile_vae"  ( set COMPILE_VAE=1           & shift & goto :argloop )
-if /i "%~1"=="--num_samples"  ( set NUM_SAMPLES=%~2         & shift & shift & goto :argloop )
-if /i "%~1"=="--image_types"  ( set IMAGE_TYPES=%~2         & shift & shift & goto :argloop )
-if /i "%~1"=="--output_base"  ( set OUTPUT_BASE=%~2         & shift & shift & goto :argloop )
-if "%OUTPUT_BASE%"==""        ( set OUTPUT_BASE=%~1         & shift & goto :argloop )
-if "%NUM_SAMPLES%"==""        ( set NUM_SAMPLES=%~1         & shift & goto :argloop )
-if "%IMAGE_TYPES%"==""        ( set IMAGE_TYPES=%~1         & shift & goto :argloop )
+if /i "%~1"=="--worldcache"  goto :arg_worldcache
+if /i "%~1"=="--compile_vae" goto :arg_compile_vae
+if /i "%~1"=="--num_samples" goto :arg_num_samples
+if /i "%~1"=="--image_types" goto :arg_image_types
+if /i "%~1"=="--output_base" goto :arg_output_base
+:: fail on unknown --flags
+if "%~1:~0,2%"=="--" echo ERROR: Unknown flag: %~1 & exit /b 1
+if not defined OUTPUT_BASE   goto :arg_pos_output
+if not defined NUM_SAMPLES   goto :arg_pos_samples
+if not defined IMAGE_TYPES   goto :arg_pos_types
+shift & goto :argloop
+:arg_worldcache
+set WORLDCACHE=1
+shift & goto :argloop
+:arg_compile_vae
+set COMPILE_VAE=1
+shift & goto :argloop
+:arg_num_samples
+set NUM_SAMPLES=%~2
+shift & shift & goto :argloop
+:arg_image_types
+set IMAGE_TYPES=%~2
+shift & shift & goto :argloop
+:arg_output_base
+set OUTPUT_BASE=%~2
+shift & shift & goto :argloop
+:arg_pos_output
+set OUTPUT_BASE=%~1
+shift & goto :argloop
+:arg_pos_samples
+set NUM_SAMPLES=%~1
+shift & goto :argloop
+:arg_pos_types
+set IMAGE_TYPES=%~1
 shift & goto :argloop
 :argdone
-
-if "%OUTPUT_BASE%"=="" set OUTPUT_BASE=out\vbench
-if "%NUM_SAMPLES%"=="" set NUM_SAMPLES=5
-if "%IMAGE_TYPES%"=="" set IMAGE_TYPES=scenery,indoor
+if not defined OUTPUT_BASE set OUTPUT_BASE=out\vbench
+if not defined NUM_SAMPLES set NUM_SAMPLES=5
+if not defined IMAGE_TYPES set IMAGE_TYPES=scenery,indoor
 
 set ROOT=%~dp0
 if "%ROOT:~-1%"=="\" set ROOT=%ROOT:~0,-1%
