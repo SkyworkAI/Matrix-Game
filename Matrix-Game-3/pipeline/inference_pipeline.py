@@ -257,6 +257,7 @@ class MatrixGame3Pipeline:
                         "num_iterations": args.num_iterations if hasattr(args, 'num_iterations') else 12,
                         "compile_vae": getattr(args, 'compile_vae', False),
                         "async_vae_warmup_iters": getattr(args, 'async_vae_warmup_iters', 0),
+                        "fps": getattr(args, 'fps', 24),
                     }
                     meta.update(self.vae_config_dict)
                     (
@@ -737,6 +738,7 @@ class MatrixGame3Pipeline:
                         mouse_icon,
                         mouse_scale=0.2,
                         default_frame_res=(height, width),
+                        fps=getattr(args, 'fps', 24),
                     )
                     print(f"Saved concatenated video with {len(all_videos_list)} segments")
                     video = torch.concat(all_videos_list, dim=2)[0]

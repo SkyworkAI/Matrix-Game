@@ -72,6 +72,8 @@ def _parse_args():
         help="Autoregressive iterations. Frames = 57 + (N-1)*40. Default: 12 -> 497 frames.")
     parser.add_argument("--num_inference_steps", type=int, default=3,
         help="Denoising steps per iteration. Distilled: 3, base: 50. Default: 3.")
+    parser.add_argument("--fps", type=int, default=24,
+        help="Output video FPS. Default: 24.")
     parser.add_argument("--sample_guide_scale", type=float, default=None,
         help="CFG scale. None -> use config default.")
     parser.add_argument("--sample_shift", type=float, default=None,
@@ -161,6 +163,7 @@ class _PipeArgs:
         self.worldcache            = getattr(args, 'worldcache', False)
         self.worldcache_thresh     = getattr(args, 'worldcache_thresh', 0.40)
         self.worldcache_warmup     = getattr(args, 'worldcache_warmup', 1)
+        self.fps                   = getattr(args, 'fps', 24)
         self.t5_fsdp               = False
         self.dit_fsdp              = False
         self.ulysses_size          = 1

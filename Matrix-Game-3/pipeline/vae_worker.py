@@ -91,17 +91,17 @@ def run_vae_worker_queue(latent_queue, ack_queue, done_event, watch_dir, device_
             mouse_condition = data["mouse_condition"]
             keyboard_condition = data["keyboard_condition"]
             save_name = data["save_name"]
-            _save_final_video([vid_cpu], actual_watch_dir, metadata, mouse_condition, keyboard_condition, save_name, clip_idx=clip_idx)
+            _save_final_video([vid_cpu], actual_watch_dir, metadata, mouse_condition, keyboard_condition, save_name, clip_idx=clip_idx, fps=metadata.get("fps", 24))
 
     print(f"✅ All clips decoded.", flush=True)
     print(f"🎬 Saving final video ...", flush=True)
-    _save_final_video(all_videos, actual_watch_dir, metadata, mouse_condition_all, keyboard_condition_all, save_name)
+    _save_final_video(all_videos, actual_watch_dir, metadata, mouse_condition_all, keyboard_condition_all, save_name, fps=metadata.get("fps", 24))
     print(f"🎉 Video saved to {os.path.join(actual_watch_dir, f'{save_name}.mp4')}", flush=True)
     done_event.set()
     print(f"✨ Task complete. Exiting.", flush=True)
 
 
-def _save_final_video(all_videos, actual_watch_dir, metadata, mouse_condition, keyboard_condition, save_name, clip_idx=None):
+def _save_final_video(all_videos, actual_watch_dir, metadata, mouse_condition, keyboard_condition, save_name, clip_idx=None, fps=24):
     if len(all_videos) == 0:
         return
     concatenated_video = denormalize_video(torch.concat(all_videos, dim=2)[0])
@@ -120,6 +120,7 @@ def _save_final_video(all_videos, actual_watch_dir, metadata, mouse_condition, k
         "assets/images/mouse.png",
         mouse_scale=0.2,
         default_frame_res=(metadata["height"], metadata["width"]),
+        fps=fps,
     )
 
 

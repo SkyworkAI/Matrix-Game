@@ -143,7 +143,7 @@ def overlay_icon(frame, icon, position, scale=1.0, rotation=0):
     frame[top_left_y:top_left_y+min_h, top_left_x:top_left_x+min_w] = frame_region
 
 
-def process_video(input_video, output_video, config, mouse_icon_path, mouse_scale=1.0, mouse_rotation=0, default_frame_res=(704, 1280)):
+def process_video(input_video, output_video, config, mouse_icon_path, mouse_scale=1.0, mouse_rotation=0, default_frame_res=(704, 1280), fps=24):
     key_data, mouse_data = parse_config(config, default_frame_res)
 
     frame_width = input_video[0].shape[1]
@@ -164,5 +164,5 @@ def process_video(input_video, output_video, config, mouse_icon_path, mouse_scal
         out_video.append(frame / 255)
         frame_idx += 1
         # print(f"Processing frame {frame_idx}/{frame_count}", end="\r")
-    export_to_video(out_video, output_video, fps=24)
+    export_to_video(out_video, output_video, fps=fps)
     # print("\nProcessing complete!")
