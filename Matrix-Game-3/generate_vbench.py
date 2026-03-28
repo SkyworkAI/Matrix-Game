@@ -112,6 +112,8 @@ def _parse_args():
     parser.add_argument("--skip_existing", action="store_true", default=True,
         help="Skip videos that already exist on disk (default: True).")
     parser.add_argument("--no_skip_existing", action="store_false", dest="skip_existing")
+    parser.add_argument("--compile_vae", action="store_true", default=False,
+        help="torch.compile the VAE decoder for faster decode (15-30%% speedup, one-time compile cost).")
     # ---- WorldCache args ----
     parser.add_argument("--worldcache", action="store_true", default=False,
         help="Enable WorldCache denoising-step caching (disabled by default).")
@@ -149,7 +151,7 @@ class _PipeArgs:
         self.verify_quant          = False
         self.vae_type              = args.vae_type
         self.lightvae_pruning_rate = args.lightvae_pruning_rate
-        self.compile_vae           = False
+        self.compile_vae           = getattr(args, 'compile_vae', False)
         self.use_async_vae         = False
         self.async_vae_warmup_iters = 0
         self.fa_version            = args.fa_version

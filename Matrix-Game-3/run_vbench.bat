@@ -44,19 +44,28 @@ set USE_INT8=1
 set WORLDCACHE=
 set WORLDCACHE_THRESH=0.40
 set WORLDCACHE_WARMUP=1
+set COMPILE_VAE=
 :: ──────────────────────────────────────────────────────────────────────────
 
-:: scan all args for --worldcache flag before positional parsing
-for %%A in (%*) do if /i "%%~A"=="--worldcache" set WORLDCACHE=1
+:: Parse arguments — named flags anywhere, positional args fill in OUTPUT_BASE / NUM_SAMPLES / IMAGE_TYPES
+set OUTPUT_BASE=
+set NUM_SAMPLES=
+set IMAGE_TYPES=
+:argloop
+if "%~1"=="" goto :argdone
+if /i "%~1"=="--worldcache"   ( set WORLDCACHE=1            & shift & goto :argloop )
+if /i "%~1"=="--compile_vae"  ( set COMPILE_VAE=1           & shift & goto :argloop )
+if /i "%~1"=="--num_samples"  ( set NUM_SAMPLES=%~2         & shift & shift & goto :argloop )
+if /i "%~1"=="--image_types"  ( set IMAGE_TYPES=%~2         & shift & shift & goto :argloop )
+if /i "%~1"=="--output_base"  ( set OUTPUT_BASE=%~2         & shift & shift & goto :argloop )
+if "%OUTPUT_BASE%"==""        ( set OUTPUT_BASE=%~1         & shift & goto :argloop )
+if "%NUM_SAMPLES%"==""        ( set NUM_SAMPLES=%~1         & shift & goto :argloop )
+if "%IMAGE_TYPES%"==""        ( set IMAGE_TYPES=%~1         & shift & goto :argloop )
+shift & goto :argloop
+:argdone
 
-set OUTPUT_BASE=%~1
-if /i "%OUTPUT_BASE%"=="--worldcache" set OUTPUT_BASE=
 if "%OUTPUT_BASE%"=="" set OUTPUT_BASE=out\vbench
-set NUM_SAMPLES=%~2
-if /i "%NUM_SAMPLES%"=="--worldcache" set NUM_SAMPLES=
 if "%NUM_SAMPLES%"=="" set NUM_SAMPLES=5
-set IMAGE_TYPES=%~3
-if /i "%IMAGE_TYPES%"=="--worldcache" set IMAGE_TYPES=
 if "%IMAGE_TYPES%"=="" set IMAGE_TYPES=scenery,indoor
 
 set ROOT=%~dp0
@@ -95,11 +104,8 @@ echo   steps     : %NUM_INFERENCE_STEPS%
 echo   vae       : %VAE_TYPE%  pruning=%LIGHTVAE_PRUNING_RATE%
 echo   int8      : %USE_INT8%
 echo   fa        : %FA_VERSION%
-if defined WORLDCACHE (
-    echo   worldcache: ON  thresh=%WORLDCACHE_THRESH%  warmup=%WORLDCACHE_WARMUP%
-) else (
-    echo   worldcache: OFF
-)
+if defined WORLDCACHE  echo   worldcache : ON  thresh=%WORLDCACHE_THRESH%  warmup=%WORLDCACHE_WARMUP%
+if defined COMPILE_VAE echo   compile_vae: ON
 echo ============================================================
 
 set START_TIME=%TIME%
@@ -115,7 +121,8 @@ set PY_ARGS=%PY_ARGS% --vae_type %VAE_TYPE%
 set PY_ARGS=%PY_ARGS% --lightvae_pruning_rate %LIGHTVAE_PRUNING_RATE%
 set PY_ARGS=%PY_ARGS% --fa_version %FA_VERSION%
 if "%USE_INT8%"=="1" set PY_ARGS=%PY_ARGS% --use_int8
-if defined WORLDCACHE set PY_ARGS=%PY_ARGS% --worldcache --worldcache_thresh %WORLDCACHE_THRESH% --worldcache_warmup %WORLDCACHE_WARMUP%
+if defined WORLDCACHE  set PY_ARGS=%PY_ARGS% --worldcache --worldcache_thresh %WORLDCACHE_THRESH% --worldcache_warmup %WORLDCACHE_WARMUP%
+if defined COMPILE_VAE set PY_ARGS=%PY_ARGS% --compile_vae
 
 echo.
 echo [MG3-VBench] Generating %NUM_SAMPLES% samples per prompt...
