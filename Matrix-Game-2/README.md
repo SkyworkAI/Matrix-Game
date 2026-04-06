@@ -53,6 +53,13 @@ python inference.py \
     --seed 42 \
     --pretrained_model_path {path-to-the-vae-folder}
 ```
+
+Depending on the `config_path` being used, the `checkpoint_path` should be varied. For example, if you were to use
+`configs/inference_yaml/inference_universal.yaml`, `checkpoint_path` should be `Matrix-Game-2.0/base_distilled_model/base_distill.safetensors`.
+Similarly, for `configs/inference_yaml/inference_templerun.yaml`, it should be `Matrix-Game-2.0/templerun_distilled_model/templerun_7dim_onlykey.safetensors`.
+
+`pretrained_model_path` should be `Matrix-Game-2.0` or whereever you downloaded `Skywork/Matrix-Game-2.0` to.
+
 Or, you can use the script `inference_streaming.py` for generating the interactive videos with your own input actions and images:
 ```
 python inference_streaming.py \
