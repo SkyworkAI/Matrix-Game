@@ -58,7 +58,7 @@ class WanVAEWrapper(torch.nn.Module): # todo
             decode_function = self.model.decode
 
         output = []
-        for u in zs:
+        for u in latent:
             output.append(decode_function(u.unsqueeze(0), scale).float().clamp_(-1, 1).squeeze(0))
         output = torch.stack(output, dim=0)
         return output
@@ -206,4 +206,3 @@ class WanDiffusionWrapper(torch.nn.Module):
         We can gradually add more methods here if needed.
         """
         self.get_scheduler()
-
