@@ -25,7 +25,10 @@ class WanRMSNorm(nn.Module):
         Args:
             x(Tensor): Shape [B, L, C]
         """
-        return x * torch.rsqrt(x.pow(2).mean(dim=-1, keepdim=True) + self.eps) # fast_rms_norm(x, self.weight, self.eps)
+        return self._norm(x.float()).to(x.dtype) * self.weight
+
+    def _norm(self, x):
+        return x * torch.rsqrt(x.pow(2).mean(dim=-1, keepdim=True) + self.eps)
 
 def sinusoidal_embedding_1d(dim, position):
     assert dim % 2 == 0
