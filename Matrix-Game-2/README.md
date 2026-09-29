@@ -13,7 +13,7 @@ https://github.com/user-attachments/assets/336b0d4a-64f5-4e5c-9b60-6212ddb261c0
 **Related Project**:  If you want to create explorable large-scale 3D scene which can be seamlessly integrated into games or VR applications, please visit [Matrix-3D](https://github.com/SkyworkAI/Matrix-3D) for details.
 
 ## 🤗 Matrix-Game-2.0 Model
-we provide three pretrained model weights including universal scenes, GTA driving scene and TempleRun game scene. Please refer to our HuggingFace page to reach these resources.
+we provide two pretrained model weights including universal scenes and TempleRun game scene. Please refer to our HuggingFace page to reach these resources.
 
 ## Requirements
 We tested this repo on the following setup:
