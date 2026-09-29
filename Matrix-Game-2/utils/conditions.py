@@ -113,61 +113,6 @@ def Bench_actions_universal(num_frames, num_samples_per_action=4):
     return combine_data(data, num_frames, keyboard_dim=4, mouse=True)
 
 
-def Bench_actions_gta_drive(num_frames, num_samples_per_action=4):
-    actions_single_action = [
-        "forward",
-        "back",
-    ]
-
-    actions_single_camera = [   
-        "camera_l",
-        "camera_r",
-    ]
-    actions_to_test = actions_single_camera * 2 + actions_single_action * 2
-    for action in (actions_single_action):
-        for camera in (actions_single_camera):
-            double_action = f"{action}_{camera}"
-            actions_to_test.append(double_action)
-
-    # print("length of actions: ", len(actions_to_test))
-    base_action = actions_single_action + actions_single_camera
-
-    KEYBOARD_IDX = { 
-        "forward": 0, "back": 1
-    }
-
-    CAM_VALUE = 0.1
-    CAMERA_VALUE_MAP = {
-        "camera_l":   [0, -CAM_VALUE],
-        "camera_r":   [0, CAM_VALUE],
-    }
-    
-    data = []
-
-    for action_name in actions_to_test:
-
-        keyboard_condition = [[0, 0] for _ in range(num_samples_per_action)] 
-        mouse_condition = [[0,0] for _ in range(num_samples_per_action)] 
-
-        for sub_act in base_action:
-            if not sub_act in action_name: # 只处理action_name包含的动作
-                continue
-            # print(f"action name: {action_name} sub_act: {sub_act}")
-            if sub_act in CAMERA_VALUE_MAP:
-                mouse_condition = [CAMERA_VALUE_MAP[sub_act]
-                                   for _ in range(num_samples_per_action)]
-
-            elif sub_act in KEYBOARD_IDX:
-                col = KEYBOARD_IDX[sub_act]
-                for row in keyboard_condition:
-                    row[col] = 1
-
-        data.append({
-            "keyboard_condition": torch.tensor(keyboard_condition),
-            "mouse_condition": torch.tensor(mouse_condition)
-        })
-    return combine_data(data, num_frames, keyboard_dim=2, mouse=True)
-
 def Bench_actions_templerun(num_frames, num_samples_per_action=4):
     actions_single_action = [
         "jump",

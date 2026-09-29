@@ -42,41 +42,6 @@ def get_current_action(mode="universal"):
                 pass
         mouse_cond = torch.tensor(CAMERA_VALUE_MAP[idx_mouse]).cuda()
         keyboard_cond = torch.tensor(KEYBOARD_IDX[idx_keyboard]).cuda()
-    elif mode == 'gta_drive':
-        print()
-        print('-'*30)
-        print("PRESS [W, S, A, D, Q] FOR MOVEMENT\n (W: forward, S: back, A: left, D: right, Q: no move)")
-        print('-'*30)
-        CAMERA_VALUE_MAP = {
-            "a":  [0, -CAM_VALUE],
-            "d":  [0, CAM_VALUE],
-            "q":  [0, 0]
-        }
-        KEYBOARD_IDX = { 
-            "w": [1, 0], "s": [0, 1],
-            "q": [0, 0]
-        }
-        flag = 0
-        while flag != 1:
-            try:
-                indexes = input('Please input the actions (split with ` `):\n(e.g. `W` for forward, `W A` for forward and left)\n').strip().lower().split(' ')
-                idx_mouse = []
-                idx_keyboard = []
-                for i in indexes:
-                    if i in CAMERA_VALUE_MAP.keys():
-                        idx_mouse += [i]
-                    elif i in KEYBOARD_IDX.keys():
-                        idx_keyboard += [i]
-                if len(idx_mouse) == 0:
-                    idx_mouse += ['q']
-                if len(idx_keyboard) == 0:
-                    idx_keyboard += ['q']
-                assert idx_mouse in [['a'], ['d'], ['q']] and idx_keyboard in [['q'], ['w'], ['s']]
-                flag = 1
-            except:
-                pass
-        mouse_cond = torch.tensor(CAMERA_VALUE_MAP[idx_mouse[0]]).cuda()
-        keyboard_cond = torch.tensor(KEYBOARD_IDX[idx_keyboard[0]]).cuda()
     elif mode == 'templerun':
         print()
         print('-'*30)

@@ -92,7 +92,7 @@ class InteractiveGameInference:
         return image
     
     def generate_videos(self, mode='universal'):
-        assert mode in ['universal', 'gta_drive', 'templerun']
+        assert mode in ['universal', 'templerun']
         
         while True:
             try:
@@ -125,10 +125,6 @@ class InteractiveGameInference:
         
         if mode == 'universal':
             cond_data = Bench_actions_universal(num_frames)
-            mouse_condition = cond_data['mouse_condition'].unsqueeze(0).to(device=self.device, dtype=self.weight_dtype)
-            conditional_dict['mouse_cond'] = mouse_condition
-        elif mode == 'gta_drive':
-            cond_data = Bench_actions_gta_drive(num_frames)
             mouse_condition = cond_data['mouse_condition'].unsqueeze(0).to(device=self.device, dtype=self.weight_dtype)
             conditional_dict['mouse_cond'] = mouse_condition
         else:
