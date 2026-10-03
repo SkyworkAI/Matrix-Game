@@ -44,6 +44,10 @@ pip install -r requirements.txt
 pip install "huggingface_hub[cli]"
 huggingface-cli download Matrix-Game-3.0 --local-dir Matrix-Game-3.0
 ```
+If you are downloading the model on a server, you can also use:
+```bash
+hf download Skywork/Matrix-Game-3.0 --local-dir Matrix-Game-3.0
+```
 ### Inference
 Before running inference, you need to prepare:
 - Input image
