@@ -14,9 +14,17 @@ except ModuleNotFoundError:
     FLASH_ATTN_3_AVAILABLE = False
 
 try:
+    import importlib as _il
+    _aiter_mha = _il.import_module('aiter.ops.mha')
+    _aiter_flash_attn_varlen = _aiter_mha.flash_attn_varlen_func
+    AITER_AVAILABLE = True
+except Exception:
+    AITER_AVAILABLE = False
+
+try:
     import flash_attn
     FLASH_ATTN_2_AVAILABLE = True
-except ModuleNotFoundError:
+except Exception:
     FLASH_ATTN_2_AVAILABLE = False
 
 import warnings
@@ -110,8 +118,19 @@ def flash_attention(
             softmax_scale=softmax_scale,
             causal=causal,
             deterministic=deterministic).unflatten(0, (b, lq))
-    else:
-        assert FLASH_ATTN_2_AVAILABLE or FLASH_ATTN_3_AVAILABLE
+    elif AITER_AVAILABLE:
+        cu_seqlens_q = torch.cat([q_lens.new_zeros([1]), q_lens]).cumsum(
+            0, dtype=torch.int32).to(q.device, non_blocking=True)
+        cu_seqlens_k = torch.cat([k_lens.new_zeros([1]), k_lens]).cumsum(
+            0, dtype=torch.int32).to(q.device, non_blocking=True)
+        x = _aiter_flash_attn_varlen(
+            q=q, k=k, v=v,
+            cu_seqlens_q=cu_seqlens_q,
+            cu_seqlens_k=cu_seqlens_k,
+            max_seqlen_q=lq, max_seqlen_k=lk,
+            softmax_scale=softmax_scale, causal=causal,
+        ).unflatten(0, (b, lq))
+    elif FLASH_ATTN_2_AVAILABLE:
         x = flash_attn.flash_attn_varlen_func(
             q=q,
             k=k,
@@ -127,6 +146,11 @@ def flash_attention(
             causal=causal,
             window_size=window_size,
             deterministic=deterministic).unflatten(0, (b, lq))
+    else:
+        raise RuntimeError(
+            'No flash attention backend available. Install one of: '
+            'flash-attn (NVIDIA), or aiter (AMD ROCm 7.x: pip install aiter)'
+        )
 
     return x.type(out_dtype)
 
@@ -149,7 +173,7 @@ def attention(
     version=None,
 ):
     global _WARNED_FA_DISABLED
-    if version != '0' and (FLASH_ATTN_2_AVAILABLE or FLASH_ATTN_3_AVAILABLE):
+    if version != '0' and (FLASH_ATTN_2_AVAILABLE or FLASH_ATTN_3_AVAILABLE or AITER_AVAILABLE):
         return flash_attention(
             q=q,
             k=k,
