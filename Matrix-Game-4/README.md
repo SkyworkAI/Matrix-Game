@@ -11,13 +11,14 @@ layers outside the model. This release includes **Medieval Castle**, **Ancient
 Egypt**, and **City Racing**, with offline rendering and a single-user WebRTC
 browser demo. Racing includes time trials and pursuit, plus fixed/dynamic prompts.
 
-> The project website describes the broader project; this package does not
-> implement a VLM agent or camera-retrieved world-memory bank.
+**2026-10-14:** We plan to release optimized inference code for NVIDIA GeForce
+RTX 50-series GPUs later this week.
 
 ## Requirements
 
-- Model inference: Linux, NVIDIA GPU, Python 3.12. The source deployment used
-  A100 80 GB and PyTorch 2.12.0/CUDA 13.2. Consumer-GPU fit is not verified here.
+- Model inference: Linux, NVIDIA GPU, Python 3.12. This release is tested on
+  A100 80 GB with PyTorch 2.12.0/CUDA 13.2. RTX 50-series optimizations are planned
+  as noted above.
 - Browser demo: the same Linux host also builds/runs the game and GStreamer.
   Safari and Chrome are the desktop client targets. No GPU is needed on the client.
 - Standalone game/recording: macOS or Linux, CMake, C++20, SDL2 and FFmpeg libraries.
@@ -50,8 +51,8 @@ Keep downloads outside Git, using this layout by default:
 
 ```text
 resources/
-  base/                         # Shared umT5, tokenizer, Wan VAE, TAEHV
-  models/castle/                 # model.safetensors, sink.png
+  base/                        # Shared umT5, tokenizer, Wan VAE, TAEHV
+  models/castle/                # model.safetensors, sink.png
   models/ancient-egypt/          # model.safetensors, sink.png
   models/racing/                # model.safetensors, sink.png
   game/assets/                  # Shooter assets and per-scene maps
@@ -61,53 +62,89 @@ resources/
 Model weights, the fast codec, sink images and game assets are hosted on
 [Hugging Face](https://huggingface.co/Skywork/Matrix-Game-4.0). Shared T5/tokenizer
 and Wan VAE files are downloaded automatically from a pinned official base-model
-revision rather than duplicated in this repository.
-Download instructions and the pinned revision are in
-[releases/README.md](releases/README.md). The resource downloader verifies file
-lengths and SHA256, requires an immutable Hub revision and downloads only the
-selected scene plus shared assets. An existing resource directory can be checked:
+revision rather than duplicated in this repository. Download one scene and its
+shared dependencies:
 
 ```bash
-matrix-game verify --manifest releases/game-assets.json --resources resources
+matrix-game download --manifest releases/game-assets.json \
+  --repo-id Skywork/Matrix-Game-4.0 --repo-type model \
+  --revision 4419accdb7bb7881234c5914de8cd915266e0325 \
+  --scene ancient-egypt --resources resources
+
+matrix-game download --manifest releases/models.json \
+  --repo-id Skywork/Matrix-Game-4.0 --repo-type model \
+  --revision 4419accdb7bb7881234c5914de8cd915266e0325 \
+  --scene ancient-egypt --resources resources
 ```
+
+Replace `ancient-egypt` with `castle`, `racing` or `all` as needed. The downloader
+verifies file sizes and SHA256 against the pinned manifests. To recheck an
+installed scene:
+
+```bash
+matrix-game verify --manifest releases/game-assets.json \
+  --scene ancient-egypt --resources resources
+matrix-game verify --manifest releases/models.json \
+  --scene ancient-egypt --resources resources
+```
+
+See [resource distributions](releases/README.md) for file sizes and upstream
+dependencies.
 
 ## Offline Rendering
 
+Start with the fast path: TAEHV encoding/decoding, one denoising step, a fixed
+scene prompt and the accelerated DiT runtime. Select it explicitly with
+`--preset realtime`, which supports both offline and online rendering:
+
 ```bash
 matrix-game render --scene ancient-egypt --input lowpoly.mp4 \
-  --resources resources --preset quality --output outputs/egypt
+  --resources resources --preset realtime --prompt-mode fixed \
+  --output outputs/egypt
 ```
 
-The `quality` preset uses Wan VAE encoding/decoding, two denoising steps
-(`1000,500`, including startup), and native DiT. Output is `rendered.mp4` plus a
-configuration report. FPS and frame count are preserved; only the final incomplete
-four-frame block is padded internally, then trimmed from the output.
+Output is `rendered.mp4` plus a configuration report. FPS and frame count are
+preserved; only the final incomplete four-frame block is padded internally, then
+trimmed from the output.
 
-To render a local game recording with the scene read from its manifest:
+To render a local shooter recording with the scene read from its manifest:
 
 ```bash
 matrix-game render --take /path/to/take-1 --resources resources \
-  --preset quality --output outputs/take-1
+  --preset realtime --prompt-mode fixed --output outputs/take-1
 python game/tools/finalize-demo.py /path/to/take-1 \
   --rendered outputs/take-1/rendered.mp4
 ```
 
+For an alternative configuration, replace `--preset realtime` with
+`--preset quality`: Wan VAE encoding/decoding, two denoising steps (`1000,500`,
+including startup) and native DiT. This is slower and remains the CLI default
+when `--preset` is omitted.
+
 See [offline recording](docs/offline.md) for clean RGB, HUD, audio and input traces.
 
 ## Play and Record Locally
+
+Run the games without the neural renderer to test gameplay, record model inputs
+or customize the source with a coding agent. Edit terrain, object placement, NPC
+behavior and game rules, then test those changes locally without loading model
+weights or installing Python model dependencies.
 
 ```bash
 bash scripts/build_game.sh
 bash scripts/play.sh --scene ancient-egypt
 ```
 
-`play.sh` starts the existing **48 FPS / 2x simulation-time** demo mode without
-neural rendering or simulated network delay. F9 toggles recording; Escape opens
-the menu. Use `--scene castle` for the other map. The game can run without Python
-model dependencies. `MATRIX_GAME_DATA_DIR` overrides `resources/game`.
+For the two shooter scenes, `play.sh` starts the **48 FPS / 2x simulation-time**
+local demo mode without neural rendering or simulated network delay. F9 toggles
+recording; Escape opens the menu. Use `--scene castle` for the other map.
+`MATRIX_GAME_DATA_DIR` overrides `resources/game`.
 
 For racing, use `bash scripts/build_racing.sh`, then follow
 [City Racing](docs/racing.md) for local play/recording and the browser modes.
+Racing's 48 FPS recording mode uses normal 1x simulation time. The browser demo
+also does not enable the shooters' local 2x mode: each captured frame advances
+simulation by `1 / --fps` seconds.
 
 ## Browser Demo
 
@@ -127,13 +164,41 @@ Open **http://127.0.0.1:8025/** on the server, or forward the required ports thr
 SSH as described in [online deployment](docs/online.md). Add `--reference-only`
 to test controls, HUD, audio and transport without loading a model.
 
-The `realtime` preset uses TAEHV encoding/decoding, one denoising step,
-ring/fused DiT, CUDA graph replay and early RGB publication. Shooter startup
-also uses one step; racing displays its supplied sink as frame zero without
-denoising, then uses one step per block. `--fps 40`
-is a **target capture cadence, not a throughput or latency guarantee**. The first
-chunk contains one RGB frame; subsequent chunks contain four. Ring/fused math
-can differ numerically from native arithmetic; it is not bitwise-equivalent.
+The `realtime` preset combines TAEHV, one-step denoising, ring/fused DiT and CUDA
+graph replay. `--fps 40` is a **target capture cadence, not a throughput or latency
+guarantee**. Video encoding, network transport, buffering and browser decoding
+add latency beyond model inference. Contributions that reduce streaming latency
+are welcome.
+
+### Scene Behavior
+
+Castle and Ancient Egypt use fixed scene prompts. Racing supports both fixed
+prompts and dynamic, chunk-aligned descriptions supplied by the game engine.
+Dynamic mode updates text conditioning as the scene changes; unchanged captions
+are cached, but frequent T5 updates reduce throughput.
+
+The scene profiles also select the reference-image behavior automatically:
+shooters use the reference as visual context and generate the first visible
+frame; racing displays its supplied reference as frame zero, then generates the
+following frames. See [City Racing](docs/racing.md) and
+[architecture](docs/architecture.md) for prompt and temporal-position details.
+
+## A100 Performance
+
+Reference measurements on **one NVIDIA A100-SXM4-80GB**, at **864 x 480**,
+using one denoising step, TAEHV encoding/decoding, SDPA, ring/fused DiT and CUDA
+graphs, excluding startup and warmup:
+
+| Scene | Prompt mode | Measured FPS | Measurement |
+| --- | --- | --- | --- |
+| Castle / Ancient Egypt | Fixed | ~38-39 | Model processing in an online session |
+| Racing | Fixed | ~38.5 | Server-side online pipeline throughput |
+| Racing | Dynamic | ~28.9 | Server-side online pipeline throughput |
+
+Online pipeline throughput includes waiting for game frames; model-processing
+throughput does not. Neither is browser presentation FPS or action-to-photon
+latency. Racing figures come from an earlier checkpoint with the same model
+architecture and inference configuration and serve as a performance reference.
 
 ## Layout
 
