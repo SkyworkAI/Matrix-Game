@@ -5,6 +5,7 @@
 <p align="center">
   <a href="https://matrix-game-v4-0.github.io/page/">Project Website</a> |
   <a href="https://huggingface.co/Skywork/Matrix-Game-4.0">Models &amp; Game Assets</a> |
+  <a href="Matrix-Game-4">Code &amp; Quick Start</a> |
   <a href="#previous-versions">Previous Versions</a>
 </p>
 
@@ -17,7 +18,7 @@ https://github.com/user-attachments/assets/53a0cfb7-4193-42c8-9819-7c023389a3d7
 
 ## News
 
-- **October 14, 2026:** Introducing **Matrix-Game 4.0**. Model weights and game assets for Medieval Castle, Ancient Egypt and City Racing are available on [Hugging Face](https://huggingface.co/Skywork/Matrix-Game-4.0). Inference and game source code will follow in this repository.
+- **October 15, 2026:** Released **Matrix-Game 4.0**. [Inference, browser demo and game source code](Matrix-Game-4) are now available, with model weights and game assets for Medieval Castle, Ancient Egypt and City Racing on [Hugging Face](https://huggingface.co/Skywork/Matrix-Game-4.0).
 - **March 27, 2026:** Released [Matrix-Game 3.0](Matrix-Game-3), a real-time streaming interactive world model with long-horizon memory.
 - **August 12, 2025:** Released [Matrix-Game 2.0](Matrix-Game-2), an interactive world foundation model for real-time long video generation.
 - **May 12, 2025:** Released [Matrix-Game 1.0](Matrix-Game-1), the first open-source release of the Matrix-Game series.
@@ -27,6 +28,10 @@ https://github.com/user-attachments/assets/53a0cfb7-4193-42c8-9819-7c023389a3d7
 - **Engine-grounded gameplay:** game logic and physical state remain in an executable engine, separate from neural rendering.
 - **Streaming generation:** a causal, few-step video model renders successive chunks conditioned on low-poly RGB and text prompts.
 - **Three scene models:** Medieval Castle and Ancient Egypt for third-person shooting, and City Racing for driving.
+
+Start with the [v4 README](Matrix-Game-4/README.md) for installation, resource
+downloads, offline rendering and the online browser demo. The release includes
+the three native games and shared single-GPU inference code.
 
 | Scene | Model Weights |
 | --- | --- |
@@ -50,7 +55,7 @@ Earlier implementations remain available in their original directories:
 ## License
 
 Matrix-Game 4.0 is released under **Apache-2.0**; see the
-[v4 license](https://huggingface.co/Skywork/Matrix-Game-4.0/blob/main/LICENSE).
+[v4 license](Matrix-Game-4/LICENSE).
 Third-party components and assets retain their respective licenses.
 Earlier versions retain their existing license terms; see the repository's
 [MIT license](LICENSE) and the notices within each version directory.

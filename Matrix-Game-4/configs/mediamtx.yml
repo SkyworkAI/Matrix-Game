@@ -1,0 +1,32 @@
+logLevel: info
+logDestinations: [stdout]
+api: false
+metrics: false
+pprof: false
+playback: false
+rtsp: true
+rtspAddress: 127.0.0.1:8555
+rtspTransports: [tcp]
+rtmp: false
+hls: false
+srt: false
+moq: false
+webrtc: true
+webrtcAddress: 127.0.0.1:8890
+webrtcAllowOrigins: ["http://127.0.0.1:8025", "http://127.0.0.1:8890"]
+webrtcLocalUDPAddress: ""
+webrtcLocalTCPAddress: 127.0.0.1:8190
+webrtcIPsFromInterfaces: false
+webrtcAdditionalHosts: [127.0.0.1]
+webrtcICEServers2: []
+authInternalUsers:
+  - user: any
+    ips: [127.0.0.1]
+    permissions:
+      - action: publish
+        path: "~^native-[a-f0-9]{32}$"
+      - action: read
+        path: "~^native-[a-f0-9]{32}$"
+paths:
+  "~^native-[a-f0-9]{32}$":
+    source: publisher

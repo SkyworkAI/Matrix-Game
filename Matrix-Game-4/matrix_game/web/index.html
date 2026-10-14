@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>__SCENE_NAME__ | Live Render</title><link rel="icon" href="data:,">
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#111;color:#fff;font:14px system-ui,sans-serif;letter-spacing:0}
+body{display:flex;flex-direction:column}button,select{font:inherit;color:inherit;background:#292929;border:1px solid #666;border-radius:4px;padding:7px 12px}button:disabled{opacity:.5}button{cursor:pointer}
+header{flex:none;min-height:54px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:8px 16px;background:#1c1c1c}h1{font-size:17px;margin:0 auto 0 0}
+.monitor-option{display:flex;align-items:center;gap:6px;white-space:nowrap;cursor:pointer}.monitor-option input{accent-color:#5ed79f;width:16px;height:16px;margin:0}
+#stage{position:relative;width:100%;flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+#surface{position:relative;aspect-ratio:864/480;flex:none;background:#080808}#stage.dual{padding-top:24px}#surface.dual:after{content:'';position:absolute;left:50%;top:0;bottom:0;border-left:1px solid #777;pointer-events:none}
+video{display:block;width:100%;height:100%;object-fit:contain;background:#080808}
+#hud{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+[hidden]{display:none!important}#notice{position:absolute;top:8px;left:12px;right:12px;text-align:center;text-shadow:0 1px 4px #000;pointer-events:none}
+#panel-labels{position:absolute;top:-24px;left:0;right:0;height:24px;pointer-events:none;display:grid;grid-template-columns:1fr 1fr}#panel-labels span{justify-self:center;align-self:start;padding:4px 10px;font-size:12px}
+#stats{font-size:12px;color:#ccc;white-space:nowrap}#play{background:#275f49}#stop{background:#51342e}
+#stage:fullscreen{background:#111;height:100%;width:100%}@media(max-width:680px){header{gap:8px;padding:8px}h1{flex:1}#stats{margin-left:auto}.monitor-option{font-size:13px}#panel-labels span{font-size:10px;margin-top:4px;padding:2px 5px}}
+</style>
+<script src="/mediamtx-reader.js"></script>
+<script src="/hud.js"></script>
+<script src="/audio.js"></script>
+<script src="/racing.js"></script>
+</head>
+<body>
+<header><h1>__SCENE_NAME__</h1><span id="stats">Disconnected</span><select id="mode" aria-label="Video source"><option value="model">Model</option><option value="reference">Reference</option></select><label class="monitor-option"><input id="monitor" type="checkbox">Reference + Render</label><label class="monitor-option"><input id="sound" type="checkbox" checked>Sound</label><button id="play">Play</button><button id="stop" disabled>Stop</button><button id="fullscreen" title="Fullscreen" aria-label="Fullscreen">&#x26F6;</button></header>
+<section id="racing-options" hidden style="padding:8px 16px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+<select id="race-mode" aria-label="Game mode"><option value="time_trial">Time trial</option><option value="pursuit">Pursuit</option><option value="drive">Free drive</option></select>
+<select id="route" aria-label="Route"><option value="downtown">Downtown</option><option value="avenue">Avenue</option><option value="skyway">Skyway</option></select>
+<label>Front drive <input id="front-drive" type="range" min="0" max="1" step="0.05" value="0.7"><output>0.70</output></label>
+<label>Front grip <input id="front-grip" type="range" min="0.9" max="1.2" step="0.05" value="1.15"><output>1.15</output></label>
+<label>Rear grip <input id="rear-grip" type="range" min="0.9" max="1.2" step="0.05" value="0.9"><output>0.90</output></label>
+</section>
+<main id="stage"><div id="surface"><video id="video" muted autoplay playsinline></video><canvas id="hud" hidden aria-label="Game HUD"></canvas><div id="panel-labels" hidden><span>Reference</span><span>Render</span></div></div><div id="notice">Ready</div></main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id),video=$('video'),surface=$('surface');
+const racing='__GAME_KIND__'==='racing',hudView=racing?RacingHud:CastleHud;
+$('racing-options').hidden=!racing;
+for(const input of $('racing-options').querySelectorAll('input'))input.oninput=()=>{input.nextElementSibling.value=Number(input.value).toFixed(2);};
+let session=null,reader=null,ws=null,pc=null,starting=false,stopping=false,seq=0,lastRtp=null,lastState=null,lastVideoAt=0;
+let dx=0,dy=0,fire=false,ads=false,weapon=-1,actions=[],keys=new Set(),metadata=new Map(),pendingActions=[],inputClock=new Map();
+let lookReset=false,lastInputSend=0;
+const inputPeriodMs=1000/120;
+let presented=[],clientStats={presented:0,matched:0,gameFrame:-1,rtp:null,error:null,actionToPhotoMs:null};
+let displayFps=0;
+let expectedDisplayTime=0;
+const sound=racing?new RacingAudio():new CastleAudio();
+async function unlockSound(){try{await sound.unlock();}catch(e){sound.error=e.message;$('sound').title=e.message;}}
+$('sound').onchange=()=>{sound.setEnabled($('sound').checked);if(sound.enabled)void unlockSound();};
+window.castleDebug=()=>({...clientStats,audio:sound.status(),game:lastState,hud:lastState?hudView.labels(lastState):null,monitor:!!session?.monitor,locked:document.pointerLockElement===surface,session:session?.id});
+function isDual(){return session?session.monitor:$('mode').value==='model'&&$('monitor').checked;}
+function drawHud(){
+ if(!lastState||$('hud').hidden)return;
+ const canvas=$('hud'),ctx=canvas.getContext('2d'),count=isDual()?2:1;
+ const panelWidth=Math.max(360,surface.clientWidth/count),height=panelWidth/1.8;
+ ctx.setTransform(canvas.width/(panelWidth*count),0,0,canvas.height/height,0,0);ctx.clearRect(0,0,panelWidth*count,height);
+ for(let i=0;i<count;i++){ctx.save();ctx.translate(i*panelWidth,0);hudView.draw(ctx,lastState,panelWidth,height,displayFps);ctx.restore();}
+ $('hud').setAttribute('aria-label',Object.values(hudView.labels(lastState)).join(', '));
+}
+function layout(){
+ const dual=isDual(),aspect=dual?3.6:1.8,stage=$('stage');stage.classList.toggle('dual',dual);surface.classList.toggle('dual',dual);
+ surface.style.aspectRatio=String(aspect);surface.style.width=`${Math.min(stage.clientWidth,Math.max(0,stage.clientHeight-(dual?24:0))*aspect)}px`;
+ const scale=Math.min(devicePixelRatio||1,2);$('hud').width=Math.round(surface.clientWidth*scale);$('hud').height=Math.round(surface.clientHeight*scale);
+ $('panel-labels').hidden=!isDual();drawHud();
+}
+function options(){ $('monitor').disabled=starting||!!session||$('mode').value!=='model';for(const input of $('racing-options').querySelectorAll('input,select'))input.disabled=starting||!!session;if(racing&&$('race-mode').value==='pursuit'){$('route').value='avenue';$('route').disabled=true;}layout(); }
+$('race-mode').onchange=options;
+$('monitor').onchange=layout;$('mode').onchange=options;new ResizeObserver(layout).observe($('stage'));
+const actionKeys=racing?{KeyR:'recover',KeyP:'pause',Enter:'resume'}:{Space:'jump',ShiftLeft:'dash',KeyR:'reload',KeyT:'trap',KeyH:'cover'};
+const handled=new Set(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Digit1','Digit2','Digit3','KeyF','KeyC','Space',...Object.keys(actionKeys)]);
+function note(text){$('notice').textContent=text;}
+function send(force=false){
+ if(!ws||ws.readyState!==WebSocket.OPEN||(!force&&ws.bufferedAmount>4096))return;
+ const locked=document.pointerLockElement===surface;
+ let msg={sequence:++seq,forward:locked?+(keys.has('KeyW')||keys.has('ArrowUp'))-+(keys.has('ArrowDown')||keys.has('KeyS')):0,right:locked?+(keys.has('KeyD')||keys.has('ArrowRight'))-+(keys.has('KeyA')||keys.has('ArrowLeft')):0,look_x:locked?dx:0,look_y:locked?dy:0,look_reset:lookReset,fire:locked&&fire,ads:locked&&ads,shield:locked&&keys.has('KeyF'),crouch:locked&&keys.has('KeyC'),weapon:locked?weapon:-1,actions:locked?actions:[]};
+ if(racing)msg={sequence:seq,drive:[msg.forward,msg.right,0,locked&&keys.has('Space')?1:0],...(locked&&actions.length?{action:actions[0]}:{})};
+ ws.send(JSON.stringify(msg));inputClock.set(seq,performance.now());while(inputClock.size>512)inputClock.delete(inputClock.keys().next().value);
+ if(pendingActions.length){clientStats.lastAction=pendingActions.at(-1);clientStats.lastActionSequence=seq;pendingActions=[];}
+ dx=dy=0;actions=[];weapon=-1;lookReset=false;lastInputSend=performance.now();
+}
+function resetInput(){keys.clear();dx=dy=0;fire=ads=false;weapon=-1;actions=[];pendingActions=[];lookReset=true;send(true);}
+function markInput(kind){pendingActions.push({kind,time:performance.now()});}
+document.addEventListener('keydown',e=>{
+ if(!session||!handled.has(e.code))return;e.preventDefault();
+ if(document.pointerLockElement!==surface)return;
+ if(!keys.has(e.code)){keys.add(e.code);if(actionKeys[e.code])actions.push(actionKeys[e.code]);if(/^Digit[123]$/.test(e.code))weapon=Number(e.code.slice(-1))-1;markInput(e.code);send();}
+});
+document.addEventListener('keyup',e=>{if(session&&handled.has(e.code)){e.preventDefault();keys.delete(e.code);markInput(e.code+':up');send();}});
+document.addEventListener('mousemove',e=>{if(document.pointerLockElement===surface){dx=Math.max(-2000,Math.min(2000,dx+e.movementX));dy=Math.max(-2000,Math.min(2000,dy+e.movementY));}});
+document.addEventListener('mousedown',e=>{if(document.pointerLockElement!==surface)return;e.preventDefault();if(e.button===0)fire=true;if(e.button===2)ads=true;markInput('mouse'+e.button);send();});
+document.addEventListener('mouseup',e=>{if(e.button===0)fire=false;if(e.button===2)ads=false;send();});
+surface.addEventListener('contextmenu',e=>e.preventDefault());
+surface.addEventListener('click',async()=>{if(!session)return;void unlockSound();try{await video.play();await surface.requestPointerLock();}catch(e){note(e.message);}});
+document.addEventListener('pointerlockchange',()=>{resetInput();note(document.pointerLockElement===surface?'':'Click to resume');});
+window.addEventListener('blur',resetInput);document.addEventListener('visibilitychange',()=>{if(document.hidden){resetInput();sound.silence();}});
+setInterval(()=>{if(dx||dy||lookReset||performance.now()-lastInputSend>=250)send();},inputPeriodMs);
+function match(){
+ const record=metadata.get(lastRtp);if(!record||record.game.frame<clientStats.gameFrame)return;
+ const g=record.game;if(racing&&g.pursuit&&clientStats.server?.capture_profile?.pursuit_map)g.map.roads=clientStats.server.capture_profile.pursuit_map.roads;lastState=g;if(g.frame>clientStats.gameFrame)clientStats.matched++;clientStats.gameFrame=g.frame;clientStats.rtp=lastRtp;
+ sound.present(metadata.values(),g,expectedDisplayTime,!document.hidden);
+ $('hud').hidden=false;drawHud();
+ const a=clientStats.lastAction;if(a&&g.input_sequence>=clientStats.lastActionSequence&&!a.presented){a.presented=true;clientStats.actionToPhotoMs=Math.round(performance.now()-a.time);}
+ for(const [rtp,r] of metadata)if(r.game.frame<g.frame)metadata.delete(rtp);
+}
+function frame(now,meta){
+ lastVideoAt=now;expectedDisplayTime=meta.expectedDisplayTime??now;lastRtp=meta.rtpTimestamp??null;clientStats.presented++;presented.push(now);presented=presented.filter(t=>t>now-3000);
+ if(lastRtp!==null)match();else{$('hud').hidden=true;clientStats.error='Browser does not expose RTP timestamps';}
+ if(session&&document.pointerLockElement===surface)note('');
+ video.requestVideoFrameCallback(frame);
+}
+if(video.requestVideoFrameCallback)video.requestVideoFrameCallback(frame);else{$('play').disabled=true;note('This browser does not support video frame callbacks');}
+async function stop(){
+ if(stopping)return;stopping=true;resetInput();const old=session;session=null;
+ sound.reset();
+ document.exitPointerLock?.();reader?.close();reader=null;pc=null;ws?.close();ws=null;video.srcObject=null;
+ metadata.clear();$('hud').hidden=true;lastRtp=null;lastState=null;
+ if(old)try{const response=await fetch(`/api/${old.id}/stop`,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});if(!response.ok&&response.status!==410)throw Error(await response.text());}catch(e){clientStats.error=e.message;}
+ $('play').disabled=false;$('mode').disabled=false;$('stop').disabled=true;stopping=false;options();note('Stopped');
+}
+$('play').onclick=async()=>{
+ if(starting||session)return;starting=true;$('play').disabled=true;$('mode').disabled=true;options();note('Starting');
+ sound.reset();const audioReady=unlockSound();
+ try{
+  await audioReady;
+  const game_options=racing?{mode:$('race-mode').value,route:$('route').value,front_drive:Number($('front-drive').value),front_grip:Number($('front-grip').value),rear_grip:Number($('rear-grip').value)}:undefined;
+  const response=await fetch('/api/start',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:$('mode').value,monitor:isDual(),game_options})});
+  if(!response.ok)throw Error(await response.text());session=await response.json();seq=0;metadata.clear();presented=[];lastState=null;lastVideoAt=0;clientStats={presented:0,matched:0,gameFrame:-1,error:null};$('stop').disabled=false;layout();
+  const id=session.id,current=()=>session?.id===id;
+  ws=new WebSocket(`${location.protocol==='https:'?'wss':'ws'}://${location.host}/api/${id}/ws`);
+  ws.onopen=()=>{if(current())send(true);};
+  ws.onmessage=e=>{if(!current())return;const msg=JSON.parse(e.data);if(msg.type==='webrtc_frames'&&msg.generation_id===id){for(const r of msg.frames)metadata.set(r.rtp_timestamp,r);while(metadata.size>160)metadata.delete(metadata.keys().next().value);if(performance.now()-lastVideoAt<500)match();}else if(msg.type==='stats'){clientStats.server=msg.report;}else if(msg.type==='ended'){clientStats.ended=msg.reason;clientStats.error=null;void stop().then(()=>note(msg.reason==='defeated'?'Game over':'Finished'));}};
+  ws.onclose=()=>{if(current()&&!stopping){note('Connection closed');clientStats.error='Control channel closed';void stop();}};
+  reader=new MediaMTXWebRTCReader({url:session.whep,onTrack:e=>{if(!current())return;clientStats.error=null;pc=e.target;for(const receiver of pc.getReceivers()){if('playoutDelayHint' in receiver)receiver.playoutDelayHint=0;if('jitterBufferTarget' in receiver)receiver.jitterBufferTarget=0;}video.srcObject=e.streams[0]??new MediaStream([e.track]);video.play().catch(()=>{if(current())note('Click to play');});},onError:e=>{if(current()){clientStats.error=String(e);note(String(e));}}});
+  note('Click the game to capture mouse');
+ }catch(e){clientStats.error=e.message;await stop();note(e.message);}finally{starting=false;options();}
+};
+$('stop').onclick=stop;$('fullscreen').onclick=()=>document.fullscreenElement?document.exitFullscreen?.():$('stage').requestFullscreen?.();
+setInterval(()=>{
+ const now=performance.now();presented=presented.filter(t=>t>now-3000);
+ const fps=presented.length>1?(presented.length-1)*1000/(presented.at(-1)-presented[0]):0;
+ displayFps=fps;drawHud();
+ $('stats').textContent=session?`${fps.toFixed(1)} FPS | ${$('mode').value==='model'?'render':'source'} ${(clientStats.server?.online_fps??clientStats.server?.model_fps??0).toFixed(1)} FPS`:'Disconnected';
+ if(session&&lastVideoAt&&now-lastVideoAt>1500){$('hud').hidden=true;note('Waiting for video');}
+},500);
+window.addEventListener('pagehide',()=>{resetInput();if(session)navigator.sendBeacon(`/api/${session.id}/stop`,new Blob(['{}'],{type:'application/json'}));});
+</script>
+</body>
+</html>

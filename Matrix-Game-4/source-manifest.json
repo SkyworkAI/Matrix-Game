@@ -1,0 +1,3902 @@
+[
+  {
+    "path": ".gitignore",
+    "size": 467,
+    "sha256": "ee9c13ca605baa69c238e6419d7a7bb3d588113f795cfce3173cc3f6c567c2f2"
+  },
+  {
+    "path": "LICENSE",
+    "size": 11357,
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  },
+  {
+    "path": "NOTICE",
+    "size": 378,
+    "sha256": "c501ad403bcf41cf0c3c9286c3f7c787d7e9714d754ed1dc49141333154f543c"
+  },
+  {
+    "path": "README.md",
+    "size": 7207,
+    "sha256": "daaabefab41402affb5390b804f6b19c0ce5c513549575fbf92c856b1370500b"
+  },
+  {
+    "path": "SECURITY.md",
+    "size": 1523,
+    "sha256": "b7336ea5f7815b33916a5bc51883962ae4d68f1af6a6a496f10475cc11b4fd60"
+  },
+  {
+    "path": "THIRD_PARTY_NOTICES.md",
+    "size": 2614,
+    "sha256": "d25466469581d8ab4342203796d88d2bfcfbddc284dec7a8bfc6ca56afe1a8e1"
+  },
+  {
+    "path": "configs/mediamtx.yml",
+    "size": 719,
+    "sha256": "7f02b563a5c8eea8e905cb2b788c3a852d986e6ec6feb7d20a097c1ffa0e0c7b"
+  },
+  {
+    "path": "docs/architecture.md",
+    "size": 4258,
+    "sha256": "c48425f7a6a7e345a7e04c133771d146b85177b4e4dce1b71c312a3397d7487a"
+  },
+  {
+    "path": "docs/installation.md",
+    "size": 3139,
+    "sha256": "0294840b0315e467fd4d4a20cc1ef2dce9a0b7f670331f236828c1f84a94806c"
+  },
+  {
+    "path": "docs/offline.md",
+    "size": 2343,
+    "sha256": "1a78d9234af77dae9c137b791e27c72f0cf3c31e1a80da4fbf53ae69a9183a3b"
+  },
+  {
+    "path": "docs/online.md",
+    "size": 2808,
+    "sha256": "7f2a9d3d4f892c1ad476648a3985b3b72b405b6c819c81a0114ad1523d42d495"
+  },
+  {
+    "path": "docs/racing.md",
+    "size": 4104,
+    "sha256": "8d67f4bda062987b44a9dfacce02ed55cedaab844c161112d8a38f1d12856d9f"
+  },
+  {
+    "path": "docs/testing.md",
+    "size": 5115,
+    "sha256": "9e696a8d6ea8750ce30d9cab7872858a4536570f17e210b09db4abc6a6cda4f6"
+  },
+  {
+    "path": "game/CMakeLists.txt",
+    "size": 6118,
+    "sha256": "80708770e4927d15ba73be65254ed9470a31cfdf1dbf0d4a37a96a307086635a"
+  },
+  {
+    "path": "game/README.md",
+    "size": 4690,
+    "sha256": "f7fe07f6eff9aef7213dc4d68c7d60c9d047301eaf7aae24525fe5c5d69df778"
+  },
+  {
+    "path": "game/racing/CMakeLists.txt",
+    "size": 2949,
+    "sha256": "955c01816e648f86de0462147aacec9bf89d87199427b7f80676e99f2295fd0e"
+  },
+  {
+    "path": "game/racing/src/Audio.h",
+    "size": 2022,
+    "sha256": "cfa1b8c451ca416026196a5e1b2833c7151fd10121019e0f1936fcbf1122bf49"
+  },
+  {
+    "path": "game/racing/src/CameraTelemetry.h",
+    "size": 6632,
+    "sha256": "c426c22ffc95b72ad141121fdf27ced81531952f00e772c7df5d5c1d6060c9c3"
+  },
+  {
+    "path": "game/racing/src/CaptionStream.cpp",
+    "size": 9396,
+    "sha256": "cb39eb428b04351c5a0dbd535a68a3dd1367761c6bfa0e4ad01d0eef7b02d362"
+  },
+  {
+    "path": "game/racing/src/CaptionStream.h",
+    "size": 897,
+    "sha256": "9366c49acba200922e516a705ed1f2b1d7128e7524c319cbe2cdf23ef81ad1c2"
+  },
+  {
+    "path": "game/racing/src/CaptionTypes.h",
+    "size": 544,
+    "sha256": "e48c265c502fbaf397cef76e2d206967412b77ccba21dd47731772f9938c3280"
+  },
+  {
+    "path": "game/racing/src/CollisionEvents.h",
+    "size": 1602,
+    "sha256": "0858ef38f2dd9c2b0c87b381b8d438ff55330600e14d390cabf47e61e0e4b632"
+  },
+  {
+    "path": "game/racing/src/Common.h",
+    "size": 2996,
+    "sha256": "949703c21a87a2d1447bd6f9a9039328488dcad793df339cce3613b97e4f1dd2"
+  },
+  {
+    "path": "game/racing/src/GameRuntime.h",
+    "size": 12408,
+    "sha256": "905f4f0a05c50c69fe645ce76b6d117181af64f26e437aa54544fdf44a6c0776"
+  },
+  {
+    "path": "game/racing/src/Gamepad.h",
+    "size": 1314,
+    "sha256": "b3ea680b3f3e08e57b1e11b8c90c107743b4d289fa13ea9c97070b94ceeb1674"
+  },
+  {
+    "path": "game/racing/src/HandlingMenu.h",
+    "size": 2020,
+    "sha256": "7c4599b5bb1bd92f099f6ef32b658915fb653be660225ef94f6733f8942c4502"
+  },
+  {
+    "path": "game/racing/src/HeadlessGL.cpp",
+    "size": 2979,
+    "sha256": "ad4fca5dc40e5918dcc60b19126cbb77648470853a1f50585cba2ccf8894ac3c"
+  },
+  {
+    "path": "game/racing/src/HeadlessGL.h",
+    "size": 284,
+    "sha256": "c5ca0fa3116e4a42825c59ca4029aa82664521300629ad4f2ce9f3ac2db3084d"
+  },
+  {
+    "path": "game/racing/src/KeyboardSteering.h",
+    "size": 1302,
+    "sha256": "d96be99798496b5d163c3755b286606ce89f9ba8a334b7d8565124df75416412"
+  },
+  {
+    "path": "game/racing/src/LatencyDemo.cpp",
+    "size": 15499,
+    "sha256": "cec0e470be8db3b82e3a99231b76cc4e64957c8368c95fa933a990aabec06324"
+  },
+  {
+    "path": "game/racing/src/LatencyDemo.h",
+    "size": 452,
+    "sha256": "b73609820bdfa794c4523ae2f405f587ea057da1c6331ada4954c4b82db23381"
+  },
+  {
+    "path": "game/racing/src/LatencySimulation.h",
+    "size": 4405,
+    "sha256": "f600bb8875bf4cb9adc180a9b8e35da4be4cadbdbf7c629cd4dd06a3d2ff660b"
+  },
+  {
+    "path": "game/racing/src/LocalRaceControls.h",
+    "size": 2069,
+    "sha256": "150b0726ab9b10a9539995d7fef13d2abe674fb83314b56f03b7db52365cd553"
+  },
+  {
+    "path": "game/racing/src/Main.cpp",
+    "size": 16172,
+    "sha256": "f60006cb5d5d0b70c2a8da71a6ab497a12c4f125b1179c6c5da0a0200876e561"
+  },
+  {
+    "path": "game/racing/src/MainSDL.cpp",
+    "size": 58093,
+    "sha256": "e514e7c93eded919a683a656b637d06beea72799025ed2ecedc278d423f56c17"
+  },
+  {
+    "path": "game/racing/src/Minimap.h",
+    "size": 2549,
+    "sha256": "ae67030dcbde18c966dcb5a58dd5aacdab2eac3039b59511de8f70d317d78df1"
+  },
+  {
+    "path": "game/racing/src/Navigation.h",
+    "size": 462,
+    "sha256": "f9c2b7d6025f9c76299d3fd4f14ac1a37b3e73dc912e74884d51f19bc332c0ae"
+  },
+  {
+    "path": "game/racing/src/OfflineRecorder.cpp",
+    "size": 10697,
+    "sha256": "7421a6e9f45483118f72ed806f4c2c7a9571e8c016fbbb9e9aa2ea9bc1f27563"
+  },
+  {
+    "path": "game/racing/src/OfflineRecorder.h",
+    "size": 869,
+    "sha256": "2b1be50bc9a0caed1b14d5372f8235c4463cc338ccc22b52a71a7d10af1bba0e"
+  },
+  {
+    "path": "game/racing/src/Physics.cpp",
+    "size": 19308,
+    "sha256": "c2e95cdaf6753b69cdebadccdd6601b276049d14e5687062c91a7224b07b68c4"
+  },
+  {
+    "path": "game/racing/src/Physics.h",
+    "size": 2399,
+    "sha256": "233b7dc1da58b4397ab6c2cd75ff3ab529753a50db3ebee40703ae01c334ad29"
+  },
+  {
+    "path": "game/racing/src/Pursuit.cpp",
+    "size": 7198,
+    "sha256": "9378c216690de37db7da45901cc57de7f6824a06c5ad1bfb21a3aa9f3fe92634"
+  },
+  {
+    "path": "game/racing/src/Pursuit.h",
+    "size": 1032,
+    "sha256": "13f36a58d5c3a1b55d144389e2c1510982a842e4f0a4e263d8ffc460d579fdd4"
+  },
+  {
+    "path": "game/racing/src/RaceRules.cpp",
+    "size": 9592,
+    "sha256": "e744482717a0a89fe67b8b34ba2994370babfa1f9d1f1ad95de9198d1051e9d9"
+  },
+  {
+    "path": "game/racing/src/RaceRules.h",
+    "size": 1001,
+    "sha256": "08c648e89eb5b355411c276d442e7af8863450823bfbc900d222549a784d7d6e"
+  },
+  {
+    "path": "game/racing/src/RaceServerMain.cpp",
+    "size": 17565,
+    "sha256": "987a5fe4cd947ea51b86eec345c6ac64dba8dc15805e64d2bd2194ceae68e2c4"
+  },
+  {
+    "path": "game/racing/src/RaceSession.cpp",
+    "size": 11755,
+    "sha256": "f3462b1a84c418f3f2987ca6499e55ae087c7c5460b97a55932d9cd0a5538c5d"
+  },
+  {
+    "path": "game/racing/src/RaceSession.h",
+    "size": 2190,
+    "sha256": "350d3a79d7c9e3e22191b847f771c775e3f0a580b234dd0536acdfac8c7560fe"
+  },
+  {
+    "path": "game/racing/src/ReferenceCaptureProfile.h",
+    "size": 315,
+    "sha256": "64515f9de1f9bac5b5eb5963ef3bfeba46018fc4ed0be577329b284dded03967"
+  },
+  {
+    "path": "game/racing/src/ReferenceDemo.cpp",
+    "size": 21418,
+    "sha256": "690c03b2faaab68a79ced1342801265e06bb4d8fac1799a12d849ee9531f329c"
+  },
+  {
+    "path": "game/racing/src/ReferenceDemo.h",
+    "size": 439,
+    "sha256": "22a3d520b2f484ace617318efcbef5e7a87c9c9ff6bab62d8bfe48d709843e41"
+  },
+  {
+    "path": "game/racing/src/ReferencePresentation.h",
+    "size": 11362,
+    "sha256": "148b5e0748db7aa3955718774aeb99b692825b23130f909356e4878e1acd688a"
+  },
+  {
+    "path": "game/racing/src/ReferenceServerMain.cpp",
+    "size": 16668,
+    "sha256": "97034303783adc45f06a20bd9a913cb2dc8a3baf2754a329eaa34c40f0629d15"
+  },
+  {
+    "path": "game/racing/src/ReferenceStream.h",
+    "size": 7150,
+    "sha256": "2faea47c54a5b641e49d57a79ec1ef868ac283b19db8b4d1f93e928d7b0f405d"
+  },
+  {
+    "path": "game/racing/src/Renderer.cpp",
+    "size": 21555,
+    "sha256": "956537a42ddb5dcdd5d627c47eeb3379e83af4f40eea76d2c3b32a3582e4cf70"
+  },
+  {
+    "path": "game/racing/src/Renderer.h",
+    "size": 5126,
+    "sha256": "e35629567b73b054d0354aaff87a5c19cda4ab2bd3cdb93069b460861d66d911"
+  },
+  {
+    "path": "game/racing/src/RendererGL.cpp",
+    "size": 59375,
+    "sha256": "62daf0616cbde98b8ea8099c2418acdabfc8e46accd219fb2a0b0a289797d8d0"
+  },
+  {
+    "path": "game/racing/src/RendererHud.cpp",
+    "size": 12418,
+    "sha256": "87981b714f039aa78b02f5a19c8dd256322f3dea6c4f0d5e2d7f654e57daf39d"
+  },
+  {
+    "path": "game/racing/src/VehicleAudio.cpp",
+    "size": 9517,
+    "sha256": "ab0c6ac3e9b5cd03cffb5dd092fddd4cff601a414ebbd729895147a41ab9b2a8"
+  },
+  {
+    "path": "game/racing/src/VehicleAudio.h",
+    "size": 2499,
+    "sha256": "6563744ae43b61c7f17a63b93a60d6a3dcae2c62b87fb6dc65b34cee29b37144"
+  },
+  {
+    "path": "game/racing/src/VideoEncoder.cpp",
+    "size": 5015,
+    "sha256": "3121dfe66f51a8a4c9ffee54baf4f6b7de5bdc586a2e98a97e05c2e96cf6034c"
+  },
+  {
+    "path": "game/racing/src/VideoEncoder.h",
+    "size": 504,
+    "sha256": "68113feca391bf937d1ca4e0386b58548307a8e01e411e58f5382a1f92ac1121"
+  },
+  {
+    "path": "game/racing/src/ViewRecorder.cpp",
+    "size": 3471,
+    "sha256": "36beb378683650e6955fbcc5312068c26fb3f4c4af99e543398651d19f7bc2e9"
+  },
+  {
+    "path": "game/racing/src/ViewRecorder.h",
+    "size": 941,
+    "sha256": "1728733ce03d1c3ec292eb4b335b2ca73acee510b71cd885e31ccd638814c3fc"
+  },
+  {
+    "path": "game/racing/src/World.cpp",
+    "size": 46995,
+    "sha256": "6f2a8593ffa1d275264b7993142bdfb2d71c41ac4605c2a2e68794cf86640038"
+  },
+  {
+    "path": "game/racing/src/World.h",
+    "size": 6969,
+    "sha256": "5fb11e88c985d025e2e3c2f7c86484abe4d5dfff62d99fd33eabdc392db64131"
+  },
+  {
+    "path": "game/racing/src/WorldCaptions.cpp",
+    "size": 2693,
+    "sha256": "9ca44784e5eb528ff45b846dcd27a84d7a5b4b8c622020723d122e0f33739626"
+  },
+  {
+    "path": "game/racing/tools/camera-telemetry-tests.cpp",
+    "size": 4436,
+    "sha256": "c1736023b5d09a07ee5f9a5416a4352a19f2dab701bd4c33597e5e42222b045b"
+  },
+  {
+    "path": "game/racing/tools/caption-tests.cpp",
+    "size": 4443,
+    "sha256": "95ee3d46c7e6e6248c81e07e066fb925810595d053b977749bb60b7e028d82b0"
+  },
+  {
+    "path": "game/racing/tools/caption-visibility-tests.cpp",
+    "size": 2888,
+    "sha256": "56844c0a587f12777ae0a3ec2a10b1e0d4065740cd457f2660b192b594485589"
+  },
+  {
+    "path": "game/racing/tools/compose-demo.py",
+    "size": 17044,
+    "sha256": "5d825a65fe6dea14a11456ae5ec70e1316bf27e83ad10bb18fbafd13027d4261"
+  },
+  {
+    "path": "game/racing/tools/finalize-offline-demo.py",
+    "size": 7125,
+    "sha256": "70e1a19bf6e0bada5578ef3f322b2f0de22ec775f0c052059118238ac71c6e9a"
+  },
+  {
+    "path": "game/racing/tools/handling-menu-tests.cpp",
+    "size": 2231,
+    "sha256": "7458b5a8f97c8cb246785f798760c2c9cde5c5caa54559da527780d43f96ca8f"
+  },
+  {
+    "path": "game/racing/tools/keyboard-steering-tests.cpp",
+    "size": 4023,
+    "sha256": "2354f89acf20735e1e6fecbdc59135ae005faeea42007358858e8b37b1c62193"
+  },
+  {
+    "path": "game/racing/tools/latency-tests.cpp",
+    "size": 4227,
+    "sha256": "1bba8c2e5b46f844016eebf9a6d4143bfc0e5b2afde9694ec763ac3a1ff902da"
+  },
+  {
+    "path": "game/racing/tools/local-race-tests.cpp",
+    "size": 6409,
+    "sha256": "0757d09746ee3e015d3a5eaa668e3fc4b7d325c077df03f24163864a98b95d02"
+  },
+  {
+    "path": "game/racing/tools/math-tests.cpp",
+    "size": 1076,
+    "sha256": "0616d82b2d5e774586064f5441984cd4e2cb9c1190ecdd3a4ead6fa9a3aa3a0d"
+  },
+  {
+    "path": "game/racing/tools/minimap-tests.cpp",
+    "size": 3122,
+    "sha256": "d8dc38a34b33d84235fecfa41a048f80fb5f5121de352fdc75dccf695effe4e1"
+  },
+  {
+    "path": "game/racing/tools/offline-recorder-tests.cpp",
+    "size": 4586,
+    "sha256": "1c73c41e10321925c876be1f81c91783a44c002ab4fa09a7a58e70f1caa51d97"
+  },
+  {
+    "path": "game/racing/tools/pursuit-tests.cpp",
+    "size": 6059,
+    "sha256": "66651ea1a1d6f6adfe06a55edb754b2390e40fe8abe9ed35efc5a61350d19ce2"
+  },
+  {
+    "path": "game/racing/tools/race-tests.cpp",
+    "size": 15224,
+    "sha256": "d08a137111fde43e4dbc32e58b9bc2eba9dc09121ecc640f3db9fca45f113f93"
+  },
+  {
+    "path": "game/racing/tools/reference-presentation-tests.cpp",
+    "size": 14389,
+    "sha256": "f6051a1686fc287df14b0779ba2510be363e50d0968d8dbfcaa1dc1d43f18672"
+  },
+  {
+    "path": "game/racing/tools/reference-render-tests.cpp",
+    "size": 17041,
+    "sha256": "c490efed785a81b47762b9aad9de83fa8e676470b5d46bb7dd3a457fd9a70adc"
+  },
+  {
+    "path": "game/racing/tools/reference-stream-tests.cpp",
+    "size": 7957,
+    "sha256": "20df4742c73b1f688ac9d92b0383d4fd0ee42d7106e12c6b250f6d25eeaf0f23"
+  },
+  {
+    "path": "game/racing/tools/test_demo_composition.py",
+    "size": 7117,
+    "sha256": "131cd07987ed344f695006acac72eeccdc56b7bf3e0f90ca90d4fdd74eaa7d64"
+  },
+  {
+    "path": "game/racing/tools/test_offline_demo_validation.py",
+    "size": 1942,
+    "sha256": "90772366ca63731b2e528114cc004b69fed086d2272e05e0abc5ffabae050d2d"
+  },
+  {
+    "path": "game/racing/tools/vehicle-audio-tests.cpp",
+    "size": 11068,
+    "sha256": "38eb9cd914afa004eb0bd19ef24b211d05f45ce1c2330be9a231a93871f20914"
+  },
+  {
+    "path": "game/racing/tools/vehicle-handling-tests.cpp",
+    "size": 20514,
+    "sha256": "379c91ece263f69c7a18c922662aec10d13d104d054a0a315432a9ee58afa835"
+  },
+  {
+    "path": "game/racing/tools/video-encoder-tests.cpp",
+    "size": 5412,
+    "sha256": "bed57b399ac7b7bec987189d5827d11393525c0b59127d9a41c00da0d2fcc91c"
+  },
+  {
+    "path": "game/src/BitmapFont.h",
+    "size": 1196,
+    "sha256": "31a22ec266b9197078c3e2fcfd5ae6b79d81b431f054a873a5e9e8b6cbbc7316"
+  },
+  {
+    "path": "game/src/CameraInput.h",
+    "size": 1486,
+    "sha256": "2195225fbbba26a93e6464d51c1b6a9237b7ff1cde866176ae97371ede2d0823"
+  },
+  {
+    "path": "game/src/Collision.cpp",
+    "size": 24729,
+    "sha256": "21d560ea40e0c97775453b345c775b67a2832fc219a8692346e4b8e8f3cc48fd"
+  },
+  {
+    "path": "game/src/Collision.h",
+    "size": 1448,
+    "sha256": "2120a5faa065b8b64fa4215a45d792a77c88ab2dd58c0ad377cbed931be33428"
+  },
+  {
+    "path": "game/src/CombatAudio.cpp",
+    "size": 2833,
+    "sha256": "087f2233d25fcb2b1507f87405ad7cb7ff726feb008769a55c37388449b681ae"
+  },
+  {
+    "path": "game/src/CombatAudio.h",
+    "size": 897,
+    "sha256": "a46dcad21f5bd74a2f069ab7d4e8c5fd46cce60c6cd157fd70ef84f1a664519d"
+  },
+  {
+    "path": "game/src/CombatSoundCues.h",
+    "size": 1639,
+    "sha256": "c8a3bbc6aa567fbeb4e91f255ba3a221f5a283287fd70104abb0cad2fb3304dc"
+  },
+  {
+    "path": "game/src/CombatUi.h",
+    "size": 1769,
+    "sha256": "26b0bf931d032e2f4701b5a71f216e86baf2907160e75cab2c3354fb65e0a566"
+  },
+  {
+    "path": "game/src/Common.h",
+    "size": 2840,
+    "sha256": "716c1f7337ae18a388bd4268bd7aa5d4275167351e650a185decbe16a94bce77"
+  },
+  {
+    "path": "game/src/DemoRecorder.cpp",
+    "size": 10704,
+    "sha256": "9ee947f784ea0549730388b0b46785f4929a04b4bda4d1e5b43958a5d238401d"
+  },
+  {
+    "path": "game/src/DemoRecorder.h",
+    "size": 677,
+    "sha256": "4de787da6abcdf0d93bbc077fe9ea6fab887acc8168afe6186714bac23d41db1"
+  },
+  {
+    "path": "game/src/Encounter.cpp",
+    "size": 182329,
+    "sha256": "6f61f787660e37de78691806e490dc163c199d429de56e7e52bdbbf32540cb94"
+  },
+  {
+    "path": "game/src/Encounter.h",
+    "size": 2101,
+    "sha256": "826c6cbacf54c155cfab8d7786694e6c5dbd5eaede158690b0ed91e34854ff92"
+  },
+  {
+    "path": "game/src/HeadlessGL.cpp",
+    "size": 2975,
+    "sha256": "ae43b62d0c1b4cf7629ab44190eee23f1597c8233adb894ec45f92e752ccc1c7"
+  },
+  {
+    "path": "game/src/HeadlessGL.h",
+    "size": 284,
+    "sha256": "c5ca0fa3116e4a42825c59ca4029aa82664521300629ad4f2ce9f3ac2db3084d"
+  },
+  {
+    "path": "game/src/Main.cpp",
+    "size": 33942,
+    "sha256": "6bf4177bd34888b1f735e29e7ad2d4ac40fe21bbd6174e5eeaa98ce4eca84336"
+  },
+  {
+    "path": "game/src/MainLinux.cpp",
+    "size": 21881,
+    "sha256": "6f1cd47f44eb70ec58ea300ecfc4b8ea2212a611173da1c6e68a8a89a89e8ff4"
+  },
+  {
+    "path": "game/src/Map.cpp",
+    "size": 13390,
+    "sha256": "6f49c1e0a6c1e572fccb8be58e8e1df8636d997b28e0dbc520ff35aea599b4cd"
+  },
+  {
+    "path": "game/src/Map.h",
+    "size": 1036,
+    "sha256": "5493a70c77295ff4394dd393b8db905ca313c63d5958c3534d27c8171bba8df4"
+  },
+  {
+    "path": "game/src/OfflineDemo.cpp",
+    "size": 12716,
+    "sha256": "0ae4d7e49c7a4ad7ee698a8e11b46b889e03283a4672665f1306c98999edfef8"
+  },
+  {
+    "path": "game/src/OfflineDemo.h",
+    "size": 378,
+    "sha256": "1ad58218e5fae070812d16334c8c4f8c8f73d37dd67ee245f60dc5ee28ec15c9"
+  },
+  {
+    "path": "game/src/Recording.cpp",
+    "size": 18630,
+    "sha256": "30c421585a30a40e6c5103ec17444171f9c843480959f3d7bc563b32100d1f88"
+  },
+  {
+    "path": "game/src/Recording.h",
+    "size": 508,
+    "sha256": "8b2e67883d6d346823795d89268e1e96ce2d7a279e25f6cdb3d52af962f18611"
+  },
+  {
+    "path": "game/src/ReferencePacing.h",
+    "size": 319,
+    "sha256": "ba79f1f4f0aeb021ff68b2cae31c1dd558662b61be629800b1a3ceb48da1df86"
+  },
+  {
+    "path": "game/src/ReferenceServerMain.cpp",
+    "size": 11394,
+    "sha256": "b4574217e53cfdd424726efd23e18a560df7a6253a198128ff22d829e106bfce"
+  },
+  {
+    "path": "game/src/Renderer.cpp",
+    "size": 38490,
+    "sha256": "cc4d562e5ce78f4044d4045639a67e2ea2fd6cd4d0bbec60e84ff4cb31200778"
+  },
+  {
+    "path": "game/src/Renderer.h",
+    "size": 4238,
+    "sha256": "e2d1089fb8cdda92ccd250c65cbc7b7a9bfcd31fdaafa7af5b6e13976910e0b7"
+  },
+  {
+    "path": "game/src/RendererCombatHud.inc",
+    "size": 1261,
+    "sha256": "1660f08d6689513db22dadda983bb1a61026f75f5e463985783c2e5891cc7fe8"
+  },
+  {
+    "path": "game/src/RendererHudLinux.inc",
+    "size": 5888,
+    "sha256": "4a5ebfd77b072de8fd6320cfc23782cc004e5f1404f33d4b007185d4e8c298be"
+  },
+  {
+    "path": "game/src/RendererLinux.cpp",
+    "size": 19696,
+    "sha256": "f5c2b547e9cbacbe962545751f795f07a2d4620ddefc5241a0200ecdb7565f08"
+  },
+  {
+    "path": "game/src/RoadSurface.cpp",
+    "size": 3384,
+    "sha256": "e585458033812c9eb60cfcee093b2d61c925cdd6f7f1f40e01184986b221bd73"
+  },
+  {
+    "path": "game/src/RoadSurface.h",
+    "size": 347,
+    "sha256": "86a0a6756fdefd8ca7a8167b07c4cd95999311e6284a5bd78bcaa9264bb7e8ad"
+  },
+  {
+    "path": "game/src/SceneConfig.cpp",
+    "size": 2039,
+    "sha256": "dad94f7a6faf2d266e4ca04755b33644c15ea4a7d19e4c3869f20d04c3858927"
+  },
+  {
+    "path": "game/src/SceneConfig.h",
+    "size": 749,
+    "sha256": "60c1af088130bd9a25be3b698c1209a1c327554f3f750a8b9c642313c9954bc5"
+  },
+  {
+    "path": "game/src/VisibleObjects.h",
+    "size": 3687,
+    "sha256": "4f6a3539734591b540b38d06cd120159f6f1287fe5f8b27b3a0302a426aece5d"
+  },
+  {
+    "path": "game/third_party/DirectXMath/Inc/DirectXCollision.h",
+    "size": 21302,
+    "sha256": "b6cd33a7ecf08e6b8c4a4208397dc83d9ecb3df7cd3f014a409593740a21bc2e"
+  },
+  {
+    "path": "game/third_party/DirectXMath/Inc/DirectXCollision.inl",
+    "size": 206490,
+    "sha256": "ef6a2f090a6da35fe60aaf900d5cbca08f4a927d1618cf6bad83f3c1da34540d"
+  },
+  {
+    "path": "game/third_party/DirectXMath/Inc/DirectXColors.h",
+    "size": 31503,
+    "sha256": "9e1436c7e0a5846fb15ca7ce9b46d3b5bee767867634b26ab35425d08123ea4e"
+  },
+  {
+    "path": "game/third_party/DirectXMath/Inc/DirectXMath.h",
+    "size": 143078,
+    "sha256": "d769fac9b5ed476cd0c1d01c52b0b41fe7c14ef4ec714e5445d8098618e2d676"
+  },
+  {
+    "path": "game/third_party/DirectXMath/Inc/DirectXMathConvert.inl",
+    "size": 80356,
+    "sha256": "8ee0fa911b4fe9cfdff5f3d3106d8bc4d7b32e7766d66f952fb4d40ebffb73af"
+  },
+  {
+    "path": "game/third_party/DirectXMath/Inc/DirectXMathMatrix.inl",
+    "size": 122917,
+    "sha256": "9d8006443661647c5cbd2fd64aa665084896782d4ad559ce7d62e0711e013143"
+  },
+  {
+    "path": "game/third_party/DirectXMath/Inc/DirectXMathMisc.inl",
+    "size": 81238,
+    "sha256": "17a69c40487f5b8511c0e588240cd291acdfb600c8f9d8205ef0726590442794"
+  },
+  {
+    "path": "game/third_party/DirectXMath/Inc/DirectXMathVector.inl",
+    "size": 547717,
+    "sha256": "e27b96e876a5ac7655263dcf1a2f56b679517c1e04c1cd3617d5667a59c2cbc6"
+  },
+  {
+    "path": "game/third_party/DirectXMath/Inc/DirectXPackedVector.h",
+    "size": 55916,
+    "sha256": "6e3c393bd3f015c85ce26adf86dc0d40bb2c524622c08bea963730855c2c147f"
+  },
+  {
+    "path": "game/third_party/DirectXMath/Inc/DirectXPackedVector.inl",
+    "size": 170517,
+    "sha256": "5c5e86cd919cad65021b0f679e382953670f79afc9ea4f04ae63f0f5ac056b47"
+  },
+  {
+    "path": "game/third_party/DirectXMath/Inc/sal.h",
+    "size": 209062,
+    "sha256": "e26ee611231a859b5a800eb2e1606e7ca03b8e3981d7c98cf1ca20c89b658b68"
+  },
+  {
+    "path": "game/third_party/DirectXMath/LICENSE",
+    "size": 1141,
+    "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+  },
+  {
+    "path": "game/third_party/DirectXMath/SAL-LICENSE.txt",
+    "size": 1116,
+    "sha256": "cfc21f5e8bd655ae997eec916138b707b1d290b83272c02a95c9f821b8c87310"
+  },
+  {
+    "path": "game/third_party/DirectXMath/SAL-VERSION.txt",
+    "size": 42,
+    "sha256": "dbf887c5e5e157876c758528a764d4a1fb7f8ec701081d21eb58cefb3eaa2ecc"
+  },
+  {
+    "path": "game/third_party/DirectXMath/VERSION.txt",
+    "size": 42,
+    "sha256": "dd65cb0e6a08ba11b300259f8ee2b635dd46392cbb92250ec8f5c6cfd24c245f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/.gitignore",
+    "size": 70,
+    "sha256": "1f48607a5c2188eb7f706e89971c5dc233ad168e67c7b0950458ddb8c1b94d40"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/CMakeLists.txt",
+    "size": 21917,
+    "sha256": "6550aea5caef57ba9fd7a0bb4373076053e67b57500a5e9ab8b9c3ec494b2483"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/README.md",
+    "size": 12648,
+    "sha256": "fca3020c0b6a662d60bcc1f7d507b3421da47021200ae92854afc74a95b21a69"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_linux_clang_gcc.sh",
+    "size": 761,
+    "sha256": "62e3d98778624ea1b1fe900130240f19b735c722aa8f4fcdd568b9ece70b04f6"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_linux_emscripten.sh",
+    "size": 584,
+    "sha256": "6cc3951734bdea16fba26088df2b94bfb620c71517514d11da1654713c1cb2d8"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_linux_mingw.sh",
+    "size": 488,
+    "sha256": "02933bb3f3ce7d6af6724bb3cf3748e48a3e6068c5055074c505f827b0baeb73"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_vs2019_cl.bat",
+    "size": 132,
+    "sha256": "60ede445e62414cd1a525e552e9644861189e97cfc5239b7a29038840ec739ac"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_vs2019_cl_arm.bat",
+    "size": 142,
+    "sha256": "6367ff2d2d7d6da6dc5cbf81610817d21ef210eb7b5f309cb03a34a75d75c12e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_vs2019_cl_arm_32bit.bat",
+    "size": 152,
+    "sha256": "533cb18ec69200390aec9bb09bab5c32e6875d08de32b1929565fe58f435cd84"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_vs2019_clang.bat",
+    "size": 504,
+    "sha256": "d268a47607e6754409e6395fe0422ec27dba2f0100cf80a4e2e88320494b81fc"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_vs2022_cl.bat",
+    "size": 132,
+    "sha256": "511c81f827b88f0c14567f7b4889db470569f7638dda95522d803972cae809c4"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_vs2022_cl_32bit.bat",
+    "size": 289,
+    "sha256": "518acf4378cc166f1bf4c581c84f4177c92a5d92f7c11484d946b72726cfd115"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_vs2022_cl_arm.bat",
+    "size": 142,
+    "sha256": "816a41b0c5049acd004515d94c87b64209a039ccc41785f398f1fb0406bb7341"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_vs2022_cl_arm_32bit.bat",
+    "size": 152,
+    "sha256": "02dedc796f70d4aea2c0f4563fc04696cac36f8cff3859c1390edafd1b307354"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_vs2022_cl_cross_platform_deterministic.bat",
+    "size": 174,
+    "sha256": "0c6a967a5dd25b6ccbc35731bb0c241ee325fe72356abf00e692c7ccdeed1e44"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_vs2022_cl_double.bat",
+    "size": 168,
+    "sha256": "a6877b166d3aa2cac04c9a8bb3af5c581a59a98575ac3a7467e7f525997c52c3"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_vs2022_cl_no_object_stream.bat",
+    "size": 181,
+    "sha256": "6bab995c235918a5e0c5beba54f17edb0e6ee851ceff276ac1a549fe07e690eb"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_vs2022_clang.bat",
+    "size": 504,
+    "sha256": "0724b709b1422a10e5ff4626db036937b03471552ec0f45c5159458c5286cc62"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_vs2022_clang_cross_platform_deterministic.bat",
+    "size": 546,
+    "sha256": "2106f69eff57ddb1c5432443ac1a3f4dbf39b02fbd36f7e0ef7045eaa9c4e84d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_vs2022_clang_double.bat",
+    "size": 541,
+    "sha256": "59b8f6483102648f8e2f5956a19ad757ee2d455c8dbb84837f786cbc9307f981"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_vs2022_uwp.bat",
+    "size": 449,
+    "sha256": "771d85a88bb69615e826958b427849e020c34cd01ca631be998363111bd6bff7"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_vs2022_uwp_arm.bat",
+    "size": 470,
+    "sha256": "d850a7b8cf68011b0f31d848e8219b09805b090c53f733927d340c91685a0865"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_windows_mingw.sh",
+    "size": 463,
+    "sha256": "fd3eec26d4d809230d72b4882395e595a5c56fe0523276e7efff770374c768fc"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_xcode_ios.sh",
+    "size": 159,
+    "sha256": "16df548a79fb4c82d5625077f7577fe08a24abbe1e6f355a6574d13b11cb4ad6"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/cmake_xcode_macos.sh",
+    "size": 125,
+    "sha256": "d2956abb6fd084e41a18eb544642029cf77cb9b04ba622533ca348ef8089992b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/iOS/JoltViewerInfo.plist",
+    "size": 1036,
+    "sha256": "e8185eae581dff2453f0f9ded1dd76fa877d0b6834c107f48dc3fb97870671dc"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/iOS/SamplesInfo.plist",
+    "size": 1030,
+    "sha256": "9dc154ce1362a8bd3734e3bf5a1842dfce2d6cef5ca33bb7fd7b541869cd6115"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/iOS/UnitTestsInfo.plist",
+    "size": 1025,
+    "sha256": "7137f829b9ddeb76bad399e2179765c39a88671c2c780691191eea1abc33f17b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/macOS/icon.icns",
+    "size": 121564,
+    "sha256": "3423195a905669964a905bd4cc3442be9f3b42d7a95d5f6027a9729fe921af3d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/macos_install_vulkan_sdk.sh",
+    "size": 464,
+    "sha256": "a6e612e568035eea42194a152a92535ce668bdaa24e2b1549b9329de284973de"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/mingw-w64-x86_64.cmake",
+    "size": 872,
+    "sha256": "a20ae5b1b8f286877844a6e533d81368d6759dc1037847ef7d9baf9b3d6174d2"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Build/ubuntu24_install_vulkan_sdk.sh",
+    "size": 276,
+    "sha256": "e85a18ad18129cc2c37d5ceae8f97489d429b09d22dde3befdf1d65488a58ff8"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/AABBTree/AABBTreeBuilder.cpp",
+    "size": 8672,
+    "sha256": "01115bda9d1989b21cffd4fd573896301e196cd6c82b5d935e0b0843067abfc8"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/AABBTree/AABBTreeBuilder.h",
+    "size": 4362,
+    "sha256": "459a56bb1f5636d292a5268829af9a039a985edeb9daca62d331b15158c5cb34"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/AABBTree/AABBTreeToBuffer.h",
+    "size": 11038,
+    "sha256": "70e0905fb7cedc9890503e8aed9b52801e53fdba0314d23ef7e0ed50f66cf1a2"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/AABBTree/NodeCodec/NodeCodecQuadTreeHalfFloat.h",
+    "size": 13279,
+    "sha256": "133ddd3ab39136e0d843a5f64c7e95adb2c12cab10270b39322a7a1b3cc9360b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/AABBTree/TriangleCodec/TriangleCodecIndexed8BitPackSOA4Flags.h",
+    "size": 22445,
+    "sha256": "3ad9e073885e87bb7e6cf822deaada140e6b3998aa70ee96f6bdb9d560704fe4"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ConfigurationString.h",
+    "size": 2116,
+    "sha256": "dc142b317b7adaa0ffbe9e82e209399df23c25126a71ee19cb90b979105e8337"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/ARMNeon.h",
+    "size": 4876,
+    "sha256": "a11c5632a0402d9dfa833b797f69d17cc1825cb5db7d4849ca018881c062d1de"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Array.h",
+    "size": 17367,
+    "sha256": "bfd3159af693500b473097b45cf66e53f9f7bdc17c2b324230c3ff45b54184b4"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Atomics.h",
+    "size": 1419,
+    "sha256": "c9964b60ae8918ad7b1cc4f1f678dee85fad1d9f4f5db5f4790e87f51a77391c"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/BinaryHeap.h",
+    "size": 3025,
+    "sha256": "9a64b287d467e88206f158dfc0f6d830a6d3a59b87ded44e55f6dd3a7d5967f7"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/ByteBuffer.h",
+    "size": 1837,
+    "sha256": "44cdda54c12e6101da634ac321ef2467700cbfc698b044241e875de7d42a3c54"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Color.cpp",
+    "size": 1947,
+    "sha256": "e8a13ec464deabf161461e06c022a6584c3073ddaa40a68ff48c779546d6f29f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Color.h",
+    "size": 3254,
+    "sha256": "e81a4d96bd9732838f8fe4656a5f586de8124e8e023664f94a0b6f5c22a2b0f7"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Core.h",
+    "size": 24426,
+    "sha256": "5f54e10d10c8f2f395ca1f7074f32bd5ae895b9aaf398da1014e96d5320af065"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/FPControlWord.h",
+    "size": 3214,
+    "sha256": "a81822802d92b30b2946ba87a9baa0396a166281fa3d842b60302010d76b7b03"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/FPException.h",
+    "size": 3425,
+    "sha256": "92d7f5d0f74b6acd9a770d31e2abf45444aa5ad926e8311bf5106fdab64ac5ad"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/FPFlushDenormals.h",
+    "size": 1442,
+    "sha256": "ff8d916c96da56c8721dc27fc206f856aed16d4ffc38c507f6b8486db31e6931"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Factory.cpp",
+    "size": 2291,
+    "sha256": "7bd6a207578f152c81e15761814abc0f85114afb3619dac46d4eacbfe09cf02e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Factory.h",
+    "size": 1481,
+    "sha256": "765fcd311bddb242ee8e8fcc4f12487f05e5b17273514aa662a41b67c5cd3be3"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/FixedSizeFreeList.h",
+    "size": 4613,
+    "sha256": "b331316e4e319967e593938afa2437eb7c2ff9ab3fd7ca15450a11a76ff92050"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/FixedSizeFreeList.inl",
+    "size": 7692,
+    "sha256": "a65a0b153fabf473d97476288906d5258e5d5531bf2fb1e63afbb2e6ea7b1f90"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/HashCombine.h",
+    "size": 6030,
+    "sha256": "7d41248e977f6f5e5fabdabdc4335554423791a8af5752fbe461dc15ef05b760"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/HashTable.h",
+    "size": 25689,
+    "sha256": "3e2ef1785ede5622254612751e6ec5b4b230f436eca75836658c6ce850f6a008"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/InsertionSort.h",
+    "size": 1560,
+    "sha256": "07b77b211bdb9abeb5c4599dc4f90c48b4b9e0dafe01c696b5eb55f26f2e5242"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/IssueReporting.cpp",
+    "size": 624,
+    "sha256": "af946e48813bce139d0512e9f1e5da5e7489ed47823a33d38f4e471d18703583"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/IssueReporting.h",
+    "size": 1816,
+    "sha256": "d7972d52f21f6a3975720ce94962d73c0f3325d87b57cbaef6119620e773f0b6"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/JobSystem.h",
+    "size": 14810,
+    "sha256": "63b57017874072dc56a7934fd578e327482c37b27eef8090a8b18c1a05c6a40e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/JobSystem.inl",
+    "size": 2166,
+    "sha256": "72ae79d73d232d4c0b08581dbe8585ed86de51002b06f6dba49435ffd1a551d8"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/JobSystemSingleThreaded.cpp",
+    "size": 1712,
+    "sha256": "1af497b446a7ce5cde822bda1fff28bcde79203c061ff1576028bdfc63bfb6d5"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/JobSystemSingleThreaded.h",
+    "size": 2123,
+    "sha256": "28448a75d0c3f415f1df193363a8facaaaf5ebaf4f14e638e96efc9c0041972d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/JobSystemThreadPool.cpp",
+    "size": 10855,
+    "sha256": "8821bdc739cce641cbabf4d1efde41c60085fd1a6ab566831fca0cfdcc7d33b0"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/JobSystemThreadPool.h",
+    "size": 4090,
+    "sha256": "442049ec9f59b33b861825649929e36413f580813a286621abcbb90fec8e499d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/JobSystemWithBarrier.cpp",
+    "size": 6644,
+    "sha256": "1e84f5bd14515c910e59cd66bd8bd3a2119e5c40e4383fc7626855f535db7daa"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/JobSystemWithBarrier.h",
+    "size": 3519,
+    "sha256": "b93693ef881482fcca6c829549ce3bb01f9222b6f76d319b271d483d3da521e8"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/LinearCurve.cpp",
+    "size": 1280,
+    "sha256": "706a92d8db7be63c11ac2b4626b9eea90ea83f35fb9f53495cb72d52e8734538"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/LinearCurve.h",
+    "size": 2042,
+    "sha256": "40f5e80daa03d60bf3a855697695b872bdfae07bb15c975407f6ffa52889afe3"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/LockFreeHashMap.h",
+    "size": 7075,
+    "sha256": "fb2a64dfb16e151a9655de081904e5c009475a71b3572a53376edde910071da6"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/LockFreeHashMap.inl",
+    "size": 10623,
+    "sha256": "e0e3bcdc17ad2f8fff4ede0523330142f86bdf30d0668534b23addc316b13e11"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Memory.cpp",
+    "size": 2059,
+    "sha256": "b93fdf9bfdb9afae3905e907c9779d088ac238bb0d411b9bc9bb9a9bc37ea77f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Memory.h",
+    "size": 3237,
+    "sha256": "b09c925ab12b1261c15f166a5f2f68d4904ca41b73838391b0f5b62684c89f84"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Mutex.h",
+    "size": 4640,
+    "sha256": "0444079b40181ae5ade85b6ac85689869bbb5bde52c96ea35a82c3361bb8dc89"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/MutexArray.h",
+    "size": 2725,
+    "sha256": "c42a3a2388c98bf31374292e5e039556398a542f54ee31da711e32823f11fd6d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/NonCopyable.h",
+    "size": 461,
+    "sha256": "e0b981afa9c61270b08fa719bca925cbafd9d596df063390672de9def04012e8"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Profiler.cpp",
+    "size": 18638,
+    "sha256": "78da3c09073e491fd2d2073102377ed565e6025d8289b44eb5f80bb875e6dcb3"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Profiler.h",
+    "size": 11104,
+    "sha256": "9af550c187fbb80ff37c3b329f6d16a6c90cb570463c05d47691c40eed9d4511"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Profiler.inl",
+    "size": 2797,
+    "sha256": "1a4ebf406fcf158759f660b17b5994e80c0ea2cdc8966f6aa58b3965eaa17e17"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/QuickSort.h",
+    "size": 4047,
+    "sha256": "0ec9c7c54d11ead6901bb3246eb1147de7a7b9c129f230810fecbeb5bfbdbd19"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/RTTI.cpp",
+    "size": 3752,
+    "sha256": "9d895076766fcd6ff6ef4f2c4466f074d16dcd0e4a29fec7098e811320a0b4da"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/RTTI.h",
+    "size": 17442,
+    "sha256": "271121c17dc3931cfe21d0468c0be8d59d7bb16e288e6612353f04c0975fdf67"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Reference.h",
+    "size": 10538,
+    "sha256": "3b627aa652c3727b02f84a5651b9ac5fa5bf3a81488ad9ad2656e27fd3661cc9"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Result.h",
+    "size": 3876,
+    "sha256": "def5f0c9354258330ebfc9c8c45bb8931c23be1e80e9fe7ab7a6c395755621bf"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/STLAlignedAllocator.h",
+    "size": 1676,
+    "sha256": "7ff13ec61b072190c9d1e1982e59db710a8cac2c654dabdb4e56cdc129283f27"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/STLAllocator.h",
+    "size": 3962,
+    "sha256": "aaabe69d9b804714a42eb0707525d52bc368d3ac04d4e53c43c8d7f065271b65"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/STLLocalAllocator.h",
+    "size": 5963,
+    "sha256": "b28aa63476649383923f5b66d2b5fa009d37a4b063beaeecc07393845c4ceba8"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/STLTempAllocator.h",
+    "size": 1987,
+    "sha256": "45f2c849a06d7f71be8d2de87efeb58fcc08f792a1abdc5423f3786a6c4c7b1d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/ScopeExit.h",
+    "size": 1229,
+    "sha256": "48015747dcc80a84a1c90e3f853cbf05f516a348047a593bc45f67fa1ae7838f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Semaphore.cpp",
+    "size": 3992,
+    "sha256": "56d423ad78f98f7a59dd826b4701b7203abde62f89f4117f05dbb2e0d29856fa"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/Semaphore.h",
+    "size": 2585,
+    "sha256": "8efc682546c3dcfe5330d2038342f8a261b82874f9e7b254b19c2c5ef6de1911"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/StaticArray.h",
+    "size": 7765,
+    "sha256": "54091e8cc701224f149530c66ae3f5ec08f5b94c2d1d8ad2a25a171e90665ddd"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/StreamIn.h",
+    "size": 3415,
+    "sha256": "9ca430e2b5dc654ab23704e6221f897dd6d39a7bc74315c40a2a4f8e2cbbf9c2"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/StreamOut.h",
+    "size": 2719,
+    "sha256": "a755ad4240c729156c37c6dadff07bb0bb64d0b7ebbc8ffa1530cd8d1921ce52"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/StreamUtils.h",
+    "size": 4257,
+    "sha256": "c90ba6ff5ebbae72bdc1ba557ef8d41463db277c7f69924db7708c18261dccdb"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/StreamWrapper.h",
+    "size": 1567,
+    "sha256": "79e4aa10c9a562d22a2a729b0fcb45fab01cbdfcc7d4c0873d206d65c2b5adeb"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/StridedPtr.h",
+    "size": 3214,
+    "sha256": "53e80c8872472a8c01e63f596d7dc2eda6ea1d7a744a1cea47d290c9019fa63e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/StringTools.cpp",
+    "size": 2301,
+    "sha256": "3ff9c73b8f837954922169da34ff6058c23e39915d628bab7487273e164d7ba1"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/StringTools.h",
+    "size": 1477,
+    "sha256": "5d67ef9cf8f5308e82280731a2c1050878243b4ca5062e379ff407fab06a4222"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/TempAllocator.h",
+    "size": 5013,
+    "sha256": "5639299605c3d192f023b289d14eaf631a0d0b9b8889a0f4647977e1e1dddb7d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/TickCounter.cpp",
+    "size": 1085,
+    "sha256": "792888dc09cd6070a70101eaeb9983c9ae6c3f8d5a9b3dc13138f067bd2e3a17"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/TickCounter.h",
+    "size": 1361,
+    "sha256": "fe26a8d6d826f955bf0bdc3bd992594fe05f82efe534b4fe01d963c95a202d28"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/UnorderedMap.h",
+    "size": 2557,
+    "sha256": "293912022960326e694800d82ca8f2f5a1ee303519ea191ad8f48ac1a2d8ecb5"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Core/UnorderedSet.h",
+    "size": 824,
+    "sha256": "a0bf92f4b186fec8a915031a7261ad940637da894ea209247cfa2c7e894fd9ab"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/AABox.h",
+    "size": 9699,
+    "sha256": "a842fe0ed4468027b4848848854eb72d9d10a8750899e52d777e13bc29cdaba8"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/AABox4.h",
+    "size": 11488,
+    "sha256": "0e022502a5e242c35d67312b63ebe8c72c366ec3311996dd4e08975504896eb3"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/ClipPoly.h",
+    "size": 7428,
+    "sha256": "3a11d09df237f16bda316fcc192d7fe8f787675729afb266c1fef500625bff2b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/ClosestPoint.h",
+    "size": 16786,
+    "sha256": "c77a7019b29be64d6eb9ab4a1a6210af3cb3f6757c304e899d05ca595627d1d5"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/ConvexHullBuilder.cpp",
+    "size": 43702,
+    "sha256": "eb99cefafc6ba5074d96767cdc2fa9397c9665fdb35c2719fe5ff81dcb31098e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/ConvexHullBuilder.h",
+    "size": 11535,
+    "sha256": "f55ef8006d6c35cd3850ae4351f5412bdec5fbeb5c5be35cfb67fd6c43b8957d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/ConvexHullBuilder2D.cpp",
+    "size": 9126,
+    "sha256": "5201b32806c02e28989e8684aedf7ac21a183d33db00a22c91780b0913c4acc0"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/ConvexHullBuilder2D.h",
+    "size": 4087,
+    "sha256": "35da00d09642f248fadafa7c5523b65ec682aee95a91f47af4ee3ba848b04bff"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/ConvexSupport.h",
+    "size": 4871,
+    "sha256": "c54fa99db96ce9a10892e93045c827ea17fe3dee0f482c7c4458e94b475988ee"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/EPAConvexHullBuilder.h",
+    "size": 28554,
+    "sha256": "09ba1bb2824c31e35bf9fbe2bcf412821696f65fe47523b23ab5e163f65ac114"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/EPAPenetrationDepth.h",
+    "size": 24815,
+    "sha256": "ad2c78c0a9f018855e1517fe18fb925eacd4c836149066fbf9f88d3b3fa29edd"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/Ellipse.h",
+    "size": 2660,
+    "sha256": "13acebfddded6162869d41cbb9809fd9c12edd7bd2d0e6f9e3d0f141ecd11d2b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/GJKClosestPoint.h",
+    "size": 31850,
+    "sha256": "b08ec5b4df0ccec4e5a4bdf3da0c204255e426a9ba68d6e9fec30634296f9d6a"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/IndexedTriangle.h",
+    "size": 4636,
+    "sha256": "d0c7c89aa6e9fc2706b1d174ddb92d6ffeb720320fbd53b2e835b65c209f57f5"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/Indexify.cpp",
+    "size": 7728,
+    "sha256": "ccb942f5702984a3cec9dc5f66e3ba5e50387581b2185425fa131cf452c882a3"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/Indexify.h",
+    "size": 834,
+    "sha256": "1a0beaa5b22b0fa3e777eb1fb22e7b6860657ff4eb54ff75b1f0849011df528a"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/MortonCode.h",
+    "size": 1239,
+    "sha256": "0114da4911164459fd20d1382ca8b5edb0ad1248a11d04b6b1b7709d8f9e2bec"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/OrientedBox.cpp",
+    "size": 7903,
+    "sha256": "0172e642794fe9814b2d816e6936fee9d19bb7687efc1d97c1b552b05baa4da5"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/OrientedBox.h",
+    "size": 1470,
+    "sha256": "eb1ed9103b7254231d013d34e7d465a990ef7e4dc10d7f287163269794627280"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/Plane.h",
+    "size": 5063,
+    "sha256": "84e8ebdd06688fbd5484b3844ab1a88edfd2a1593ea8c76e7fb0d49142aa2df2"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/RayAABox.h",
+    "size": 11957,
+    "sha256": "f3e4cc41c188aa7a66e6050c7d07c1e106446d8ff2b566267bd8712dcb1d7823"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/RayCapsule.h",
+    "size": 1673,
+    "sha256": "ebbf60e448fb55b872399a9881aca625b617c78cda4b63b7bff2c3275a501205"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/RayCylinder.h",
+    "size": 4110,
+    "sha256": "2e8618ab82c99b24e361b5d690cca8a5465de81ff831f7faf3cfc5d592b303ca"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/RaySphere.h",
+    "size": 3734,
+    "sha256": "c0b461187a2e2a99eebd405aaaef386b381bca1ba6c6f50506f801e1f1995eb2"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/RayTriangle.h",
+    "size": 4758,
+    "sha256": "d41d81eb3068186126cd821fa1eeddbfb53b0141afa8187424f9378367417710"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/Sphere.h",
+    "size": 2249,
+    "sha256": "2fde715fdc9bfe4d29af7f8c684e8951769def9d3298d4dc285d66063f222965"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Geometry/Triangle.h",
+    "size": 1316,
+    "sha256": "a9d456e7a6be39bc641dfc389e5ade838f22b234fc59d778fc84f085c7ea0822"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Jolt.cmake",
+    "size": 34778,
+    "sha256": "598667f89f013f2189396bd61a383fece0be0d20aabde398e57a9fe97177ee06"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Jolt.h",
+    "size": 461,
+    "sha256": "32cea6abffc8b2203348d1d2f765b51f51d01299a450c90d8654ae5bcdcdf84f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Jolt.natvis",
+    "size": 5730,
+    "sha256": "9dbe3b24ebc0ccccc7c908d886d1ce7f7efa883c0edc5b40e4c89f724bcf285b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/BVec16.h",
+    "size": 3611,
+    "sha256": "831046f9e07efc0bb609eae4259cfc4e0ae24d5768192d5d97e5839b5048249a"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/BVec16.inl",
+    "size": 4826,
+    "sha256": "a64da08f40117056889ae7bc9655b69537ef0dfcebf49e464516001eca6f36e9"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/DMat44.h",
+    "size": 6981,
+    "sha256": "1142a9dc6a91d93fc85a5f65ad834ec52f18cc8eca8e658dccd5de979ba74311"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/DMat44.inl",
+    "size": 12112,
+    "sha256": "adad6cc52efa96189a72111db40ff1647bbbfe201d5f57ebc7e3f4f93bf5a414"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/DVec3.h",
+    "size": 10582,
+    "sha256": "d5c4823980df2221e397eac3e4f9c02f0ce7581c82757f7f2049048c96e02570"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/DVec3.inl",
+    "size": 34291,
+    "sha256": "1035b65a9113e1bd7bc5c56d78de098ba2826b982854def8af9aeb32494f31d6"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Double3.h",
+    "size": 1247,
+    "sha256": "b159e1c984bcdd1c03a654341304ace9c0648dc6fb57e04352263ec2c0cc91bd"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/DynMatrix.h",
+    "size": 967,
+    "sha256": "9f1e075ed864e9a674295f7281de8e774d3e9f9c0b62e27a569d935f72a2db3c"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/EigenValueSymmetric.h",
+    "size": 5408,
+    "sha256": "ee546835fb82e84054e3c2e5cff656ad5d36620c87af0618d3d25cd634ac1614"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/FindRoot.h",
+    "size": 1034,
+    "sha256": "1466ea1f86254cf8264b51212018c4931f68cd04ba0e9e5317e7f54c13e2bda0"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Float2.h",
+    "size": 1047,
+    "sha256": "45f61230d10529d273e3f6f6420d3cd235ecf88933b076f2e3b219da6dede08e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Float3.h",
+    "size": 1270,
+    "sha256": "87ba7fdda57eacf895cb5499475e238a19087ccdefaffc2350a7cf608840e532"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Float4.h",
+    "size": 831,
+    "sha256": "eb44fd9bb75f6d1f8921cb412bee1e6ad10ba5646006e66481d9cae3d18e41c0"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/GaussianElimination.h",
+    "size": 3117,
+    "sha256": "77ce947d0d766de35cce4ef30a27f68820909d9bbd785d51e6806b4caf1c9b7c"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/HalfFloat.h",
+    "size": 7854,
+    "sha256": "0f8e920952a613025fe6940021ee57fe10f5614d1cba5698ecd5cc2a715218dd"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Mat44.h",
+    "size": 10283,
+    "sha256": "2c5b779dbf4ef7755ccfb9d1fbee0d06fd16c7a41e647ec58fda99904f5426c6"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Mat44.inl",
+    "size": 35999,
+    "sha256": "e7c7b896bbde12bac678a4fed654b7142210b3fbbc940af2f60e1d5c36f1c8f1"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Math.h",
+    "size": 5252,
+    "sha256": "6e018d7d08d7b0d07474ad5e1f47e83a42af8fb7eea388d092aaa27eea6986cc"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/MathTypes.h",
+    "size": 691,
+    "sha256": "659d08acb4d24a67e7840c2f053cb4d88195e39558c0c2aa1c71c439bb8163a3"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Matrix.h",
+    "size": 6345,
+    "sha256": "b3770b21f1c6a984cb1dfe1cfa945c8f7158afd835127225455dd26c4694b927"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Quat.h",
+    "size": 10755,
+    "sha256": "15c5618adb60abc2cbde1343ab03941cebdd68351f67f475bb8e2e6b19d7639e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Quat.inl",
+    "size": 9258,
+    "sha256": "ff60b48b5c0e10181f53760c88ec77ac84cbe38ae2de11022c09d0f75f43c2be"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Real.h",
+    "size": 1020,
+    "sha256": "5f64bd96c35e9397de4382bfa45dd371ad18b5ca369102c6bd109119d714c33f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Swizzle.h",
+    "size": 665,
+    "sha256": "4756314d9895109b4092d07b1e7d8be7d70d9d0ea0a8b9614a12b2bd5d39be84"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Trigonometry.h",
+    "size": 3187,
+    "sha256": "2237079f3743db04b2cdee0e1b8a0d2cf52f03f86805001430cfe3d1aa1e8cf5"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/UVec4.h",
+    "size": 8513,
+    "sha256": "424d43a15ca11991d00ac260e06d402689230e2156d334f392fdb4eccd574cb4"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/UVec4.inl",
+    "size": 17032,
+    "sha256": "5530b7d86152204504c18a1102998f6f3c8ae35b85aa7cb430f7dc6bb8b6ce2a"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Vec3.cpp",
+    "size": 2281,
+    "sha256": "d6de2bb3f88319fc0fcf3242c7a6595de832473356c9e3108293af3c6ffd39ba"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Vec3.h",
+    "size": 10399,
+    "sha256": "bd8e413a995bc60e17a17c87a670ddc1a3b045269e031db7fda2a3a220f6143e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Vec3.inl",
+    "size": 24263,
+    "sha256": "4b7e2c48ab7b17397738a9605c90587bb5665a9d9f29e8842842c5fe2cee6a9e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Vec4.h",
+    "size": 10307,
+    "sha256": "70c7a571194615c4911f134c83fee4d1131dbdb040bbcc2f48e6b997e917b0cb"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Vec4.inl",
+    "size": 33030,
+    "sha256": "1cac03fff6616238b4a135ca52050f2ab603d5d85b968dc94cbf85e1d2d1cf54"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Math/Vector.h",
+    "size": 4636,
+    "sha256": "11cfb0419a55c91160a2927635aaa7c2b54e1d867008cac0a3611d931087723c"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/GetPrimitiveTypeOfType.h",
+    "size": 1194,
+    "sha256": "07fb27baa0860293d3ae74e8c7877e62bef9acc3fc0074f9f10a26e5cd36a95f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/ObjectStream.cpp",
+    "size": 1383,
+    "sha256": "5d8efcec0310f38eb7693625235778e71f2ce261a2c47a5dde478dd47a2e05ce"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/ObjectStream.h",
+    "size": 11298,
+    "sha256": "0096633e6a224b9df81c6060e80d838280a4d5aba4f50f158ef59376027f0035"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/ObjectStreamBinaryIn.cpp",
+    "size": 5758,
+    "sha256": "35bb705c42c9d5d665538ddc3ea62106a2389364df0029f3aee17db89e6ec0a6"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/ObjectStreamBinaryIn.h",
+    "size": 2123,
+    "sha256": "ff3d481d0b86a393130052b1b7489b38a58d64a8d53c05f6ef5c738d568aab21"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/ObjectStreamBinaryOut.cpp",
+    "size": 4266,
+    "sha256": "5c60047de9fb8b79e37308e92ad1009837d06df13f6f8c95138562ea03b86eb6"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/ObjectStreamBinaryOut.h",
+    "size": 2247,
+    "sha256": "cf5e9ad39e0b60e941c7f067f7f31fc2ff31c0293a82587479fa16763984873e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/ObjectStreamIn.cpp",
+    "size": 16027,
+    "sha256": "056dfa9147bd26cc9f1f1abf53ff9424d5e10a2e4ba44093d896397a8326a6a8"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/ObjectStreamIn.h",
+    "size": 4480,
+    "sha256": "27bddbeb84e36058dfd8e0b27dddaacc79b849a5a8793fed1a4047ca8d984d94"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/ObjectStreamOut.cpp",
+    "size": 4466,
+    "sha256": "feab53f8ec536671965167bf27a658f748f911072bbef77966c246425ea36e3e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/ObjectStreamOut.h",
+    "size": 3366,
+    "sha256": "a9e47859f47ada6432a0e3b8adc0da4e96ee77e43d6405609200031c1d91410a"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/ObjectStreamTextIn.cpp",
+    "size": 8392,
+    "sha256": "113b834b27b40eaf4b267c48fbca95be4ffeb313239e407f6a6407fc1b07eea2"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/ObjectStreamTextIn.h",
+    "size": 2065,
+    "sha256": "547bd2f7f7893677526158da9ae294d08f26831d72083ff64d26a68f3a74f821"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/ObjectStreamTextOut.cpp",
+    "size": 6435,
+    "sha256": "1ff5a08aa941054b9dcbf9509e63439ff383548ba8b64d6a4fdbe783f476d1da"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/ObjectStreamTextOut.h",
+    "size": 2406,
+    "sha256": "4e4df3953906fc6be0e4af43c3118160b0a021e9d2632c3c2d6bea5a90b47263"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/ObjectStreamTypes.h",
+    "size": 784,
+    "sha256": "10d26b67ac83547efa87d1a4981c3cfaef353bb4c42a3b1ed5f467136c5406cd"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/SerializableAttribute.h",
+    "size": 4658,
+    "sha256": "f2f232702dad40982086d73abcedcbd4b8066a615fd5176962c24fceafdaed73"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/SerializableAttributeEnum.h",
+    "size": 2111,
+    "sha256": "850e405d22b745036c4ad0ee5a3abfa6a3ee0967ab93cfb2432fa1755bd5b0dd"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/SerializableAttributeTyped.h",
+    "size": 1924,
+    "sha256": "def31a3b66b423e3b6860bb22ae1f335c05ed60cfd5641d3ba144d79363dd41c"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/SerializableObject.cpp",
+    "size": 332,
+    "sha256": "0656a60a2b1f9c232f30982f0731399afadfa1b5eba63c596da0ebdfdbc501de"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/SerializableObject.h",
+    "size": 8549,
+    "sha256": "ea7570ad6ffa89ebf7f3ffb52e20a9a336c4a687f78214b8399b9f863e32d1ac"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/TypeDeclarations.cpp",
+    "size": 1857,
+    "sha256": "b68137e8cdf18368b09b9dde0350859e9c530d2db133e8d5e70964439182ea95"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/ObjectStream/TypeDeclarations.h",
+    "size": 1854,
+    "sha256": "7f30c7a2ba4178329d47f2a656b8b81584f2d6f9e90c62408f43a935235309b3"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/AllowedDOFs.h",
+    "size": 2405,
+    "sha256": "3a645d47e815192170ff3f4ed2b9a40482c2aedec3c22fc221102542ae5764a5"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/Body.cpp",
+    "size": 17581,
+    "sha256": "b87eac0e0e67f062d25cdf63546d678f2de6d03aa1ac67d7816b0df7838c6b35"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/Body.h",
+    "size": 35144,
+    "sha256": "06ca72b718189daa4f79613a9e5a7d757ce549221d5060fd3e4dce936bb6ad1d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/Body.inl",
+    "size": 8284,
+    "sha256": "a214c51b65651ad5c03696673caade8773b8801181cf04b79ceeae2898c70e8e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/BodyAccess.h",
+    "size": 1580,
+    "sha256": "68cd67d14f7f9def7107d9d255d3b884ea8ceb81d8f3fa7b53fdad2df032bc3f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/BodyActivationListener.h",
+    "size": 1190,
+    "sha256": "9990a083c3e66414f2b4ab962ecc02f5c8a755aa1762eab33a87744ba08a2b6f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/BodyCreationSettings.cpp",
+    "size": 8150,
+    "sha256": "e1d05063917e730bb8405f60d537f15265e526d14c8ef28d3a3c2c492bfa046d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/BodyCreationSettings.h",
+    "size": 10185,
+    "sha256": "40b77231253fe9f5bce7bbf56c2afe5479c509785c4fb58e4c1b802255a3203b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/BodyFilter.h",
+    "size": 3578,
+    "sha256": "15e6042c730155e65a5c56e3743a50bbee64a78279fde894583c2b344d2c35d0"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/BodyID.h",
+    "size": 3193,
+    "sha256": "fc55e93c056b256e58d7d161cc58ceba797ca0e8ac439a32df26c2800f4f6ac2"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/BodyInterface.cpp",
+    "size": 30089,
+    "sha256": "133950420638cfbd2693b610198f11ea3e9ec3110425931d0fe1ebd240a9ef14"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/BodyInterface.h",
+    "size": 17163,
+    "sha256": "f9cc6727010f638fa0a49a132eac59ca3e54999414c2106a9c406a8f35c28fc3"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/BodyLock.h",
+    "size": 3003,
+    "sha256": "9f74d6fc76f16a50d29f7e6f2f928d6b4798293764461724d8c6be367d1a9193"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/BodyLockInterface.h",
+    "size": 4919,
+    "sha256": "3b40d4b891929eb3dc2aeb3a04032dee1aabb1843a0f40da2d008ad43b14b58c"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/BodyLockMulti.h",
+    "size": 2988,
+    "sha256": "4b4c2b458ba564588dffdf134a7e460ef83abb1f7e7326ec5b4fbe28366e96ba"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/BodyManager.cpp",
+    "size": 37007,
+    "sha256": "ed5edaefb82d6618bf7f4a076067e9bb5810dbbabb8727727e17bae431ee3d8b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/BodyManager.h",
+    "size": 17420,
+    "sha256": "11d28b7e1c92ce16896b89abee5647c5c3b415acca86756c21993208b2b2fb04"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/BodyPair.h",
+    "size": 1184,
+    "sha256": "7d2536bb96e1774af5a5c0ee898dd178d3ab415e09c420f9e3c8e66f18bf44dd"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/BodyType.h",
+    "size": 469,
+    "sha256": "7e0c2f30214acdc949638243ba356eba8c1e4b89c446cae544cd5f59474f4522"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/MassProperties.cpp",
+    "size": 6927,
+    "sha256": "817150f08cd45f9dff2ee00201bf632c5e6cfd48aa2600df8dbe39d9a99c6d3d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/MassProperties.h",
+    "size": 2170,
+    "sha256": "a78962764ea7f5c120103989097694ae037b3ea5c5e82be19cae143c93bde639"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/MotionProperties.cpp",
+    "size": 2744,
+    "sha256": "02f0b432d3f1eccff9e4f2c6ad0f15ec2bf8341c8094bd0b8d0c36127b98d353"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/MotionProperties.h",
+    "size": 19443,
+    "sha256": "e100a3a0a53f0ffc7a821e4732155368d71d8ef3f7548e2d2f4401993278c593"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/MotionProperties.inl",
+    "size": 8059,
+    "sha256": "ed3e5607ad7e5774ae696e8874aad3146020690389c3794f3cec62e3457fd5a3"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/MotionQuality.h",
+    "size": 1718,
+    "sha256": "d256d244c19baafba3937ef1817598cba646d646879c9a937a5853038b9a3326"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Body/MotionType.h",
+    "size": 458,
+    "sha256": "a0767e7805ff64574c3a0803c415a96b748711f8a1ac9ca3f5fe4c7daede82b3"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Character/Character.cpp",
+    "size": 12031,
+    "sha256": "639475dbc7737ae3f9c681aa492143077d686bc6697c37712af6f01e67c0ff49"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Character/Character.h",
+    "size": 7652,
+    "sha256": "4de3f602e387544faea369a67aa02fca0492467fe3da1b1821238d9519bfb644"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Character/CharacterBase.cpp",
+    "size": 1705,
+    "sha256": "bc5c7d9468185d32bc4a26b5ed24a05f66993776982773edb78fd3dabcd8ab07"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Character/CharacterBase.h",
+    "size": 6367,
+    "sha256": "d3cfebcaea06b23205831903898858cf28ed334649034c0fe247afa9939b1eb9"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Character/CharacterID.h",
+    "size": 2305,
+    "sha256": "d26f627d6e963cae1721a9948928392043d2cc7744e2825997ae95f407e6005d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Character/CharacterVirtual.cpp",
+    "size": 78585,
+    "sha256": "8ea048d17c8e3111962b702edab2afdcb497bc24d14574837384bdfce14e0c8c"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Character/CharacterVirtual.h",
+    "size": 53667,
+    "sha256": "a53e74aabd326766f07078733525e9b70e9f4d3b4f35a4f63f1c4b1df431af8f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/AABoxCast.h",
+    "size": 553,
+    "sha256": "31e9a1063baea2279609786fce7f1f3cdf8e65e04a96f9f4bcacad79b42f2752"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/ActiveEdgeMode.h",
+    "size": 676,
+    "sha256": "e367ddb45d9a4fd8c92f38f211987605e3d1aa57faac31ed32a21a1bffc31a46"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/ActiveEdges.h",
+    "size": 5264,
+    "sha256": "763aa59b637583d0835b28b8511d16da4d8629f95330a401cc2f1662a3fa0033"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/BackFaceMode.h",
+    "size": 484,
+    "sha256": "bd08c44595aa1c08404b74447a57683fa52fd9967c4b5e682d819ae9c2a844de"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/BroadPhase/BroadPhase.cpp",
+    "size": 416,
+    "sha256": "4d4a429db302c02da085dbd94a508f51e6541e5f819192096925938e0e6516c7"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/BroadPhase/BroadPhase.h",
+    "size": 7040,
+    "sha256": "d47fe226fcd6b615dc5ad46d543a4a89c05e80678247a9c2edcf4e6416dd1f4b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/BroadPhase/BroadPhaseBruteForce.cpp",
+    "size": 9406,
+    "sha256": "649b03e14ba33a5a74d53e77a8095d87ef484977fe8af8ce2b1270d234619902"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/BroadPhase/BroadPhaseBruteForce.h",
+    "size": 2827,
+    "sha256": "ab58cf3c7f629bc24a9b2a802f9ec8d81a712122e902d1c4968aaaca67558b61"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/BroadPhase/BroadPhaseLayer.h",
+    "size": 4952,
+    "sha256": "1715719c2866dd3ee9f57e858d4df3d3a7942bee5b8956b45c5fb3424f6c3dfe"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/BroadPhase/BroadPhaseLayerInterfaceMask.h",
+    "size": 3651,
+    "sha256": "c60448fcaa38f6523fe8d31042cf6bf9ecf9ca5d792dc26bab96ed28c886b420"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/BroadPhase/BroadPhaseLayerInterfaceTable.h",
+    "size": 2129,
+    "sha256": "2677279800ed7b08bf67a93d5dc787bdaf82ce68a60379678bea0b8f695a6932"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/BroadPhase/BroadPhaseQuadTree.cpp",
+    "size": 23383,
+    "sha256": "c0d0a9e523bdf552ee6485b00652d6d869c61768b89f17433543cf9fa282e2cf"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/BroadPhase/BroadPhaseQuadTree.h",
+    "size": 5395,
+    "sha256": "bbfd4dad6c4248830abf855e98ad2a49dbec4e9999d066ee89056e217b44f575"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/BroadPhase/BroadPhaseQuery.h",
+    "size": 3033,
+    "sha256": "497de0624546d4fb00f1c366800e10d1ce3a06c529c2aeabaca5c8ec5fcf9d3c"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/BroadPhase/ObjectVsBroadPhaseLayerFilterMask.h",
+    "size": 1156,
+    "sha256": "993bdbd614ca68d9a654ce3d0917f33365145872b067ece54af7d56c869d7a4f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/BroadPhase/ObjectVsBroadPhaseLayerFilterTable.h",
+    "size": 2741,
+    "sha256": "ad117112901e9364d053a8bdab94b4251cdc3183594b15934dad87cccb79e682"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/BroadPhase/QuadTree.cpp",
+    "size": 61349,
+    "sha256": "24cd04c237c56602e2d1cd0970adf8330518ce2b221775ad8f1a5f71be972970"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/BroadPhase/QuadTree.h",
+    "size": 18650,
+    "sha256": "e9c070495574b24ae60f91860dd1764a6aac6d51c09c51a9ba71e766432ea7a5"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CastConvexVsTriangles.cpp",
+    "size": 5117,
+    "sha256": "4c94a439c9623e628d0053a7d6179f91af91363a764a41a26076af658d35d089"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CastConvexVsTriangles.h",
+    "size": 2459,
+    "sha256": "a1e23f4ad1fd20385483c36fbe99bb64ba83d2718023a0e1b804ae22575b3020"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CastResult.h",
+    "size": 1233,
+    "sha256": "e04495b944f1cafe88156d29ab710fd2f3e1df74554432257e52707e8e2ad8d0"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CastSphereVsTriangles.cpp",
+    "size": 10893,
+    "sha256": "906cebc9b3c413aa71058312d6b95a06ff0a05b3692ae9f3e8cd5489c748a724"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CastSphereVsTriangles.h",
+    "size": 2911,
+    "sha256": "e51291f8ab924c390d0bfcb1ffc373aa66b500f4c60a3c000d6e600e4211b2be"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CollectFacesMode.h",
+    "size": 434,
+    "sha256": "9203e4e40489def2e273447b28d840610b3f9d789612a99ddba0aa0713fa7ce9"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CollideConvexVsTriangles.cpp",
+    "size": 7323,
+    "sha256": "fe992e18d78e55dd48693f3fab692a07161df194973adc0c7968325c6a8434ff"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CollideConvexVsTriangles.h",
+    "size": 3682,
+    "sha256": "11384ea7c39749e55e1b751dbf1e9200366b932b805c8e6454a441e5bd81c99f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CollidePointResult.h",
+    "size": 802,
+    "sha256": "b45a4e2e47b272288dab33263395195d781cc897ee49d140e5c8a3dbd63fc0b9"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CollideShape.h",
+    "size": 5287,
+    "sha256": "8f91aa1898a9040eb31cad6a2a6846cac19c74eb1ca8f43dfd25199b9b8e3601"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CollideShapeVsShapePerLeaf.h",
+    "size": 5066,
+    "sha256": "c2a5c101254ff9d9adf22677c0ba4586b4678191aab0a6ff3437903296ca2f25"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CollideSoftBodyVertexIterator.h",
+    "size": 3711,
+    "sha256": "9fea5e54d8ddf9b8ceaf06b1ea095c45b049d1aa7b9e542abc66c88472911e46"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CollideSoftBodyVerticesVsTriangles.h",
+    "size": 3164,
+    "sha256": "b2d9f820d79ac37534d55c7ffc2fbb04513d702a75610e28f884d27b2d44eef1"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CollideSphereVsTriangles.cpp",
+    "size": 5470,
+    "sha256": "f3a9aa6ed0f64e46e3b80e229038da35b212c2d8ea2a7991a58110baee2d59f7"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CollideSphereVsTriangles.h",
+    "size": 2900,
+    "sha256": "1e07e26809d40a6f0508c666d50705da624a217efa82d434bb17008d2e6a98e9"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CollisionCollector.h",
+    "size": 5614,
+    "sha256": "6438945bcba373491e4410a488a9b28a8aa0da26ea14fc2bfdcdedd703f694b0"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CollisionCollectorImpl.h",
+    "size": 5517,
+    "sha256": "e521689f3c051f7f24ce0a796bd8319f91308e0fabfab931fbcb06e4179270b5"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CollisionDispatch.cpp",
+    "size": 4669,
+    "sha256": "2c8274f1a4721a102bac9e76b0508dc0af6f1fa4318c4d899a9cb45f91a438ed"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CollisionDispatch.h",
+    "size": 8496,
+    "sha256": "75dacb97f05a10082126aa657ffff3156636ad523e9733bcc3b26815a5ee9f33"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CollisionGroup.cpp",
+    "size": 901,
+    "sha256": "1af56a09d2e8844f9f4088e25e4b771de640be06f6847e75f1a64e3ed0252ae9"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/CollisionGroup.h",
+    "size": 2716,
+    "sha256": "71f2e13a1b19b29fc95487dc99c1f6ec3e6ac0603f80374af4fffc67586af156"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/ContactListener.h",
+    "size": 10899,
+    "sha256": "97e605c5368eb7ec94450a752989c12c18dbb730ec8973e437cef5d7db8f0e04"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/EstimateCollisionResponse.cpp",
+    "size": 8417,
+    "sha256": "7c8382d52e2cc25f8c69240679fb4fac8649267ecc3ebd7ffe2b7c97c3d0b300"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/EstimateCollisionResponse.h",
+    "size": 3005,
+    "sha256": "af6a543f6be924d2223e04cb42dac917f8a9acbc4f43840235aa36819eb5998a"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/GroupFilter.cpp",
+    "size": 835,
+    "sha256": "d890241b869de2dcfc33f6209b53126c55d3d13dcd620c6776b0533b2a49b389"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/GroupFilter.h",
+    "size": 1332,
+    "sha256": "fdf1d3312e16c399a12ae73bb407896f90a80ceecf8f873242cd889b7ec59c04"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/GroupFilterTable.cpp",
+    "size": 954,
+    "sha256": "c5361f9b30ca7a39329de7e7f93056e6ffce15f6de647a4572005ed9a62e5346"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/GroupFilterTable.h",
+    "size": 5144,
+    "sha256": "fd8ef1330c41d19544e44d9378169e898ee29fd6baee0cbcbf73995188864ed5"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/InternalEdgeRemovingCollector.h",
+    "size": 10695,
+    "sha256": "8104489c7c6dd9e8d08ed9593b08db3a76192a6712b2a073511042757a00963f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/ManifoldBetweenTwoFaces.cpp",
+    "size": 9994,
+    "sha256": "119c54994711c3f412149571f8dd96de7d44cb7ec3d4aabb3b45a133ad2b24d2"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/ManifoldBetweenTwoFaces.h",
+    "size": 2651,
+    "sha256": "da80d1660a02c5f00039afcf5023cd0b4e8749bd21e33ae0859c2edde6fbecd5"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/NarrowPhaseQuery.cpp",
+    "size": 18759,
+    "sha256": "0d7c01aaac2cf5c57ece540417dd848208bde11b405c493d27961aa9572d2bdb"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/NarrowPhaseQuery.h",
+    "size": 6762,
+    "sha256": "1cd10b7695825fc9cb906d09cb167b4cfd0ad434b76a5d820c78272e76df5f9e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/NarrowPhaseStats.cpp",
+    "size": 2361,
+    "sha256": "4cb093910d33d89c89351bced1d19a4f3a698b653fc1b9282a04595f55ce1fbb"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/NarrowPhaseStats.h",
+    "size": 3090,
+    "sha256": "b6e7776c272a38203558812428c0482d8d5500d515c890c07a76f3bd71e82024"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/ObjectLayer.h",
+    "size": 3155,
+    "sha256": "604c332691cbfaa31e9484e6a36f791a4b49f20474eaf06793c5fd987dd796ef"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/ObjectLayerPairFilterMask.h",
+    "size": 1833,
+    "sha256": "b385d625577821d53805ed4477e34b83ce1bb64fb87b069327f83e1c653b90de"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/ObjectLayerPairFilterTable.h",
+    "size": 2799,
+    "sha256": "dd76b25df66f99e8aa0db4bebe9af7d2672adedeb1796590f03eca6f062d288f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/PhysicsMaterial.cpp",
+    "size": 984,
+    "sha256": "ab66241893162a62dee55982132ec3209b9e7ce11b742b6d20e9469a16dbfd2c"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/PhysicsMaterial.h",
+    "size": 1941,
+    "sha256": "a3ec30d93df1895f00fc08d6203b4c04e23d7ed098355a6b2f4a813892ca2bb2"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/PhysicsMaterialSimple.cpp",
+    "size": 1007,
+    "sha256": "134483d63017cbd07c3018af04438e507e8fd170c2b3ebf2476a06b3b39278db"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/PhysicsMaterialSimple.h",
+    "size": 1334,
+    "sha256": "95601fd938aaa69cbdf9365ad71f330eec19ad6cab6fbe60b6879771df0b00c3"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/RayCast.h",
+    "size": 2965,
+    "sha256": "423c5683c41c4b8a5dab048547b25ca45216ae0a8028959b272e6a0df97a1867"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/BoxShape.cpp",
+    "size": 11027,
+    "sha256": "9b77816e1b96b1f30009a85f2723e35ed5ab562f6f8af3e354904da93585dcd6"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/BoxShape.h",
+    "size": 5447,
+    "sha256": "f8de5407d8ee58a7e69d0d30fda4aa34c2a34e70846fd7c74d7d0e65f9e87b60"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/CapsuleShape.cpp",
+    "size": 15567,
+    "sha256": "d29275fe1cae3c66ca266782b15281a54332cbd7520bbd75c8cb7745401038df"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/CapsuleShape.h",
+    "size": 5718,
+    "sha256": "2ccb7a67c2cf10ab386ed05c369ca84cc460e802246aee3c05015a78f08dae6c"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/CompoundShape.cpp",
+    "size": 15201,
+    "sha256": "8fd5575d3cce0b561345693262c9cfd1e15d1527b5cf03b9a94e027a825d0fd4"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/CompoundShape.h",
+    "size": 16067,
+    "sha256": "c5927d21a780752b8a0e3ebcd705466cc4b5657c803a0de9fc7216b470994742"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/CompoundShapeVisitors.h",
+    "size": 20079,
+    "sha256": "99b3aecb61532a52ef319b190e709cb3997a2d443800eb76297376b0d4a3009f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/ConvexHullShape.cpp",
+    "size": 45048,
+    "sha256": "fcb4797f0d77797865bb8102331fc35bc8902ded0748aab3fb687c939a30c29e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/ConvexHullShape.h",
+    "size": 10520,
+    "sha256": "6806d4c83f0931f4a342e1c7f6ec4e20bb0f40f13527dabcc591c0a5930a6c66"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/ConvexShape.cpp",
+    "size": 24287,
+    "sha256": "38b1ec6c52fa0733c590f89ab1c2cb867b9df5eec85138787e73dc09871419d7"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/ConvexShape.h",
+    "size": 8202,
+    "sha256": "2b5340a2a4c535fc127ad2ffb219b0009bccb9264e71a961bf97fb6c77cc5924"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/CylinderShape.cpp",
+    "size": 14546,
+    "sha256": "06da8ebf58261fede00a99495faf897234461029604e01ebc6e1af7535e3cd18"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/CylinderShape.h",
+    "size": 5554,
+    "sha256": "8b31e13b54c568a6f7921fb93f031110a150ca7c80eccd905d7f64c8ee57446f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/DecoratedShape.cpp",
+    "size": 2512,
+    "sha256": "8b16805cad116a49966395d37e640efe7d7dc1b71cac15ebf953b5b4186799e9"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/DecoratedShape.h",
+    "size": 3485,
+    "sha256": "0a6e73aa7771dee2b43cd626179db146b138fbd6c7a728b1390bc6d2eb422541"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/EmptyShape.cpp",
+    "size": 3098,
+    "sha256": "6d3ced8eed9b07e211959f3cefa1ddd7cba94b190e128cb8ee452293ed22e4fa"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/EmptyShape.h",
+    "size": 5353,
+    "sha256": "899ee3b15cb970898c9f1e666635cc8f307d97a1d2c0960915896532bb41d3b8"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/GetTrianglesContext.h",
+    "size": 9239,
+    "sha256": "84aa19c01829492bda71b04265ba456c3448d311608294e3f1b9b38bed673725"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/HeightFieldShape.cpp",
+    "size": 106172,
+    "sha256": "292988c89ba530dfe7e8856eb3ffc316a48fba0752f6899ce663445cd70ca6a7"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/HeightFieldShape.h",
+    "size": 25707,
+    "sha256": "a0f651122d13e01001f2ee9352a605669186352bcb959c867d9a316a7324cb82"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/MeshShape.cpp",
+    "size": 50724,
+    "sha256": "4db10b506c3cd5d66530f8ddca53ce0aa2dd98e81aed91f3362b2855ae29f457"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/MeshShape.h",
+    "size": 13561,
+    "sha256": "0c648d70c56081d3d51ac81689891a429c5b637c0bcbd4af75f0b13d1968b862"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/MutableCompoundShape.cpp",
+    "size": 21636,
+    "sha256": "f29a2b8e7fcd2c3aa18ec4af029fc90a836b65931c6eee1b411ae6bb5d34cdfc"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/MutableCompoundShape.h",
+    "size": 10410,
+    "sha256": "74a68bab959240bf9343a12f829a9770105e63b84fee4be03d06701f98f1bd9b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/OffsetCenterOfMassShape.cpp",
+    "size": 11555,
+    "sha256": "040b92afcc6065525c530ed61f9ee2c7aaaec647b9ae73286a6b232e9e1571e4"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/OffsetCenterOfMassShape.h",
+    "size": 8517,
+    "sha256": "1794e155e3e97006b8cccd5a8f003a9a804a0bf9589ff41de62dea2f693c20c4"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/PlaneShape.cpp",
+    "size": 19780,
+    "sha256": "0abbcfe11afbf2c9124a6d98b5b003fd9d7775bf264b97d08b3c248d5efc14ce"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/PlaneShape.h",
+    "size": 8036,
+    "sha256": "88a2a4e168910f413b40dcca36a85c017406ea4dd0ef1a12f0fa358037ebfe1b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/PolyhedronSubmergedVolumeCalculator.h",
+    "size": 13572,
+    "sha256": "df5e32160c803b45904099c013cfaabf03eea25fcb19476c4b8d31e14103ee17"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/RotatedTranslatedShape.cpp",
+    "size": 17762,
+    "sha256": "820c7c6311b3a4f2cb61dd9ee1eaedc1779611f454f8919d783820526d91226d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/RotatedTranslatedShape.h",
+    "size": 10230,
+    "sha256": "5f4e1746b242eb901e9df8477f49e2be4e99e7f63f4ff81ef813720a04ceab76"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/ScaleHelpers.h",
+    "size": 4641,
+    "sha256": "c941cac576b44ec4252d467a168d26f33218e60443d6bbbd507a794d4bcf57a8"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/ScaledShape.cpp",
+    "size": 11341,
+    "sha256": "5e507d5c99ac695ea66e64baa51c89f833dc16e68cafd2522bd5501e26731a25"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/ScaledShape.h",
+    "size": 8483,
+    "sha256": "2256abeb09143650af6ecaf92d7ea8d26981118fe9455eb158af449ec6801665"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/Shape.cpp",
+    "size": 9668,
+    "sha256": "14af9c9fc41d365dfe2eedeb66df0b1a836d4963dc0d935085e7d879770f2fcb"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/Shape.h",
+    "size": 29958,
+    "sha256": "7c2d78ecddea97b74dc0594f3f8a671715d2c7ce98b264034fad6c2b0f896b49"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/SphereShape.cpp",
+    "size": 11969,
+    "sha256": "af9af51d82651c5048d5d844b7435c6fd75c7435a4bb0b3890343fbd801e492e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/SphereShape.h",
+    "size": 5508,
+    "sha256": "fe7db0229a02f01a697f124d76c6acafa7e38fbe52305083cf4f3f95a9ba6c56"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/StaticCompoundShape.cpp",
+    "size": 25324,
+    "sha256": "b55fa27436c0aea590e3c1d0cf74dfe798c4cebe12759921ad29f5c17b8a4b4a"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/StaticCompoundShape.h",
+    "size": 7378,
+    "sha256": "51c59f5c7cc12c3af457d164b9c1d7e62767554bcd41f787c3f13bb52e0b2db1"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/SubShapeID.h",
+    "size": 4736,
+    "sha256": "b8165f87d8ed555c614f581f2326b80424863493ca6f2d075d263f9eae5a4a04"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/SubShapeIDPair.h",
+    "size": 2340,
+    "sha256": "2fa003c05ac5f51349d4e58a140a4ba001cfd63d4b1a901cdb79f544080fe34f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/TaperedCapsuleShape.cpp",
+    "size": 17300,
+    "sha256": "1a9deb5b56da6205fe0c85bc67d681b0081d3abad351d7cdb66ae72e7a2a4dfe"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/TaperedCapsuleShape.gliffy",
+    "size": 16723,
+    "sha256": "72e1587cb2e8d68289649ddec11fd8dd0f1d920b898faa0c27506d710ffff4e7"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/TaperedCapsuleShape.h",
+    "size": 5263,
+    "sha256": "76318ffa1dc33b3c5fcc98b1817a5c34d4b0e9ea0c82ec69d48d801e405bf7b8"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/TaperedCylinderShape.cpp",
+    "size": 24996,
+    "sha256": "4aba50ec2f003d33938df9fbab4c87a082d1ad6ed20dbe34e0f75a7bfdd1e4a8"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/TaperedCylinderShape.h",
+    "size": 5427,
+    "sha256": "2cd5ea192ff51533fad9dc5982d841f8305e743d4ef88a5caddbf5cd4c4ba654"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/TriangleShape.cpp",
+    "size": 16804,
+    "sha256": "f301bdcecf8b0489c4cc4db48ab9e8c543249465eab66387b55ded0019ae9182"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/Shape/TriangleShape.h",
+    "size": 7904,
+    "sha256": "655d761d0d4f6c4bf9fc092b9f6479fec29229f055ecf98df2607d711d175c74"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/ShapeCast.h",
+    "size": 8098,
+    "sha256": "8756110559880ad80316a38ff90cc5824bdd1485095c2e8c4ff1d2a5f44a36a7"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/ShapeFilter.h",
+    "size": 3252,
+    "sha256": "89ad84abeb7a34b15f772f33f526bc486d7a3912903cdf9399ca2478211b7de0"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/SimShapeFilter.h",
+    "size": 1890,
+    "sha256": "85b9008abac9543f672717c1a83e10f778d33bb3db184e0113ed9828f7b0dbae"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/SimShapeFilterWrapper.h",
+    "size": 2399,
+    "sha256": "005200d43611e9afb5bf96f8757c79f4ebc3d0bf8a417803e231c13acf4ca4f4"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/SortReverseAndStore.h",
+    "size": 1950,
+    "sha256": "aac6575a7e7fe4159c1c93772816423ceaeef5e9dff0539274883ade2b60adc2"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/TransformedShape.cpp",
+    "size": 6789,
+    "sha256": "54dfd9c0035763cb631e845b286929eaff61e2cae6347081eefa1b8e14035131"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Collision/TransformedShape.h",
+    "size": 13724,
+    "sha256": "4ccec6231d2358c3c504a257590d0b8baa4d20789c336de685aaaa61506a5404"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/CalculateSolverSteps.h",
+    "size": 2162,
+    "sha256": "7b99dcf4389f433bef27c82a3a39a9492d82f040940f8a8481cb4f47a8f68c8d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ConeConstraint.cpp",
+    "size": 9437,
+    "sha256": "bb409467e3c8c04254211367d3ca8ba921c5744d7380c5957ad18ad25a9dc01b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ConeConstraint.h",
+    "size": 5230,
+    "sha256": "f0a0625c849c0d5c73bda78beb2103e8327728b4303e12ac172f467c79b1b4ec"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/Constraint.cpp",
+    "size": 2371,
+    "sha256": "3a43caa8f1a9cd705fa7ea28594963d1de66f9c6a69d6936aa90c957cc4b3602"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/Constraint.h",
+    "size": 11803,
+    "sha256": "b51801cf5d69a8376715eae4b7606c84a98fd7393a0205d64835a08197afc92e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ConstraintManager.cpp",
+    "size": 10144,
+    "sha256": "a8be70b3490fb1f1c6200ad40a8b644d75502031a289612352ed76d6dc519185"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ConstraintManager.h",
+    "size": 4359,
+    "sha256": "1a64b04af28e820bf8da7e39b62d6137214dbb1de9e18a1722ec4a4d13053666"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ConstraintPart/AngleConstraintPart.h",
+    "size": 11417,
+    "sha256": "76d6b346fd484c5dcda84ef1ee328a28cb33a3e2926ac53b6e8bf26196b4efb4"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ConstraintPart/AxisConstraintPart.h",
+    "size": 32435,
+    "sha256": "bcfff82e765d8c88368f319db60d5675166103bb6a87c9c01c89f0ac469206c2"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ConstraintPart/DualAxisConstraintPart.h",
+    "size": 9348,
+    "sha256": "37c5f7534dc0c3ae145699ca9c797f9bc18381420e573305116c0e58368c3527"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ConstraintPart/GearConstraintPart.h",
+    "size": 7417,
+    "sha256": "f2741fcc5ac02d75859b03518af4ce21b56dfa24710879c24fe3da641717d95a"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ConstraintPart/HingeRotationConstraintPart.h",
+    "size": 7676,
+    "sha256": "ff2956fdbc42a535cb1f750bcb6c1354ff77fcf2ed744a256ddb4b391d30d4fb"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ConstraintPart/IndependentAxisConstraintPart.h",
+    "size": 10105,
+    "sha256": "dff3562cb7d54713cbee02cf3ce7f8ed83a98cc9f0c9c7e3182bb7853c77dc07"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ConstraintPart/PointConstraintPart.h",
+    "size": 8496,
+    "sha256": "eac83bf841e98d94da47287bbac743a864cffdedbc587402dbe10fca74a0bfdf"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ConstraintPart/RackAndPinionConstraintPart.h",
+    "size": 7334,
+    "sha256": "c38f5e20f327b244f876fdb07e46b40f2b219b1c330920c951dccc8e8f64114b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ConstraintPart/RotationEulerConstraintPart.h",
+    "size": 9357,
+    "sha256": "21d35d0bb126462603c75f79fa8c1e4c7471c3d95ccf895bed236bf28d6bff52"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ConstraintPart/RotationQuatConstraintPart.h",
+    "size": 8910,
+    "sha256": "3c9a0811b38ad98f4967c24b6b3b20ed80f79c3bf635c8ed75241e8739bee95f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ConstraintPart/SpringPart.h",
+    "size": 7369,
+    "sha256": "dc2288de01f66c37f009990208e7e8735ec7dbf5f9fd4e7d98025722a6726acf"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ConstraintPart/SwingTwistConstraintPart.h",
+    "size": 23938,
+    "sha256": "e2de98956cb1170e7b39a0f42a44b85c9fff13ca5643d3938bddd2d461ae23c6"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ContactConstraintManager.cpp",
+    "size": 73857,
+    "sha256": "2d2085f029d3bb52c595c8dfebbb3eea827f427f0c7868567285aa6b93a450ed"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/ContactConstraintManager.h",
+    "size": 25854,
+    "sha256": "2f8094d358c36301d404a22ebe610bcaa6d80a1dc0a22a5cc5e189b229a29054"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/DistanceConstraint.cpp",
+    "size": 9818,
+    "sha256": "cf0f352122523c02910ca2c547c9ff5395d421049f165380843a7059511ac997"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/DistanceConstraint.h",
+    "size": 5648,
+    "sha256": "1d17173917a93327fc1a3dcafcf3cbb44aaece21d924672e4cc730106d7ae14b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/FixedConstraint.cpp",
+    "size": 7918,
+    "sha256": "6bda82fb6f4c4818c0d0eb2104a45c3b05c44e2c4556c9d0e6414380194aed9e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/FixedConstraint.h",
+    "size": 4326,
+    "sha256": "9d294499784534bfd3d5f22588718e9286182390699df4963fbeb2ed330d75da"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/GearConstraint.cpp",
+    "size": 6253,
+    "sha256": "9c5c28ce33ef99457adcf13bf744f7e31cdd4fb174442dd3f61e2af918cf7f46"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/GearConstraint.h",
+    "size": 4712,
+    "sha256": "16e1ee05a7554dc7e4f7f2c6206fa8887228a43f1e9b0597b88767754a198761"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/HingeConstraint.cpp",
+    "size": 16203,
+    "sha256": "84f2d77123151ae1b9c8d0f4ea059d43f4fefec3376111331ab050cd34518c4e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/HingeConstraint.h",
+    "size": 9561,
+    "sha256": "daffcc69c3694dbda2e78e0a42521b1032826dabba913da806786798d72fe475"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/MotorSettings.cpp",
+    "size": 1495,
+    "sha256": "351994f28501e84ec1d0e25d097cdc63bdcc34001504a3d620ebe0581b297b41"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/MotorSettings.h",
+    "size": 3610,
+    "sha256": "eb850b5457a88848f4d28f948e9cde3a87628d64f086dfa8ce6043808074d007"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/PathConstraint.cpp",
+    "size": 17641,
+    "sha256": "42bff08312cc45761cd1329889519aa6cebaf4188d92bdbcb9e98f8092f419be"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/PathConstraint.h",
+    "size": 9879,
+    "sha256": "9f03e6d8f4c0397ceaf26a539fd04e28db29a4bc00fc716e6741702bcd768d37"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/PathConstraintPath.cpp",
+    "size": 2978,
+    "sha256": "3579a99ce987923046a4a5973424ab89a90cd43bd8f5c8f7b08003f2134bdc28"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/PathConstraintPath.h",
+    "size": 3446,
+    "sha256": "e01a3bcbb55aa0b41eb81741f42eec787feddc3fc3bab9e6833ba92fb72f8eab"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/PathConstraintPathHermite.cpp",
+    "size": 10968,
+    "sha256": "36a84a1dca1a68bded3f2c55d2084d76a3bb05d0280c2eb30f7aa44a72af834b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/PathConstraintPathHermite.h",
+    "size": 2149,
+    "sha256": "36decb161d6db6cb9e2db7318eae004a8a6dd7f6359b0cf618711a024bcdef27"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/PointConstraint.cpp",
+    "size": 4957,
+    "sha256": "090e6502bef7d565106369c95c4f68467191a85623d6af247381c4b7cae3a4a1"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/PointConstraint.h",
+    "size": 4382,
+    "sha256": "53872f4a88801acaf4dc620f3d644b494d3bb009bda4e689810bad7c38166c80"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/PulleyConstraint.cpp",
+    "size": 9000,
+    "sha256": "0bdd862e49ed64862e49ff0e316d42ee542a6a87a5612dea50b6738e835368a9"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/PulleyConstraint.h",
+    "size": 6227,
+    "sha256": "ed3cfc717fb5138db4f5634615c02ad28b524e02624ebec9103f754bb11b19a7"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/RackAndPinionConstraint.cpp",
+    "size": 6621,
+    "sha256": "cc985b3b939db91bdb0b4a75af8a348dd425dbde199f1f9d28bd568d5595f5b0"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/RackAndPinionConstraint.h",
+    "size": 5108,
+    "sha256": "8f7a9c9214377aa8cd0459850a2c503ef6212a361840bb8b346b2e5b3a6f220a"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/SixDOFConstraint.cpp",
+    "size": 34718,
+    "sha256": "f69368bb1abbf7dd1b4cf40a7f7d8dd64f867b0d9c007d873ea85092adacdca1"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/SixDOFConstraint.h",
+    "size": 15409,
+    "sha256": "dcfc6e7cf4a2761ec73f48387a04a2096e401aa27c60e3773ba4367e5c91a54c"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/SliderConstraint.cpp",
+    "size": 18910,
+    "sha256": "cb4b8c73a7203f2d32e9b727be3be2f8a491bd926db0678face2d4cac588d569"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/SliderConstraint.h",
+    "size": 9205,
+    "sha256": "e7a5cb8884530fa9e7beaf9202aa4b295d36f3ab822d5213d5d7f2cff5c0f922"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/SpringSettings.cpp",
+    "size": 897,
+    "sha256": "fe80f0ad0ca7d932ccb2e6c93d434c7f371818ef3d91928473608f420b4cf0d9"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/SpringSettings.h",
+    "size": 3770,
+    "sha256": "e84f2526f9aeb5d3d8a50604bde807b71666f872d7563340926da0e8afc3adde"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/SwingTwistConstraint.cpp",
+    "size": 20935,
+    "sha256": "f390e2fea08402f1601be9427f8c07b7fb6a323f07382da39e444222263493a1"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/SwingTwistConstraint.h",
+    "size": 10080,
+    "sha256": "f72bae19d9f06f6bb7247c05a5b5bfed8a98cbad0b3ce52e36ea6d835b36b03d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/TwoBodyConstraint.cpp",
+    "size": 1898,
+    "sha256": "433fe3bd15da8164e14b795a9703c07f7bd22bc916b54d57b612a89c3b729c2a"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Constraints/TwoBodyConstraint.h",
+    "size": 2857,
+    "sha256": "6e716157bfe27f33378098f74e28eb6f7fc10b90b88e68e6e5d888f82c40a382"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/DeterminismLog.cpp",
+    "size": 375,
+    "sha256": "1574e8b8bc09af27d4dacc7abef575ba0566c741a50ecbf82cba070888367c54"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/DeterminismLog.h",
+    "size": 4161,
+    "sha256": "31ef4367ab0724aa9b36097775d621689743f2dcd137b5f1608e44b5bc2ac44f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/EActivation.h",
+    "size": 480,
+    "sha256": "1b0754c5d19c90da1c139ae146a1516d6a128a82e506ce77f49b18ce01341bbd"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/EPhysicsUpdateError.h",
+    "size": 1673,
+    "sha256": "740c0b1616ae1b6b7a52ef6cd709c78d648a6bcc5e7ba408e14994ffbf1e35df"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/IslandBuilder.cpp",
+    "size": 17672,
+    "sha256": "0861f99786bdbd0180fe15523a4bacb2532e3cb44e52a5183a0e89d1eedea566"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/IslandBuilder.h",
+    "size": 6074,
+    "sha256": "f79056009d1dc0ebb10ccd8c019c0cdf7ca3c260b1626622aa034c813f44dc27"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/LargeIslandSplitter.cpp",
+    "size": 21833,
+    "sha256": "f3a16e67901180d6499c73269ac18e4830cc9655743ae4150f8dc21345cfd23d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/LargeIslandSplitter.h",
+    "size": 8348,
+    "sha256": "c9e2646e9cdf076522eae6fdaeeeaccf3dd1502452f192ad8d73c0a45402637b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/PhysicsLock.h",
+    "size": 5141,
+    "sha256": "9f0657e0051f5b0f291c94aea09ad03254aba4416a07617c9e539fed0bc4bcb1"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/PhysicsScene.cpp",
+    "size": 8092,
+    "sha256": "17d0a9e3eb744a3172d5e37bafc77de9ed2d4eb29481a1da98a77486d59c3e36"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/PhysicsScene.h",
+    "size": 4532,
+    "sha256": "4a75e628e09515a259c0ac4e359007277d8fd9cefe875cbd93805024c04c9ee8"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/PhysicsSettings.h",
+    "size": 6424,
+    "sha256": "e2990ec08a1886aa700208c578c9b4e6f0035271dce74af871e6a400e9289a9b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/PhysicsStepListener.h",
+    "size": 1646,
+    "sha256": "0f3cd99e191a843894abedda74f4415b0c09abe9ff2b599c5be725ae6e7f346b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/PhysicsSystem.cpp",
+    "size": 123192,
+    "sha256": "7c98e24e4457cb27270a839b815078768df489f2a5e4a2baaaf0037d0fe8a1e9"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/PhysicsSystem.h",
+    "size": 24913,
+    "sha256": "c5f421bab7bd8a84e0fea6b0f8c95ec39ef15e30405eb2974fd33cbfc34886f1"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/PhysicsUpdateContext.cpp",
+    "size": 549,
+    "sha256": "10ea6aa4e6deeb4d4bbfa49320ce2d1ca3ada628566fe7f31833d06cdc4cce21"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/PhysicsUpdateContext.h",
+    "size": 11702,
+    "sha256": "1af0e1ff5f2a3f134d4eacbe280b9a3f55935940e2bfc07abd3ce35adef9b320"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Ragdoll/Ragdoll.cpp",
+    "size": 24436,
+    "sha256": "ab6648acc9dd801aa8f078ef93f8c0421c5bd20fcbb01228b16494a9fcd5f4c4"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Ragdoll/Ragdoll.h",
+    "size": 11965,
+    "sha256": "84ae8ee59494b0f0acbd9814ee6ea185a1e148351a645b74f3760f080d8b9074"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/SoftBody/SoftBodyContactListener.h",
+    "size": 3862,
+    "sha256": "d08c28b93c3f0cdfc043c811782a2425d62a567ed7d284b47bb3176e7e6104b9"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/SoftBody/SoftBodyCreationSettings.cpp",
+    "size": 4322,
+    "sha256": "6ed7a1fe6f5c85af76852ea388b8f9903d8a92d6e2e27888d07db85f0f761955"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/SoftBody/SoftBodyCreationSettings.h",
+    "size": 4707,
+    "sha256": "2798123dc1c3ac06445ee83177c5fefd4fe0983c2d74b07132088182bed4cd4d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/SoftBody/SoftBodyManifold.h",
+    "size": 2572,
+    "sha256": "fb6c7b2498219e699c796163c99f04e833b6d1d6e101ab8a5cc61105c254c32f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/SoftBody/SoftBodyMotionProperties.cpp",
+    "size": 51510,
+    "sha256": "6e576dc427417ad15d19682be0b1336cf14e446acba01ac5b39dffd0118cf606"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/SoftBody/SoftBodyMotionProperties.h",
+    "size": 17004,
+    "sha256": "a4c13b9406107c469823277b59fa6ed55274cf5f6e3f76d6e9519dbe5568364c"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/SoftBody/SoftBodyShape.cpp",
+    "size": 15624,
+    "sha256": "01c8855d215b3b6a4e685ec49ea2d9d28971549a5448d21158f2f96fb9744fff"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/SoftBody/SoftBodyShape.h",
+    "size": 5320,
+    "sha256": "142c21d926027c4b4548d91726ee1f06f5a2fc306291280614a5e0067cbea4b5"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/SoftBody/SoftBodySharedSettings.cpp",
+    "size": 41292,
+    "sha256": "0fd6fd9ff7b1e9637f4601da0efe2d1d5bbe356cd62c36416441d9c71d036357"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/SoftBody/SoftBodySharedSettings.h",
+    "size": 19018,
+    "sha256": "1fdbd39d2f836db0ec15d9423a79431a0021da932c41b7e39a32d513b367b43e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/SoftBody/SoftBodyUpdateContext.h",
+    "size": 3254,
+    "sha256": "8418c8e6867d8ad6ccb1bbb1562d9ca3a581d5731085c2264843f37fb14d4788"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/SoftBody/SoftBodyVertex.h",
+    "size": 1609,
+    "sha256": "dd18deb40bee9cdfa032289083820461d8dc644603c846b2186594a678d69e62"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/StateRecorder.h",
+    "size": 5769,
+    "sha256": "06f0acdbb189a27be9b99fcceb727059338cc0ce95409446400c29281abe4d63"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/StateRecorderImpl.cpp",
+    "size": 2269,
+    "sha256": "d0a862f9eb7e91d1e431d1c8579e382af1844b1eadb3d42dee33677e40e6d520"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/StateRecorderImpl.h",
+    "size": 1635,
+    "sha256": "360598b6cc84f9f901a164dcfcd74858473274f8b9f99c8346025af8cd7fc2b1"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/MotorcycleController.cpp",
+    "size": 11380,
+    "sha256": "846e24413637317ae18222668a1111491f9df9e19296cf64e2666a573f87e980"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/MotorcycleController.h",
+    "size": 5790,
+    "sha256": "f2b178e56c945255a5ee2b291103cad0f350868ded64a0c4df1b10c9bc36af7d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/TrackedVehicleController.cpp",
+    "size": 21624,
+    "sha256": "2dd8cbaf5559e0977d335d545205090488776a82e18056abf5581cc677515210"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/TrackedVehicleController.h",
+    "size": 9064,
+    "sha256": "22b27658b93b4cce24b40c9ef0751786ce52d15eeb6b1bf7548a8861201e0387"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/VehicleAntiRollBar.cpp",
+    "size": 873,
+    "sha256": "29ac7b4a465b872ce35cad67eab6a684b0e0b38f41d6c541cfe305f5de8b9eee"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/VehicleAntiRollBar.h",
+    "size": 1265,
+    "sha256": "3b3fbf0d64cd6100357b22b5d1677ae9827b9d2c20460012f31d647b9fcc2589"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/VehicleCollisionTester.cpp",
+    "size": 17396,
+    "sha256": "8885af16a61fa4350420fd5e6ffe4ef330c9ef028739ecb4561a45a3d511b840"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/VehicleCollisionTester.h",
+    "size": 9650,
+    "sha256": "df72f07d65ca882333c59690fe55a9d387d27c29e5e640d0f89850268965d504"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/VehicleConstraint.cpp",
+    "size": 26152,
+    "sha256": "ceac724788cb59dff855eb09f3079e322263e1747f4bbb9a0a1285bb6fd0df40"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/VehicleConstraint.h",
+    "size": 17766,
+    "sha256": "3e00150f07d334e879c01be8be665a57303695821cbe30c31b37fb876faf01f9"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/VehicleController.cpp",
+    "size": 458,
+    "sha256": "02809868bfd654ee616dcc429ffb53b38a122eb77194892504ff320cb00f836a"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/VehicleController.h",
+    "size": 3036,
+    "sha256": "f75c04357673126d1dd288e99ece372f8a7a36f44b6d1a825a25e1526753905c"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/VehicleDifferential.cpp",
+    "size": 3065,
+    "sha256": "d3e019d0153479ac99281ed273b4edfe321b228d6ceb07f1b22d42f58620becb"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/VehicleDifferential.h",
+    "size": 2240,
+    "sha256": "a920e37d3b1eb783860e03b6be9f3c979ddb20458c513d572ea85e2e872e2df1"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/VehicleEngine.cpp",
+    "size": 3678,
+    "sha256": "3a6174daa48debcf891503fa90406db49b65b303b6927e2201af81e0559e8b09"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/VehicleEngine.h",
+    "size": 3937,
+    "sha256": "16e36bc900caf38256a56e09b0e36d310ffd04bb62ff474723ecdbd6b4dab1f9"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/VehicleTrack.cpp",
+    "size": 1466,
+    "sha256": "e6bb02367a031180f66129dd67537d01f76213351aac5873df09707e67d08822"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/VehicleTrack.h",
+    "size": 2063,
+    "sha256": "d5c2d4fef2068e78465a56103904473f8417ad1ab3aa2fa14fbab445b13d8fd4"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/VehicleTransmission.cpp",
+    "size": 4834,
+    "sha256": "b03da907aa894a8104d1e8ad4cf866bf638c0cac27b6b93c732bd906d212d11f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/VehicleTransmission.h",
+    "size": 5125,
+    "sha256": "9bdad1240c1b48e581ff26256a461928def16e5cd8118a29c6c73ece21b11eca"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/Wheel.cpp",
+    "size": 3811,
+    "sha256": "fe9ad608fe4513717391619a33a721b00e2dbab72437b1917ea8c0ca2ffd6542"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/Wheel.h",
+    "size": 9669,
+    "sha256": "0596aeac7fd9487fca287fd4cb98a4a0c53cc82e14b951f2bcc3f7f1aa50e61e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/WheeledVehicleController.cpp",
+    "size": 33536,
+    "sha256": "2e1ceb3c8e7c7661d2c48b7adba5ff23722540c61a10f2a29b4a4b80446bdfdb"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Physics/Vehicle/WheeledVehicleController.h",
+    "size": 12401,
+    "sha256": "8cf2e07c162aa20aacc6f55fe2bc96abf9e0c24d22b40f6577cb266312483366"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/RegisterTypes.cpp",
+    "size": 8898,
+    "sha256": "61291c7977b0fa3c04e30cdafbb3e62aa6f8fdd39d9325eb9cf137a3c7ad2259"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/RegisterTypes.h",
+    "size": 1377,
+    "sha256": "89d14844c1c2020476735bad33a3d9a7b7bc4f738b699b0b4718974402d639d3"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Renderer/DebugRenderer.cpp",
+    "size": 41736,
+    "sha256": "265b2fee86b1b07cc79d854392e4a091bbbfc1c0a3419c2f7f20cb9ffc0152fd"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Renderer/DebugRenderer.h",
+    "size": 18769,
+    "sha256": "911f452456989000aff77c613c6ae447f66208138d28769d58e2faed857f4d6b"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Renderer/DebugRendererPlayback.cpp",
+    "size": 4777,
+    "sha256": "aabd0fb9eacb729823f1ab1e40e126bbff4256a62ca1ad69f661fed7e051c377"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Renderer/DebugRendererPlayback.h",
+    "size": 1415,
+    "sha256": "0705c1103f66320246b71b33fd50aa642de77de404374fa3fdee2dac79d6489c"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Renderer/DebugRendererRecorder.cpp",
+    "size": 4718,
+    "sha256": "a979e9b5ceeb69002ee10c307b335e8c6a4561099590c6d347eac3454bd73036"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Renderer/DebugRendererRecorder.h",
+    "size": 3913,
+    "sha256": "5de0bc0b1582dd7aab5dabd8b0a2a3e319b075e737de77de99cea8737646129e"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Renderer/DebugRendererSimple.cpp",
+    "size": 2506,
+    "sha256": "e73437aceae74de4dd65ce38e7a5562aff0606a2a0b5d5e41d0e8c2b2819ae6c"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Renderer/DebugRendererSimple.h",
+    "size": 3073,
+    "sha256": "066df0f1591191b03584a9b34179e1ad1629fd6e58de0e9c8f4265e111b0e339"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Skeleton/SkeletalAnimation.cpp",
+    "size": 4484,
+    "sha256": "2f6758d806bedbf6129715d9b32b94b36aea96dc606db911b93d90d3056fb909"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Skeleton/SkeletalAnimation.h",
+    "size": 3128,
+    "sha256": "42b76bc7fc34adeb9b877801d7a7f4d06922276dc06fcc7be03ae413e5c51319"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Skeleton/Skeleton.cpp",
+    "size": 1888,
+    "sha256": "dbd67d92f6de8f4e87722acb5e2d29b40e848ebc9684c1c578160eb6e9addc57"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Skeleton/Skeleton.h",
+    "size": 2794,
+    "sha256": "90dfac0462dcae1b6ef39954b12e34c184159f6ead404a951aaa23547685beba"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Skeleton/SkeletonMapper.cpp",
+    "size": 8281,
+    "sha256": "68a3483f53ece6f0330f31167b999daa2e34051b9a7d264e7e2f592a334a54e6"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Skeleton/SkeletonMapper.h",
+    "size": 8554,
+    "sha256": "9d8a02f56150ec2efd8b1d1604b9f887cc0cfe7966f3846d64a17348fff2a145"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Skeleton/SkeletonPose.cpp",
+    "size": 2520,
+    "sha256": "402015d263d822c479d16ad775419b67ad6c8dd39308f049d7c91013b9bf15f3"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/Skeleton/SkeletonPose.h",
+    "size": 3106,
+    "sha256": "e06c6605dc81b1f5769b1ddaca3efd9078ce3a6f912aff7147b9887d08e1054d"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/TriangleSplitter/TriangleSplitter.cpp",
+    "size": 2346,
+    "sha256": "078b84e08ecab7ad6827c4d645a288ac38b8e82a9b68792bd9307ccbb988450f"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/TriangleSplitter/TriangleSplitter.h",
+    "size": 2674,
+    "sha256": "7ba2a79b855c7866ca8949f4787d31bedb0bd13d595eb095836b8fc2eabc6798"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/TriangleSplitter/TriangleSplitterBinning.cpp",
+    "size": 4518,
+    "sha256": "210f268de20040c66b740de76997dd99f0723b000d766f118b45a5b417aebba7"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/TriangleSplitter/TriangleSplitterBinning.h",
+    "size": 1553,
+    "sha256": "4d14cb859a24949610f3b8eaa331e60f8fbd962936f17da77c30309c3e2c2457"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/TriangleSplitter/TriangleSplitterMean.cpp",
+    "size": 1335,
+    "sha256": "27528e392162e9520607f1fb6def2eae971aa411c57d397ab3d5484cb84ab878"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/Jolt/TriangleSplitter/TriangleSplitterMean.h",
+    "size": 808,
+    "sha256": "560d7a84edaa1164ca88e3fa980f050584ea8221b583d675e4d50d1ae2c5794a"
+  },
+  {
+    "path": "game/third_party/JoltPhysics/LICENSE",
+    "size": 1059,
+    "sha256": "8d1c7e0303333dfdafcc6583c620eb163e9c6c53c7cebcb53db78eaa9807e76c"
+  },
+  {
+    "path": "game/third_party/json.hpp",
+    "size": 919975,
+    "sha256": "9bea4c8066ef4a1c206b2be5a36302f8926f7fdc6087af5d20b417d0cf103ea6"
+  },
+  {
+    "path": "game/third_party/recastnavigation/.editorconfig",
+    "size": 159,
+    "sha256": "b2fe4ceaa84ba35278f416fd3ec5e20750286aecddea4e2addb8059d83285f5a"
+  },
+  {
+    "path": "game/third_party/recastnavigation/.gitignore",
+    "size": 665,
+    "sha256": "680e2cf1308d76a993d1d6a0f458699a7da7c594a217c91777084c5eb1f54922"
+  },
+  {
+    "path": "game/third_party/recastnavigation/CHANGELOG.md",
+    "size": 2499,
+    "sha256": "305f7bda105245edd57e78566aff9da9ec5db36d888435e853dab14ac43b3f3d"
+  },
+  {
+    "path": "game/third_party/recastnavigation/CMakeLists.txt",
+    "size": 3051,
+    "sha256": "b88d9e6e8f3c891484446d8b2d8b618ff20450766050f2163a38e26f1af4243b"
+  },
+  {
+    "path": "game/third_party/recastnavigation/CODE_OF_CONDUCT.md",
+    "size": 5638,
+    "sha256": "d60ee21454dd7ece059b2c295e02344d0e5506fe2de7188422a4fd7605b6f0d2"
+  },
+  {
+    "path": "game/third_party/recastnavigation/CONTRIBUTING.md",
+    "size": 7816,
+    "sha256": "e29338bd4885a1430875fd7f9b9972fbaf8006bfde0ba60674dfe8752ba7afd9"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DebugUtils/CMakeLists.txt",
+    "size": 1278,
+    "sha256": "0ba6a5b94af95257bcf845315dfc2248121b2193d9f767ec08c806bad51c2ef8"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DebugUtils/Include/DebugDraw.h",
+    "size": 8539,
+    "sha256": "350c3eda632e014a1b9d211fd88ab5b026430df43b2eff60c20ac0d9f287d834"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DebugUtils/Include/DetourDebugDraw.h",
+    "size": 2571,
+    "sha256": "cc38ecfda006fdf36fa11b96f44c34ac4cbf6d0ce7727f3123784722c8d41d97"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DebugUtils/Include/RecastDebugDraw.h",
+    "size": 2744,
+    "sha256": "e04411d171afd3abc51842efa7489b3ee6882e5c7dfbf15db6ca0bb68f596943"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DebugUtils/Include/RecastDump.h",
+    "size": 1765,
+    "sha256": "7a27efccecd03c39bc49f79eb06171be17849574ca5569f9166e28353de4f90b"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DebugUtils/Source/DebugDraw.cpp",
+    "size": 16587,
+    "sha256": "20681d631fad5a0fffcd1cc0882ff87e89d10c707275dc2003b3ca916d007b4b"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DebugUtils/Source/DetourDebugDraw.cpp",
+    "size": 24367,
+    "sha256": "842646af25f9fcbe361f4a2392e22049a71467c841547a0edfeb04add5155668"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DebugUtils/Source/RecastDebugDraw.cpp",
+    "size": 27904,
+    "sha256": "df7d89e421c9da20c5ef7d253eda3df27e5be0be286793d8a61cc1cf307f43ec"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DebugUtils/Source/RecastDump.cpp",
+    "size": 13163,
+    "sha256": "d0b3204001f373ef35d694ef7c74417359a5a3f5a47f18b8ff3b2d7ea3f190ca"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/CMakeLists.txt",
+    "size": 1376,
+    "sha256": "0f022b03400c23547299bfb93748d59a22fbcd18f518b8b38d0a6c21d9e96883"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/Include/DetourAlloc.h",
+    "size": 2718,
+    "sha256": "e3bc48f597da2b12cd43d957c3010f8d87a9321721ba05aae1558bc16bc0dae9"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/Include/DetourAssert.h",
+    "size": 2346,
+    "sha256": "716eace99734459d98a35309edb8db2fa3b766e73a6c4b8b192045e9d1a70f14"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/Include/DetourCommon.h",
+    "size": 20006,
+    "sha256": "142e46f305ad7252a17d0c62dae9f84e951188a5d1567995c1b6929e116152af"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/Include/DetourMath.h",
+    "size": 650,
+    "sha256": "34cd7e6ad062f4835f092c79d7a95e4a539dd93ce4d565265812db0e9dff0645"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/Include/DetourNavMesh.h",
+    "size": 32639,
+    "sha256": "3d4e4238321dd17160bdcd8b4f8a21abcef95d43c0b9fd426edbfcf3cd76a7ba"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/Include/DetourNavMeshBuilder.h",
+    "size": 6905,
+    "sha256": "f2f46f138967866ba39c21d26967604efbbc9f6bdb7be1e437c2f9db654badd3"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/Include/DetourNavMeshQuery.h",
+    "size": 31781,
+    "sha256": "aecd2b0d32be5c287308fd49cc21d030c57d581c16efa2ec3ddc8edcbc629100"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/Include/DetourNode.h",
+    "size": 4812,
+    "sha256": "fbde19f591f6e75382bb0e0e19e8591c6415c6c1aef79453978840c0986ecbf0"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/Include/DetourStatus.h",
+    "size": 2772,
+    "sha256": "a82157d29a6ef53dba05628d934c208c60260da31745e8ffd21056669c37a10e"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/Source/DetourAlloc.cpp",
+    "size": 1565,
+    "sha256": "2d021a2982f55b4f1406fa2e214104e4a1a645d4dffc7c3720d6ffaf95b6dde9"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/Source/DetourAssert.cpp",
+    "size": 1229,
+    "sha256": "071fd42170f3cc4960c2b897eb4643995e08a7b9b24dfc3048e1f0fb8c3ae2e7"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/Source/DetourCommon.cpp",
+    "size": 10218,
+    "sha256": "12eb5fb52bf960401ff0ec19efaf784ee305301de8586a8eb16cb79b4deb21dc"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/Source/DetourNavMesh.cpp",
+    "size": 47013,
+    "sha256": "60a84b1b986bd0e1c6911e057cac21747b9a647f4d7cfc5388dd77236331df06"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/Source/DetourNavMeshBuilder.cpp",
+    "size": 25014,
+    "sha256": "defd67990ddeaeca13c55f02cb92997eefd839ddeb4188ac323c37cb817e765a"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/Source/DetourNavMeshQuery.cpp",
+    "size": 108606,
+    "sha256": "f709ec61a82f2523c791dfc5234b162a96258365d5379c682362762ae499011c"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Detour/Source/DetourNode.cpp",
+    "size": 5084,
+    "sha256": "464b86a04dbd55138fdcb909e57d52c0575603f2a21fc6495ff40c572e06c1c8"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourCrowd/CMakeLists.txt",
+    "size": 1258,
+    "sha256": "a567fc4cfc0c1e3ce435c0d535da9ddcbef1ad80c6f8ab1f39aee4ac6c99de91"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourCrowd/Include/DetourCrowd.h",
+    "size": 18607,
+    "sha256": "4f3270525445b27c9f4f56e594b31a1fb9b0555a4c10667ae3e4180c76ef0580"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourCrowd/Include/DetourLocalBoundary.h",
+    "size": 2143,
+    "sha256": "fe84c74d858cdc390db3fa4968ee132a2fa769e6ff82ccb80dc2edee770e385a"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourCrowd/Include/DetourObstacleAvoidance.h",
+    "size": 5505,
+    "sha256": "8e72f025b486287aec39908b562bd82a36c7c9036d38808879a829c455cf9428"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourCrowd/Include/DetourPathCorridor.h",
+    "size": 7649,
+    "sha256": "e6b4b598cdc9cff01f089bc36ac0535dfc17c78ac3d981c6f2c16ed907382a47"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourCrowd/Include/DetourPathQueue.h",
+    "size": 2460,
+    "sha256": "b181fc5b53a32d7ae846c1fa87009d2808f58acaafc0ae2a0296568400044667"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourCrowd/Include/DetourProximityGrid.h",
+    "size": 2196,
+    "sha256": "45f2b656f4043bf4df83f8fa93f6992041499271e532067da2d613f8b3e18405"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourCrowd/Source/DetourCrowd.cpp",
+    "size": 39593,
+    "sha256": "59ca5b589ba7dcd60a71c895d4383f96708987f1857d01fbee6529d7488ae017"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourCrowd/Source/DetourLocalBoundary.cpp",
+    "size": 3628,
+    "sha256": "4014437586068c0be9349643175915190da068f6c80f15fb744c6a642a5db91b"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourCrowd/Source/DetourObstacleAvoidance.cpp",
+    "size": 16005,
+    "sha256": "482a85a11f0271e5a2e95583e1afd41286750f2294a640b001817d0016adc8aa"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourCrowd/Source/DetourPathCorridor.cpp",
+    "size": 18432,
+    "sha256": "9311477fe8137c3d3b1d84bb41389f9d73ffbe802a957b145eeca053ab2c19ff"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourCrowd/Source/DetourPathQueue.cpp",
+    "size": 4931,
+    "sha256": "4f97965a36d8bc5225a0afeef68c9d7b7ccf2cfc96411e0d5e8a45ebb2cbc807"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourCrowd/Source/DetourProximityGrid.cpp",
+    "size": 5007,
+    "sha256": "37001a94ca37926e89655e76995e6ef3d6d819915d0b10f0014b7628ce132f5f"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourTileCache/CMakeLists.txt",
+    "size": 1312,
+    "sha256": "2f50672e8ad02ff4dd43b108bfeaf0e2881eb7bdd7c21abb5c05648a9b00930e"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourTileCache/Include/DetourTileCache.h",
+    "size": 7664,
+    "sha256": "d5922a285111ffd40ed7ae840868bb0b003c5d11a8ba4cb3fecb4d2222145eb6"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourTileCache/Include/DetourTileCacheBuilder.h",
+    "size": 5573,
+    "sha256": "2471d558ed6ebcebded29e028d6ea6cb5e493b4e681ea70068c3d6aa261e5713"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourTileCache/Source/DetourTileCache.cpp",
+    "size": 22437,
+    "sha256": "a086c6cb352235ba6ccfa2e3bed3eed2c24385fc5d00cd65b5fd240946c85872"
+  },
+  {
+    "path": "game/third_party/recastnavigation/DetourTileCache/Source/DetourTileCacheBuilder.cpp",
+    "size": 60398,
+    "sha256": "c5247d33fa113aae052548fca18ecf2857c2e19ae7a60983a4f078f787cfc0aa"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Doxyfile",
+    "size": 123040,
+    "sha256": "bb3efd3d3db27c34d002aabc3e11f1a1e6790d97a1ae934e82eb51c213abae0b"
+  },
+  {
+    "path": "game/third_party/recastnavigation/License.txt",
+    "size": 877,
+    "sha256": "ffad87821cce7cfd3be00b63ffadd01b04e83a4c6a0bcc68f06362ffd42d705e"
+  },
+  {
+    "path": "game/third_party/recastnavigation/README.md",
+    "size": 5006,
+    "sha256": "07f0686a1984c7edbb370fc9ca45460261124bb52b4bce224d1a0bc1e72e81cc"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Recast/CMakeLists.txt",
+    "size": 1146,
+    "sha256": "308249c64bd8822d3e1aff5a4c764f193b5c27bee0b93414a35712e337f8e5de"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Recast/Include/Recast.h",
+    "size": 62666,
+    "sha256": "12f5655e2aa4617e34542b62c982dad6f3d35f9e355e2b03531087e3ea1834c8"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Recast/Include/RecastAlloc.h",
+    "size": 13923,
+    "sha256": "e7e8da7ed0e3b35a846b34111552df2437094d632cf577ceb674e07a6090415b"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Recast/Include/RecastAssert.h",
+    "size": 2194,
+    "sha256": "326d3c0d01ade18396acea7a6cf375502fb034a1b88470815bcd29357a59b6fd"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Recast/Source/Recast.cpp",
+    "size": 14114,
+    "sha256": "b4537899945b88f5d3c21006b95a9184b906746f5d1508dc4984febf25e6a2a1"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Recast/Source/RecastAlloc.cpp",
+    "size": 1596,
+    "sha256": "12cee9681861cd64c04f353311851adff87de0ce5d4bc8a9c7aa912202cef628"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Recast/Source/RecastArea.cpp",
+    "size": 16223,
+    "sha256": "c6a7626a2491db6d5ebc62ec796f9368803cbc290592e51d299997e324859735"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Recast/Source/RecastAssert.cpp",
+    "size": 1247,
+    "sha256": "50f177378c8d247a3f6a52d203759fc28a87aa02852d7626d6aaf7b4ed581820"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Recast/Source/RecastContour.cpp",
+    "size": 31454,
+    "sha256": "6de569211cf7e1f3137c323a04c434f4c4ea16acdeffc21559701d742e6e890e"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Recast/Source/RecastFilter.cpp",
+    "size": 6266,
+    "sha256": "dc4213e6d9db57e73aedb30bee9a4f388ff23702e36126649ba2f97b013789fa"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Recast/Source/RecastLayers.cpp",
+    "size": 18242,
+    "sha256": "f2ecd3f033d9734338af8d5ab919bf211ff97e28da44ab5fc4932ec057437f8f"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Recast/Source/RecastMesh.cpp",
+    "size": 44049,
+    "sha256": "d65df5705522721a68367938b81f2f9ea3dfe44d31914a034b24d75cf21b8fce"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Recast/Source/RecastMeshDetail.cpp",
+    "size": 41088,
+    "sha256": "42abef9413d211f1c4c5f5e2c1942c8cde8c2a4a491fb404d382a954417bd982"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Recast/Source/RecastRasterization.cpp",
+    "size": 18212,
+    "sha256": "ae98ceb27877221a9c4d4c6cddf97626bcea05e40b853b83eafd8ececd964f33"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Recast/Source/RecastRegion.cpp",
+    "size": 47521,
+    "sha256": "43d23998e09aa22094f11a1e0483759e03089ae5f0a67292d5179d609d0a24da"
+  },
+  {
+    "path": "game/third_party/recastnavigation/Roadmap.md",
+    "size": 8644,
+    "sha256": "f4e0f8d2a7177513b019bb6ae90e8aa9d4d8ae0fcfc9afa42c9ad54f8b5059a9"
+  },
+  {
+    "path": "game/third_party/recastnavigation/recastnavigation-config.cmake.in",
+    "size": 87,
+    "sha256": "11f6dd5b72d6bbe5a85590f8a3fc886364569019576e8c6d9bcaacb5cdc71a3e"
+  },
+  {
+    "path": "game/third_party/recastnavigation/recastnavigation.pc.in",
+    "size": 396,
+    "sha256": "1138fab4a6dc9ef05f8371a12f2eb6a110d5654f5d560ecaafc8c865bf243438"
+  },
+  {
+    "path": "game/third_party/recastnavigation/version.h.in",
+    "size": 131,
+    "sha256": "5602f09fa99139d538e2909cef58421be584be3c71d2659677b20aef4818b91d"
+  },
+  {
+    "path": "game/third_party/stb/LICENSE",
+    "size": 2510,
+    "sha256": "bebfe904b14301657e4e5d655c811d51fd31b97c455b9cc2d8600d6bac6cff63"
+  },
+  {
+    "path": "game/third_party/stb/VERSION.txt",
+    "size": 42,
+    "sha256": "6ea83037f170659f2713841af9a8affd094bf82c8228dfec939021bb0f608d83"
+  },
+  {
+    "path": "game/third_party/stb/stb_image_write.h",
+    "size": 71221,
+    "sha256": "cbd5f0ad7a9cf4468affb36354a1d2338034f2c12473cf1a8e32053cb6914a05"
+  },
+  {
+    "path": "game/tools/add-input-overlay.py",
+    "size": 12334,
+    "sha256": "d1ec970a7d5a9a2ec4f8f8c315d420053a4e55850601d02cc6a980ab5927b21e"
+  },
+  {
+    "path": "game/tools/export-combat-audio.cpp",
+    "size": 1480,
+    "sha256": "40dd8af20584f99c1e24939c757d759fbb4915ad74da66e24757b98d803979a4"
+  },
+  {
+    "path": "game/tools/finalize-demo.py",
+    "size": 5755,
+    "sha256": "3170624c9440871450ed30aa188a796dea7253706f6003e19e5519b228fbd8fc"
+  },
+  {
+    "path": "game/tools/test-camera-input.cpp",
+    "size": 2738,
+    "sha256": "20b0852299432917b30861f5f9724b09ff698ffab364352bbb6296b1dfa042f0"
+  },
+  {
+    "path": "game/tools/test-combat-cues.cpp",
+    "size": 1632,
+    "sha256": "3144cb7af51995644461b7f137f15e4e256b7c1d281561a531c2fc9b424c3670"
+  },
+  {
+    "path": "game/tools/test-demo-media.cpp",
+    "size": 2010,
+    "sha256": "3f7d7e475a8f95abefed461ab39eaf399bc4f0bf64885de929835a108f617f70"
+  },
+  {
+    "path": "game/tools/test-reference-pacing.cpp",
+    "size": 767,
+    "sha256": "185ff656b434fe81cedf35a446d251e6f0274639037f2877f18e296da89f0b31"
+  },
+  {
+    "path": "game/tools/test-road-surface.cpp",
+    "size": 1931,
+    "sha256": "3d06ba41458404808c7e2773021fd2447ad81d9a3f6d451e4086008887995b92"
+  },
+  {
+    "path": "game/tools/test-scene-config.cpp",
+    "size": 1983,
+    "sha256": "dd9b590f9002888beca23bc2188f9831829abbdcacff3e6e30a31b2f10c18378"
+  },
+  {
+    "path": "licenses/MG4CF-LICENSE",
+    "size": 11357,
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  },
+  {
+    "path": "licenses/TAEHV-LICENSE",
+    "size": 1073,
+    "sha256": "532f9e394518ffddecd294a517d5b41d79d3d3866c3fb95a6cb0e8bcc02370bf"
+  },
+  {
+    "path": "matrix_game/__init__.py",
+    "size": 39,
+    "sha256": "6caec048ff14d4b867ff62c0189c23e3b13f769f2be9ded16ff5322ab6c6c052"
+  },
+  {
+    "path": "matrix_game/cli.py",
+    "size": 767,
+    "sha256": "2fe9e4c4cc7cf16ab1f8a19ce8acbeca1177f53bf480b0cfcf9d81666d68029b"
+  },
+  {
+    "path": "matrix_game/configs/ancient-egypt.json",
+    "size": 393,
+    "sha256": "12e12ab8a73515ba5ce0dc31845123cb92e0dafb007ab8610d005cea7c76e9b2"
+  },
+  {
+    "path": "matrix_game/configs/castle.json",
+    "size": 372,
+    "sha256": "fc58fb9dfc1a668e63d4c4afd2512f8b49eda6bf900703ea2a310caaf5d23d1a"
+  },
+  {
+    "path": "matrix_game/configs/racing.json",
+    "size": 270,
+    "sha256": "d5637cf3086f4c24495e61d5c517ef0b08ee8a1303a33e47facdbea87b028922"
+  },
+  {
+    "path": "matrix_game/inference/__init__.py",
+    "size": 39,
+    "sha256": "6caec048ff14d4b867ff62c0189c23e3b13f769f2be9ded16ff5322ab6c6c052"
+  },
+  {
+    "path": "matrix_game/inference/decoder.py",
+    "size": 1789,
+    "sha256": "88c2ed95d31829365405143ecdc43bc4ff991fe0d39bca955c274af3f8246d2d"
+  },
+  {
+    "path": "matrix_game/inference/kernels.py",
+    "size": 11273,
+    "sha256": "d2c18b5ddb52d056f055879d9a12f944eccf73e8ff9c9c0793f175b2a43f8149"
+  },
+  {
+    "path": "matrix_game/inference/loader.py",
+    "size": 5339,
+    "sha256": "fa2525133e1358348a14e78052bd0f55ec5c36298df322e5f2ada982662b4aef"
+  },
+  {
+    "path": "matrix_game/inference/loading.py",
+    "size": 3412,
+    "sha256": "08ac1ac792d4845a21e96b1c031498de1d4dabbd3b00bea293a90ac9d27001be"
+  },
+  {
+    "path": "matrix_game/inference/offline.py",
+    "size": 7228,
+    "sha256": "f1598940605cc1eb7770a2e0fb22e58324c272b6c25d8b265ecaa8d85d89d148"
+  },
+  {
+    "path": "matrix_game/inference/preprocessing.py",
+    "size": 1276,
+    "sha256": "95a4a1f6f6bd23e2f66f1abe03120d70d7022704b663736d781bf3c6faf1307f"
+  },
+  {
+    "path": "matrix_game/inference/rollout.py",
+    "size": 6145,
+    "sha256": "128015a1abaa888c6feeb5c39b0ce0ec6d1ba90e3adbcf9b85c43c1e9a4b21d7"
+  },
+  {
+    "path": "matrix_game/inference/rope_kernel.py",
+    "size": 7196,
+    "sha256": "10940995cc02f18ae15f0688f2d2feccf4ee406b2cd7d6a05432a91589bfc480"
+  },
+  {
+    "path": "matrix_game/inference/runtime.py",
+    "size": 13144,
+    "sha256": "0fa4e9037338c933c1518efb0824cad1147aa79471cf45bfc95724f86176b96f"
+  },
+  {
+    "path": "matrix_game/inference/scheduler.py",
+    "size": 7967,
+    "sha256": "3c11b99fa4fe3bf7d49d0e1d219b3f069407c3d349f7a2589efe5a20ff0e2266"
+  },
+  {
+    "path": "matrix_game/inference/seq_parallel.py",
+    "size": 327,
+    "sha256": "a5b9f74bd95c45665ce14f49ca8305a4fc184a4233dea70522999364b49585e3"
+  },
+  {
+    "path": "matrix_game/inference/stream.py",
+    "size": 14047,
+    "sha256": "01cfe1e6cf4efa5f48135d5da06643b9cf3c07e66301ff7191c867fa027bf2f0"
+  },
+  {
+    "path": "matrix_game/inference/taehv.py",
+    "size": 40785,
+    "sha256": "00e42effc686f2d052d2e1806d93f888f9fa5e8c3b3f3ed9fab369133a79b51e"
+  },
+  {
+    "path": "matrix_game/inference/text.py",
+    "size": 2413,
+    "sha256": "3909b7feab623ab166d1bda804de9f047bb2b0e5f4f8ac026f07961c3d256423"
+  },
+  {
+    "path": "matrix_game/inference/vae_graph.py",
+    "size": 5783,
+    "sha256": "0a4780534a5831c3b26c7def9986c288d9fc938e58393e319564b22b6e633509"
+  },
+  {
+    "path": "matrix_game/inference/wan/__init__.py",
+    "size": 39,
+    "sha256": "6caec048ff14d4b867ff62c0189c23e3b13f769f2be9ded16ff5322ab6c6c052"
+  },
+  {
+    "path": "matrix_game/inference/wan/modules/__init__.py",
+    "size": 39,
+    "sha256": "6caec048ff14d4b867ff62c0189c23e3b13f769f2be9ded16ff5322ab6c6c052"
+  },
+  {
+    "path": "matrix_game/inference/wan/modules/attention.py",
+    "size": 6126,
+    "sha256": "24f07ae9c1e1d712b15510b19c3b95360eed17127169afbc7f16185fba754155"
+  },
+  {
+    "path": "matrix_game/inference/wan/modules/causal_model.py",
+    "size": 72516,
+    "sha256": "56cb2359c70b877a7292f02b7324dba28e15113f1e0959cde207a7fa736b73de"
+  },
+  {
+    "path": "matrix_game/inference/wan/modules/model.py",
+    "size": 37041,
+    "sha256": "4f8d33bf1c3c494406935cee9677668e58bd2115a9d93997c7eef5e2fc8fece7"
+  },
+  {
+    "path": "matrix_game/inference/wan/modules/t5.py",
+    "size": 17015,
+    "sha256": "4aca531c80db1ded2918bf36c151c5218b4dcada369f54a4e537b1e65dde7183"
+  },
+  {
+    "path": "matrix_game/inference/wan/modules/tokenizers.py",
+    "size": 2431,
+    "sha256": "cf5b189c1ae017326efadab2fc6380ba223fa7a59d0be6464bd264db53c76934"
+  },
+  {
+    "path": "matrix_game/inference/wan/modules/vae.py",
+    "size": 23782,
+    "sha256": "57cf320225990a79dd3bf013abf607d0ffa8d0d6e9cd82c46399a73408302e85"
+  },
+  {
+    "path": "matrix_game/inference/wan/modules/vae2_2.py",
+    "size": 31992,
+    "sha256": "084045f6dd55f7b071792ba4845ee490d00b7c3631bb47ad67c5c2d8c31c71ef"
+  },
+  {
+    "path": "matrix_game/inference/wrappers.py",
+    "size": 38116,
+    "sha256": "2790e661b50e533f656db7b6f941521d433b8ac05649f24d152b13f271b383fc"
+  },
+  {
+    "path": "matrix_game/profiling.py",
+    "size": 1431,
+    "sha256": "5026b70c004454b5460ceb3fadf4368260c2570402e8b3bc4d68765a1e9f0fd1"
+  },
+  {
+    "path": "matrix_game/resources.py",
+    "size": 5092,
+    "sha256": "e4f3c3df10bec6cb0e6db24a78d2e922e71b22b139686249f77ea337b3f57014"
+  },
+  {
+    "path": "matrix_game/scenes.py",
+    "size": 4264,
+    "sha256": "47533f78b6784ca5059e44d61cc715677220ff3790fe040b24f70324ce0f8f13"
+  },
+  {
+    "path": "matrix_game/server/__init__.py",
+    "size": 39,
+    "sha256": "6caec048ff14d4b867ff62c0189c23e3b13f769f2be9ded16ff5322ab6c6c052"
+  },
+  {
+    "path": "matrix_game/server/app.py",
+    "size": 27619,
+    "sha256": "a65801aa5a03d2a178f07b6e99be99c3b1fc8fa92015a324272cb9bdd4125fa0"
+  },
+  {
+    "path": "matrix_game/server/game.py",
+    "size": 8164,
+    "sha256": "ca0596d7912d35466e33b5d09c7b651b05126032abd39e78ec32bf1d3cf438be"
+  },
+  {
+    "path": "matrix_game/server/racing.py",
+    "size": 6895,
+    "sha256": "2bff388fbf83be72e88e80882128a9777ebab57afbb2740866f017a1b9c32a57"
+  },
+  {
+    "path": "matrix_game/server/reference_input.py",
+    "size": 1167,
+    "sha256": "0943c96e5cdd4b993e03292e43bf6ffb697e3f92fa0ddf315052b47f5da38d32"
+  },
+  {
+    "path": "matrix_game/server/transport/__init__.py",
+    "size": 39,
+    "sha256": "6caec048ff14d4b867ff62c0189c23e3b13f769f2be9ded16ff5322ab6c6c052"
+  },
+  {
+    "path": "matrix_game/server/transport/output.py",
+    "size": 17737,
+    "sha256": "0a4c7c260d6a90eca55ee5eac6f9b34507552f4f0981996ea45c16fd38d8693d"
+  },
+  {
+    "path": "matrix_game/server/transport/publisher.py",
+    "size": 5639,
+    "sha256": "2d6ca93f4ef45bf8404937f7afc0c5771c3adad306571528f963837d505cc47d"
+  },
+  {
+    "path": "matrix_game/server/transport/rtsp.py",
+    "size": 6546,
+    "sha256": "c1e3d9a226cab8fb965ee3e4a3653371bf2deb969bd1079d4b79ea5da4981fee"
+  },
+  {
+    "path": "matrix_game/web/audio.js",
+    "size": 3818,
+    "sha256": "590bfcf7fab067e4ccf0abf18a3ba162856d2020516bfd26b3b2ad087618f72f"
+  },
+  {
+    "path": "matrix_game/web/hud.js",
+    "size": 3679,
+    "sha256": "19d799873fef656dd2e08f2c4bf1562eec45308518aea289ef5a8de11106f95c"
+  },
+  {
+    "path": "matrix_game/web/index.html",
+    "size": 15346,
+    "sha256": "692c7f4a7034bdd2301b1661b0921d95393b42ec064b825992e3c991c33e652f"
+  },
+  {
+    "path": "matrix_game/web/mediamtx-reader.LICENSE",
+    "size": 1062,
+    "sha256": "ecae73b0a23185a35a1222edc0aae5245bb9739420bad0125b0c42e935301a80"
+  },
+  {
+    "path": "matrix_game/web/mediamtx-reader.js",
+    "size": 18929,
+    "sha256": "a802f229b803c33713d4c69c4cc0d480108a5bf384947aeee4aaf04268bf85c1"
+  },
+  {
+    "path": "matrix_game/web/racing.js",
+    "size": 5019,
+    "sha256": "43b4408389271023f3599d662f00b9274b44e299f630b3c2f2c458b73db2bc09"
+  },
+  {
+    "path": "pyproject.toml",
+    "size": 1282,
+    "sha256": "2bef281ee5254bdc3060db72def2c59fc1cff2b90d4720dbd8db1b1cc500a63d"
+  },
+  {
+    "path": "releases/README.md",
+    "size": 3902,
+    "sha256": "24ce760405ff7015b8a2a552c5d789c251031761577b70ccf56a95345c893467"
+  },
+  {
+    "path": "releases/game-assets.json",
+    "size": 6443,
+    "sha256": "c4931f203e8668f15dc73f69d3efc57e7e8c6344bf105ead8668eb76ba6ea1a4"
+  },
+  {
+    "path": "releases/models.json",
+    "size": 6031,
+    "sha256": "44f23435f06f3497fb6377b0e1dd73b2c5a691bd79a963126c86792b1bfc4309"
+  },
+  {
+    "path": "scripts/build_game.sh",
+    "size": 289,
+    "sha256": "4727f573fb01ccbddc8e598a5dbed19f6ca4490b3260b20299b186e0a8924873"
+  },
+  {
+    "path": "scripts/build_racing.sh",
+    "size": 317,
+    "sha256": "3d4d086aaf8b4636ff6408f846b35d9890d1f60a1ef9d6aec32a447a45922bff"
+  },
+  {
+    "path": "scripts/export_checkpoint.py",
+    "size": 2566,
+    "sha256": "bd94cb345ddb8a5cd64aa9fe4f01fc1a5f4637590a7fcbbd8cf4867cfab9b1e5"
+  },
+  {
+    "path": "scripts/package_release.py",
+    "size": 6354,
+    "sha256": "7864016ac740017cc33ea1a2bef5dcb89581d245b92995857fde31b888c2c468"
+  },
+  {
+    "path": "scripts/play.sh",
+    "size": 234,
+    "sha256": "843710a9bfea0264480e368e1bea92fd5b667740c07b8906ed142e885490162f"
+  },
+  {
+    "path": "scripts/serve.sh",
+    "size": 512,
+    "sha256": "a57d08cf85148a42bfc1554026f441ca1892932ba98ce5921d0a73370ffcb254"
+  },
+  {
+    "path": "tests/browser/test_audio.cjs",
+    "size": 1742,
+    "sha256": "fdaba0f462348d702660d52d0e7bc420a8f05222db3e2a53e7f181cfa4fb3ff3"
+  },
+  {
+    "path": "tests/browser/test_audio_browser.cjs",
+    "size": 3022,
+    "sha256": "e99d5329c388e4eb1b8dd0470cd0e866cd57954b6e36e352f3c37cd8fcb2d98a"
+  },
+  {
+    "path": "tests/browser/test_browser.cjs",
+    "size": 8678,
+    "sha256": "b771dbfea8a565fee2e686b30677d4fe643ac2602331f7a6ba3647e3ba4a3b1b"
+  },
+  {
+    "path": "tests/browser/test_hud.cjs",
+    "size": 1100,
+    "sha256": "430abd5e5e174e3df66c2264fb4e181a9f86c01493a32569da7ca1835ce1d137"
+  },
+  {
+    "path": "tests/browser/test_racing.cjs",
+    "size": 5472,
+    "sha256": "ed3d7469fa1bebd7187aec7a30e9314c51d47bc9857c539b1e8066b8b50bf581"
+  },
+  {
+    "path": "tests/browser/test_stability.cjs",
+    "size": 4171,
+    "sha256": "4da8cb72fd412aa6ebdfb826f1bb5c9194ce32cd4f4cc8c452475e5de82f5c0c"
+  },
+  {
+    "path": "tests/test_caption_encoder.py",
+    "size": 1297,
+    "sha256": "481905f6593cf311e3003f66ecefa5c85c52a2f77785a76ada67614fcfd5f7a5"
+  },
+  {
+    "path": "tests/test_chunk_profile.py",
+    "size": 4638,
+    "sha256": "afb0330b40b8a3e7952909adead3d80ce66bf4c3ad3b589ad455fdc4f403cff1"
+  },
+  {
+    "path": "tests/test_cli.py",
+    "size": 534,
+    "sha256": "7f04df9b53af33ad7619e9c1a554d7167045fa4ed1ec94ad5747257daa549474"
+  },
+  {
+    "path": "tests/test_display.py",
+    "size": 7230,
+    "sha256": "ede4cc3916c74522ccfcc6bd9a70cb6ecbc4f655a2b0c3e15d5fcce8064f4f6b"
+  },
+  {
+    "path": "tests/test_loading.py",
+    "size": 552,
+    "sha256": "907e02d478ca58122fe958b6098626219a29ead3eccac3e93e0d972d48c3b7a3"
+  },
+  {
+    "path": "tests/test_media_environment.py",
+    "size": 761,
+    "sha256": "d459fb28499002165b12650b4b11c615fe6567ea2cc9c4d0b7e69bc2c6e86d7a"
+  },
+  {
+    "path": "tests/test_offline.py",
+    "size": 3597,
+    "sha256": "c455d23a3de48cc1ad16d3e523fea2fc67f9296b601377ffe4ab290afaa1e1bd"
+  },
+  {
+    "path": "tests/test_packaging.py",
+    "size": 3393,
+    "sha256": "ccd5a86a1245d423a3218913683969591e89fca92c16fd7804cd9de7e7910c5e"
+  },
+  {
+    "path": "tests/test_preprocessing.py",
+    "size": 1509,
+    "sha256": "e2a5753027940afa081584be7b053d17038319854aeb202084d178025a03d583"
+  },
+  {
+    "path": "tests/test_racing.py",
+    "size": 3295,
+    "sha256": "b1f4abc395c059f7fbdf8b6ae3251c47bfacd70f2b26564c0b2af0ba40cf2cf5"
+  },
+  {
+    "path": "tests/test_reference_input.py",
+    "size": 4932,
+    "sha256": "f5f73cdaf3a0e2d7a8847439ea95ec752ff32933d754e4c7b2a1edf0db1d4423"
+  },
+  {
+    "path": "tests/test_release_runtime.py",
+    "size": 2651,
+    "sha256": "2e0d426d388a7e3a89d3fa649f19d8b59f17bb683a7bce19fee9aa01bc943851"
+  },
+  {
+    "path": "tests/test_resources.py",
+    "size": 7177,
+    "sha256": "abfb558be971dd3d121ee7486aa422864c8c68bebdde855e1245b5fe30b8ff33"
+  },
+  {
+    "path": "tests/test_sink.py",
+    "size": 7717,
+    "sha256": "7a7a4b593415aacf6b2228c30ccb28ac9aa49809ea1e39ec6d387bbcabbf6797"
+  }
+]

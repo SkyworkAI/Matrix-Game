@@ -1,0 +1,167 @@
+{
+  "schema": 1,
+  "version": "4.0.0rc1",
+  "kind": "models",
+  "license": "Apache-2.0; TAEHV MIT",
+  "bundles": {
+    "shared": [
+      {
+        "path": "base/models_t5_umt5-xxl-enc-bf16.pth",
+        "size": 11361920418,
+        "sha256": "7cace0da2b446bbbbc57d031ab6cf163a3d59b366da94e5afe36745b746fd81d",
+        "repo_id": "alibaba-pai/Wan2.2-Fun-5B-Control",
+        "repo_type": "model",
+        "revision": "b8bc1a65ab71d054ba4636dc0dac104aa4df2686",
+        "repo_path": "models_t5_umt5-xxl-enc-bf16.pth"
+      },
+      {
+        "path": "base/Wan2.2_VAE.pth",
+        "size": 2818839170,
+        "sha256": "20eb789667fa5e60e7516bf509512f6cb61f01b0aa0695eadaea930c13892b36",
+        "repo_id": "alibaba-pai/Wan2.2-Fun-5B-Control",
+        "repo_type": "model",
+        "revision": "b8bc1a65ab71d054ba4636dc0dac104aa4df2686",
+        "repo_path": "Wan2.2_VAE.pth"
+      },
+      {
+        "path": "base/google/umt5-xxl/special_tokens_map.json",
+        "size": 6623,
+        "sha256": "7b8a9f5040adb67b5805abdfd42c1f8d0f3d0e711f10726580eb3789cd0ad61d",
+        "repo_id": "alibaba-pai/Wan2.2-Fun-5B-Control",
+        "repo_type": "model",
+        "revision": "b8bc1a65ab71d054ba4636dc0dac104aa4df2686",
+        "repo_path": "google/umt5-xxl/special_tokens_map.json"
+      },
+      {
+        "path": "base/google/umt5-xxl/spiece.model",
+        "size": 4548313,
+        "sha256": "e3909a67b780650b35cf529ac782ad2b6b26e6d1f849d3fbb6a872905f452458",
+        "repo_id": "alibaba-pai/Wan2.2-Fun-5B-Control",
+        "repo_type": "model",
+        "revision": "b8bc1a65ab71d054ba4636dc0dac104aa4df2686",
+        "repo_path": "google/umt5-xxl/spiece.model"
+      },
+      {
+        "path": "base/google/umt5-xxl/tokenizer.json",
+        "size": 16837417,
+        "sha256": "6e197b4d3dbd71da14b4eb255f4fa91c9c1f2068b20a2de2472967ca3d22602b",
+        "repo_id": "alibaba-pai/Wan2.2-Fun-5B-Control",
+        "repo_type": "model",
+        "revision": "b8bc1a65ab71d054ba4636dc0dac104aa4df2686",
+        "repo_path": "google/umt5-xxl/tokenizer.json"
+      },
+      {
+        "path": "base/google/umt5-xxl/tokenizer_config.json",
+        "size": 61728,
+        "sha256": "ed9a3a8b0faa71a70a32847e0435fe036e6e112d4df4edb7bb48a921e344dc05",
+        "repo_id": "alibaba-pai/Wan2.2-Fun-5B-Control",
+        "repo_type": "model",
+        "revision": "b8bc1a65ab71d054ba4636dc0dac104aa4df2686",
+        "repo_path": "google/umt5-xxl/tokenizer_config.json"
+      },
+      {
+        "path": "base/taew2_2.pth",
+        "size": 22884021,
+        "sha256": "d053e216ca50e2bb837bbcd79b85f0366bea00e5938025572382a773b74c559a"
+      },
+      {
+        "path": "LICENSE",
+        "size": 11357,
+        "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+      },
+      {
+        "path": "THIRD_PARTY_NOTICES.md",
+        "size": 2614,
+        "sha256": "d25466469581d8ab4342203796d88d2bfcfbddc284dec7a8bfc6ca56afe1a8e1"
+      },
+      {
+        "path": "licenses/TAEHV-LICENSE",
+        "size": 1073,
+        "sha256": "532f9e394518ffddecd294a517d5b41d79d3d3866c3fb95a6cb0e8bcc02370bf"
+      },
+      {
+        "path": "licenses/MG4CF-LICENSE",
+        "size": 11357,
+        "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+      }
+    ],
+    "castle": [
+      {
+        "path": "models/castle/model.safetensors",
+        "size": 10002122256,
+        "sha256": "f57a4e964535f3bda80210bc1333e8364827a2e06b46d8154fbbe1c455b29c16",
+        "repo_path": "fps-castle/model.safetensors"
+      },
+      {
+        "path": "models/castle/sink.png",
+        "size": 1753604,
+        "sha256": "3ebfd83095f2bf159d17ce2e71e50238a78c2080dd147db28e79fabc5a7b73b7",
+        "repo_path": "fps-castle/sink.png"
+      },
+      {
+        "path": "models/castle/model.json",
+        "size": 213,
+        "sha256": "b7347751e629a0579a68f13e0294d378f51078cfc787630f63f8e24c84ca9dee",
+        "repo_path": "fps-castle/model.json"
+      },
+      {
+        "path": "models/castle/inference.json",
+        "size": 807,
+        "sha256": "3be7e4065a9257a45fe6a89587ab23338697d40207b7649c24dc904bfc270d51",
+        "repo_path": "fps-castle/inference.json"
+      }
+    ],
+    "ancient-egypt": [
+      {
+        "path": "models/ancient-egypt/model.safetensors",
+        "size": 10002122256,
+        "sha256": "a8fffd22a0f8542a27c4975ee569d838ac925bf411cbad19654766b1ec2ae547",
+        "repo_path": "fps-egypt/model.safetensors"
+      },
+      {
+        "path": "models/ancient-egypt/sink.png",
+        "size": 1490954,
+        "sha256": "94e03c1a951467475f120746f71a30afd555176ea3a3d120e4d5ef6d3f8645f6",
+        "repo_path": "fps-egypt/sink.png"
+      },
+      {
+        "path": "models/ancient-egypt/model.json",
+        "size": 213,
+        "sha256": "e143529f582976ca63a9d4d2ef9fee4e6b71de32fcb098f3c5e176d15e5e31a0",
+        "repo_path": "fps-egypt/model.json"
+      },
+      {
+        "path": "models/ancient-egypt/inference.json",
+        "size": 828,
+        "sha256": "2de27644e1cbee2e51fea0d580528bbadf7aafda07885ac62483beb18360918e",
+        "repo_path": "fps-egypt/inference.json"
+      }
+    ],
+    "racing": [
+      {
+        "path": "models/racing/model.safetensors",
+        "size": 10002122224,
+        "sha256": "715b906586e5fd528d0387fd66c3e8574e92ef0183f5313a0b1bf3e6ee737d6d",
+        "repo_path": "driving_game/model.safetensors"
+      },
+      {
+        "path": "models/racing/sink.png",
+        "size": 1223549,
+        "sha256": "f95803ae01868567d4b1822da3a027bd5fc573c6d650d03c13ea3dab0b263d37",
+        "repo_path": "driving_game/sink.png"
+      },
+      {
+        "path": "models/racing/model.json",
+        "size": 213,
+        "sha256": "d55ed95cf1878071a2a9ba4473f4f536bb6a36e4fb38669cea160ccae9252623",
+        "repo_path": "driving_game/model.json"
+      },
+      {
+        "path": "models/racing/inference.json",
+        "size": 894,
+        "sha256": "c755765f9e6fb245cd57220a87cc6cb7fa39a91114ef30f2bfe1615209e8d13c",
+        "repo_path": "driving_game/inference.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "matrix-game-4.0"
+version = "4.0.0rc1"
+description = "Streaming neural rendering for executable low-poly games"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_NOTICES.md", "licenses/*", "matrix_game/web/mediamtx-reader.LICENSE"]
+authors = [{name = "Skywork AI Matrix-Game Team"}]
+dependencies = ["numpy>=1.26,<3", "Pillow>=10,<12"]
+
+[project.optional-dependencies]
+inference = ["torch==2.12.0", "torchvision==0.27.0", "diffusers==0.39.0", "transformers==5.17.0", "accelerate==1.15.0", "safetensors==0.8.0", "einops>=0.8", "ftfy>=6", "regex", "sentencepiece>=0.2", "tqdm>=4.66", "imageio-ffmpeg>=0.5"]
+server = ["aiohttp>=3.10,<4"]
+download = ["huggingface-hub>=0.26,<2"]
+test = ["pytest>=8,<10", "aiohttp>=3.10,<4", "imageio-ffmpeg>=0.5"]
+
+[project.scripts]
+matrix-game = "matrix_game.cli:main"
+
+[project.urls]
+Homepage = "https://matrix-game-v4-0.github.io/page/"
+
+[tool.setuptools.packages.find]
+include = ["matrix_game*"]
+
+[tool.setuptools.package-data]
+matrix_game = ["configs/*.json", "web/*.html", "web/*.js", "web/*.LICENSE"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

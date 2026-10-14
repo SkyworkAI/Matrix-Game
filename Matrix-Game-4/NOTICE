@@ -1,0 +1,7 @@
+Matrix-Game 4.0
+Copyright 2026 Skywork AI and contributors.
+
+This distribution includes adapted model, inference and media code. Original
+copyright and license notices remain applicable; see THIRD_PARTY_NOTICES.md.
+Release modifications include module extraction, explicit resource configuration,
+checkpoint loading hardening, native-game integration and bounded browser media.

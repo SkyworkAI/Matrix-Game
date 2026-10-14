@@ -1,0 +1,186 @@
+{
+  "schema": 1,
+  "version": "4.0.0rc1",
+  "kind": "game-assets",
+  "license": "Apache-2.0; racing audio CC0 and CC BY 3.0 (see audio/CREDITS.md)",
+  "bundles": {
+    "shared": [
+      {
+        "path": "game/assets/shooter/source.json",
+        "size": 21756499,
+        "sha256": "53fc09a67c8356da289c3429208e6fb89fe991d649ed442be7f850d3e97ab1bf"
+      },
+      {
+        "path": "game/assets/shooter/arm-reference.json",
+        "size": 21117,
+        "sha256": "ac90fe385f84f4baabc0198b06756a359bd2c9e8888b8f496d08e43c43142bac"
+      },
+      {
+        "path": "game/assets/shooter/ue-bbox-parts.json",
+        "size": 74623,
+        "sha256": "2c3793bbd23a92693514066444f606101c2aa714beaf4ba099f8b645aa8e2359"
+      },
+      {
+        "path": "game/assets/shooter/cover.json",
+        "size": 59967,
+        "sha256": "7a37b7a352fc644591910b0c507927fa08c3338921166567157f26c328fa4e26"
+      },
+      {
+        "path": "game/assets/combat-audio/0.wav",
+        "size": 15404,
+        "sha256": "9338eb4eba478cc7c9a493c0e52bc332843163f285fdbc75da962accc67c3687"
+      },
+      {
+        "path": "game/assets/combat-audio/1.wav",
+        "size": 28844,
+        "sha256": "7060b921792ce38e9c215398e894328d876ee680292c0c1aedb386d5a0010254"
+      },
+      {
+        "path": "game/assets/combat-audio/2.wav",
+        "size": 30764,
+        "sha256": "79365689fb9302733cb80e8412cf76a258aad0f1d33f174943208f997b788460"
+      },
+      {
+        "path": "game/assets/combat-audio/3.wav",
+        "size": 81644,
+        "sha256": "b8a5de65598ca3c3bead2fe8016402124414f78c16ff700d7fbdc68f0db1101c"
+      },
+      {
+        "path": "game/assets/combat-audio/4.wav",
+        "size": 9644,
+        "sha256": "62711f02e834274f4214b2684f82966b767b9a96317a02e7c4da713b271a48ee"
+      },
+      {
+        "path": "game/assets/combat-audio/5.wav",
+        "size": 7724,
+        "sha256": "881bf5a9481425662180ae503e6a533023ac3722b4b61a4e879d6d398e2222b8"
+      },
+      {
+        "path": "game/assets/combat-audio/6.wav",
+        "size": 19244,
+        "sha256": "958b111d7eeaf9b31044f42c7622b2dea98f19ceb3db5bd006be6e9c344d3f2e"
+      }
+    ],
+    "castle": [
+      {
+        "path": "game/assets/castle-map.bin",
+        "size": 6519376,
+        "sha256": "be67c8a5a2524781df3d91b070f69b5bdce39439c11ed2eec74d6e11521369a7"
+      },
+      {
+        "path": "game/assets/manifest.json",
+        "size": 180254,
+        "sha256": "34bbf84f6188450c4c146d35b1f76c851afbc7c0e19876c8bfb9a2e056355032"
+      },
+      {
+        "path": "game/assets/shooter/CatalogManifest.json",
+        "size": 12431,
+        "sha256": "5d4cd5a251fb590fbac59689ce12c160b2ef4fb3655f1c7ef9c872a95b38739d"
+      },
+      {
+        "path": "game/assets/shooter/StaticMeshCatalog.csv",
+        "size": 9219,
+        "sha256": "3b21a5b222bcd640eb949d4f05418d15a0b4a3ed18c93a58b8294fbad7c7a1b0"
+      }
+    ],
+    "ancient-egypt": [
+      {
+        "path": "game/assets/maps/ancient-egypt/castle-map.bin",
+        "size": 88812920,
+        "sha256": "c39b416f577403b38cf109da03cd73f6b4b6265f75c67329d8fff57b0e70e883"
+      },
+      {
+        "path": "game/assets/maps/ancient-egypt/manifest.json",
+        "size": 18573233,
+        "sha256": "20b6dbeb49bc7a0f01c1654a7cb58560e2b430dc91098bfac1fde03fa35beefc"
+      },
+      {
+        "path": "game/assets/maps/ancient-egypt/map.json",
+        "size": 671,
+        "sha256": "55d30d59f1ee873d0cf4dab777955653d255e49172bcbed36542251a4fad81ec"
+      },
+      {
+        "path": "game/assets/maps/ancient-egypt/road-surface-overrides.json",
+        "size": 208,
+        "sha256": "9032f94f4a37c8f309edb19ceec823c8275d913fc241974509508dd9683e1f68"
+      },
+      {
+        "path": "game/assets/maps/ancient-egypt/shooter/CatalogManifest.json",
+        "size": 50091,
+        "sha256": "47ba02040e41d799ce29d2c8552ce81d261f827aef48ad0646e6bc330554b30e"
+      },
+      {
+        "path": "game/assets/maps/ancient-egypt/shooter/StaticMeshCatalog.csv",
+        "size": 35669,
+        "sha256": "e6e4c626bd56a6daff87c81d8e719a5aedacbe19d32a37608efc1f0514b27a9e"
+      }
+    ],
+    "racing": [
+      {
+        "path": "racing/assets/small-city.bin",
+        "size": 44771892,
+        "sha256": "8782fd15ce940e9fc80046c304968f69ace520632af2a3c3984a32aa00d1288a"
+      },
+      {
+        "path": "racing/assets/bbox-assets.bin",
+        "size": 59064,
+        "sha256": "16a850905483cf82122006fe395ca1bcd236351ab61cc0541db4b488a4e41151"
+      },
+      {
+        "path": "racing/assets/caption-catalog.json",
+        "size": 240436,
+        "sha256": "cd724962fe8ab6fb0a5d49c973ca32f1d85f7391cc2fb21fbeed7f874a39c4c3"
+      },
+      {
+        "path": "racing/assets/caption-labels.bin",
+        "size": 7590560,
+        "sha256": "8b8f44a7723e0080c1315cd8532eb7add24d1e51d6b622fe9b2da02f28dbdd03"
+      },
+      {
+        "path": "racing/assets/race-routes.json",
+        "size": 55989,
+        "sha256": "8804dd0fefb525b2d87051be73a335f3b297f96103a271ceef41a660c56d9fed"
+      },
+      {
+        "path": "racing/assets/reference-building-stripes.bin",
+        "size": 2584744,
+        "sha256": "2d766d8a25ec1857d3e8c1a98610e063152c126ea73f061cdd305bf285a3b0e6"
+      },
+      {
+        "path": "racing/assets/reference-junction-surfaces.bin",
+        "size": 5588,
+        "sha256": "639ed37b731a78a5998f10579890736434be8182a3fcc17d40c5921d7bdef3e6"
+      },
+      {
+        "path": "racing/assets/audio/engine-loop.wav",
+        "size": 83030,
+        "sha256": "6c6f23592774ca5afb7a99c9d68c00deb8d262a397ed8345f3bb5603dcadb2c6"
+      },
+      {
+        "path": "racing/assets/audio/tire-loop.wav",
+        "size": 288078,
+        "sha256": "6ab89592e20c1f05db116c3272ec2287b40a5a8e2927021e71c05f495f131e87"
+      },
+      {
+        "path": "racing/assets/audio/tire-front-loop.wav",
+        "size": 432078,
+        "sha256": "2d2c83fd6a1906a18f9823aa53ff40b2a3ebf29c56365289ad3f86cd81481bb4"
+      },
+      {
+        "path": "racing/assets/audio/impact-medium.wav",
+        "size": 13572,
+        "sha256": "e64cbcd58aad02138e7927a3eff4ae76bb94507b079c60396a092c3b623f81dd"
+      },
+      {
+        "path": "racing/assets/audio/impact-heavy.wav",
+        "size": 15896,
+        "sha256": "01b98448eecfa5b49004d677033b13aeb292d1926ea799aa031c0ec6cf7135ff"
+      },
+      {
+        "path": "racing/assets/audio/CREDITS.md",
+        "size": 2665,
+        "sha256": "f67618caf9379c643b340515d279ea5edce07052be3e017caf12d4a8e5864ca5"
+      }
+    ]
+  }
+}
