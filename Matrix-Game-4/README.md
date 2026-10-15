@@ -11,14 +11,15 @@ layers outside the model. This release includes **Medieval Castle**, **Ancient
 Egypt**, and **City Racing**, with offline rendering and a single-user WebRTC
 browser demo. Racing includes time trials and pursuit, plus fixed/dynamic prompts.
 
-**2026-10-14:** We plan to release optimized inference code for NVIDIA GeForce
-RTX 50-series GPUs later this week.
+**2026-10-15:** Optimized inference for NVIDIA GeForce RTX 5090 is now available.
+Use `--preset rtx5090`, or `--preset rtx5090-sage` with the optional SageAttention
+backend. See [RTX 5090](#rtx-5090) for setup and launch commands.
 
 ## Requirements
 
-- Model inference: Linux, NVIDIA GPU, Python 3.12. This release is tested on
-  A100 80 GB with PyTorch 2.12.0/CUDA 13.2. RTX 50-series optimizations are planned
-  as noted above.
+- Model inference: Linux, NVIDIA GPU, Python 3.12. The A100 80 GB deployment uses
+  PyTorch 2.12.0/CUDA 13.2. A dedicated RTX 5090 runtime is also included; use the
+  environment below and select the matching preset explicitly.
 - Browser demo: the same Linux host also builds/runs the game and GStreamer.
   Safari and Chrome are the desktop client targets. No GPU is needed on the client.
 - Standalone game/recording: macOS or Linux, CMake, C++20, SDL2 and FFmpeg libraries.
@@ -42,7 +43,9 @@ python -m pip install -e '.[inference,server,download,test]'
 ```
 
 The optimized path requires matching PyTorch/Triton and a compatible NVIDIA
-driver. FlashAttention is optional; SDPA is the tested source deployment path.
+driver. A separate FlashAttention installation is optional. The `rtx5090` preset
+uses PyTorch SDPA and does not require SageAttention; only `rtx5090-sage` requires
+the additional [SageAttention build](#optional-sageattention).
 See [installation](docs/installation.md) for native and media dependencies.
 
 ## Resources
@@ -95,7 +98,8 @@ dependencies.
 
 Start with the fast path: TAEHV encoding/decoding, one denoising step, a fixed
 scene prompt and the accelerated DiT runtime. Select it explicitly with
-`--preset realtime`, which supports both offline and online rendering:
+`--preset realtime` on A100. On RTX 5090, use `--preset rtx5090` instead. Both
+presets support offline and online rendering; hardware selection is not automatic.
 
 ```bash
 matrix-game render --scene ancient-egypt --input lowpoly.mp4 \
@@ -160,6 +164,9 @@ CUDA_VISIBLE_DEVICES=0 bash scripts/serve.sh \
   --scene ancient-egypt --resources resources --preset realtime --fps 40
 ```
 
+On RTX 5090, replace `--preset realtime` with `--preset rtx5090`. See
+[RTX 5090](#rtx-5090) for the optional SageAttention variant.
+
 Open **http://127.0.0.1:8025/** on the server, or forward the required ports through
 SSH as described in [online deployment](docs/online.md). Add `--reference-only`
 to test controls, HUD, audio and transport without loading a model.
@@ -202,31 +209,55 @@ architecture and inference configuration and serve as a performance reference.
 
 ## RTX 5090
 
-`rtx5090` replaces the DiT runtime with FP8 linears, fused kernels and CUDA
-graphs (`matrix_game/inference/rtx5090`); `rtx5090-sage` also runs
-self-attention on SageAttention.
+Start with `--preset rtx5090` after the standard installation and resource
+downloads above. It uses the same scene checkpoints and shared resources; no
+separate quantized checkpoint is needed. DiT block linear weights are converted
+to FP8 at load time, and their activations are quantized during inference.
+Embeddings and the output head remain BF16.
+
+Both RTX 5090 presets select TAEHV encoding/decoding, one-step denoising, fused
+kernels and CUDA graphs. They differ in the self-attention backend:
+
+| Preset | Self-attention | Additional setup |
+| --- | --- | --- |
+| `rtx5090` | PyTorch SDPA | None beyond the standard installation |
+| `rtx5090-sage` | SageAttention for the full history window; SDPA while it fills | Patched SageAttention build below |
+
+Render an existing low-poly video or start the browser server:
 
 ```bash
 matrix-game render --scene ancient-egypt --input lowpoly.mp4 \
   --resources resources --preset rtx5090 --prompt-mode fixed \
-  --output outputs/egypt
+  --output outputs/egypt-rtx5090
 
 CUDA_VISIBLE_DEVICES=0 bash scripts/serve.sh \
-  --scene ancient-egypt --resources resources --preset rtx5090 --fps 40
+  --scene ancient-egypt --resources resources --preset rtx5090 \
+  --prompt-mode fixed --fps 40
 ```
 
-`rtx5090-sage` needs SageAttention 2.2.0 patched for CUDA-graph capture and
-built with CUDA 13.2:
+The browser server uses the same native-game and MediaMTX setup described above.
+The runtime warms up kernels and captures CUDA graphs before accepting a real
+session, so startup takes longer than steady-state rendering. `--fps 40` still
+controls the game capture cadence, not measured rendering throughput.
+
+### Optional SageAttention
+
+To use `--preset rtx5090-sage`, build SageAttention 2.2.0 with the supplied
+CUDA-graph patch and CUDA 13.2. Run these commands from `Matrix-Game-4/` in the
+same Python environment as the model:
 
 ```bash
-pip install "nvidia-cuda-nvcc==13.2.*" "nvidia-nvvm==13.2.*" "nvidia-cuda-crt==13.2.*" "nvidia-cuda-cccl==13.2.*" setuptools wheel ninja
+python -m pip install "nvidia-cuda-nvcc==13.2.*" "nvidia-nvvm==13.2.*" "nvidia-cuda-crt==13.2.*" "nvidia-cuda-cccl==13.2.*" setuptools wheel ninja
 export CUDA_HOME="$(python -c 'import nvidia, os; print(os.path.join(nvidia.__path__[0], "cu13"))')"
 mkdir -p ../cuda-link && ln -sf "$CUDA_HOME/lib/libcudart.so.13" ../cuda-link/libcudart.so
 git clone https://github.com/thu-ml/SageAttention.git ../SageAttention
 git -C ../SageAttention checkout eb615cf6cf4d221338033340ee2de1c37fbdba4a
 git -C ../SageAttention apply "$PWD/matrix_game/inference/rtx5090_sage/sageattention.patch"
-LIBRARY_PATH="$PWD/../cuda-link" MAX_JOBS=4 EXT_PARALLEL=2 pip install --no-build-isolation ../SageAttention
+LIBRARY_PATH="$PWD/../cuda-link" MAX_JOBS=4 EXT_PARALLEL=2 python -m pip install --no-build-isolation ../SageAttention
 ```
+
+Then replace `--preset rtx5090` with `--preset rtx5090-sage` in either command
+above. No SageAttention build is needed when using plain `rtx5090`.
 
 ## Layout
 

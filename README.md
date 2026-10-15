@@ -18,6 +18,7 @@ https://github.com/user-attachments/assets/53a0cfb7-4193-42c8-9819-7c023389a3d7
 
 ## News
 
+- **October 15, 2026:** [RTX 5090 optimized inference](Matrix-Game-4/README.md#rtx-5090) is now available, with FP8 linear layers, fused kernels, CUDA graphs and an optional SageAttention backend.
 - **October 15, 2026:** Released **Matrix-Game 4.0**. [Inference, browser demo and game source code](Matrix-Game-4) are now available, with model weights and game assets for Medieval Castle, Ancient Egypt and City Racing on [Hugging Face](https://huggingface.co/Skywork/Matrix-Game-4.0).
 - **March 27, 2026:** Released [Matrix-Game 3.0](Matrix-Game-3), a real-time streaming interactive world model with long-horizon memory.
 - **August 12, 2025:** Released [Matrix-Game 2.0](Matrix-Game-2), an interactive world foundation model for real-time long video generation.
@@ -31,7 +32,7 @@ https://github.com/user-attachments/assets/53a0cfb7-4193-42c8-9819-7c023389a3d7
 
 Start with the [v4 README](Matrix-Game-4/README.md) for installation, resource
 downloads, offline rendering and the online browser demo. The release includes
-the three native games and shared single-GPU inference code.
+the three native games and single-GPU inference paths for A100 and RTX 5090.
 
 | Scene | Model Weights |
 | --- | --- |
