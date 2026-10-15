@@ -14,7 +14,7 @@
 the engine handles gameplay, physics and player input, while the model transforms
 low-poly RGB frames into detailed visuals through streaming neural rendering.
 
-https://github.com/user-attachments/assets/53a0cfb7-4193-42c8-9819-7c023389a3d7
+https://github.com/user-attachments/assets/4ded08da-1309-43c9-9662-6e2f2b3fbb41
 
 ## News
 
