@@ -200,6 +200,34 @@ throughput does not. Neither is browser presentation FPS or action-to-photon
 latency. Racing figures come from an earlier checkpoint with the same model
 architecture and inference configuration and serve as a performance reference.
 
+## RTX 5090
+
+`rtx5090` replaces the DiT runtime with FP8 linears, fused kernels and CUDA
+graphs (`matrix_game/inference/rtx5090`); `rtx5090-sage` also runs
+self-attention on SageAttention.
+
+```bash
+matrix-game render --scene ancient-egypt --input lowpoly.mp4 \
+  --resources resources --preset rtx5090 --prompt-mode fixed \
+  --output outputs/egypt
+
+CUDA_VISIBLE_DEVICES=0 bash scripts/serve.sh \
+  --scene ancient-egypt --resources resources --preset rtx5090 --fps 40
+```
+
+`rtx5090-sage` needs SageAttention 2.2.0 patched for CUDA-graph capture and
+built with CUDA 13.2:
+
+```bash
+pip install "nvidia-cuda-nvcc==13.2.*" "nvidia-nvvm==13.2.*" "nvidia-cuda-crt==13.2.*" "nvidia-cuda-cccl==13.2.*" setuptools wheel ninja
+export CUDA_HOME="$(python -c 'import nvidia, os; print(os.path.join(nvidia.__path__[0], "cu13"))')"
+mkdir -p ../cuda-link && ln -sf "$CUDA_HOME/lib/libcudart.so.13" ../cuda-link/libcudart.so
+git clone https://github.com/thu-ml/SageAttention.git ../SageAttention
+git -C ../SageAttention checkout eb615cf6cf4d221338033340ee2de1c37fbdba4a
+git -C ../SageAttention apply "$PWD/matrix_game/inference/rtx5090_sage/sageattention.patch"
+LIBRARY_PATH="$PWD/../cuda-link" MAX_JOBS=4 EXT_PARALLEL=2 pip install --no-build-isolation ../SageAttention
+```
+
 ## Layout
 
 ```text

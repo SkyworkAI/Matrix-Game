@@ -23,14 +23,17 @@ def configure_scene(args):
         args.sink_image = root / "models" / args.scene / "sink.png"
 
 
+OPTIMIZED_RUNTIMES = ("rtx5090", "rtx5090-sage")
+
+
 def add_model_arguments(parser):
     parser.add_argument("--scene", choices=tuple(SCENES), default="ancient-egypt")
     parser.add_argument("--resources", type=Path, default=Path("resources"))
     for key in ("model-dir", "checkpoint", "taehv-path", "asset-root"):
         parser.add_argument("--" + key, type=Path)
-    parser.add_argument("--preset", choices=("realtime", "quality", "baseline"), default="realtime")
+    parser.add_argument("--preset", choices=("realtime", "quality", "baseline") + OPTIMIZED_RUNTIMES, default="realtime")
     parser.add_argument("--vae-backend", choices=("wan", "taehv"))
-    parser.add_argument("--dit-runtime", choices=("native", "kernels", "cudagraph", "ring", "ring-graph", "ring-fused"))
+    parser.add_argument("--dit-runtime", choices=("native", "kernels", "cudagraph", "ring", "ring-graph", "ring-fused") + OPTIMIZED_RUNTIMES)
     parser.add_argument("--steps", type=parse_steps)
     parser.add_argument("--first-steps", type=parse_steps)
     parser.add_argument("--vae-graph", action=argparse.BooleanOptionalAction, default=None)
@@ -60,12 +63,15 @@ def resolve_model_arguments(args, require_model=True):
         raise ValueError("Dynamic captions are currently supported for racing only")
     if not 1 <= args.prompt_interval_chunks <= 1024:
         raise ValueError("Prompt interval must be 1..1024 chunks")
-    args.vae_backend = args.vae_backend or ("taehv" if args.preset == "realtime" else "wan")
+    realtime = args.preset == "realtime" or args.preset in OPTIMIZED_RUNTIMES
+    if args.preset in OPTIMIZED_RUNTIMES:
+        args.dit_runtime = args.dit_runtime or args.preset
+    args.vae_backend = args.vae_backend or ("taehv" if realtime else "wan")
     args.dit_runtime = args.dit_runtime or ("ring-fused" if args.preset == "realtime" else "native")
-    args.steps = args.steps or ((1000,) if args.preset == "realtime" else (1000, 500))
+    args.steps = args.steps or ((1000,) if realtime else (1000, 500))
     args.first_steps = args.first_steps or args.steps
     if args.vae_graph is None:
-        args.vae_graph = args.preset == "realtime" and args.vae_backend == "taehv"
+        args.vae_graph = realtime and args.vae_backend == "taehv"
     if args.vae_graph and args.vae_backend != "taehv":
         raise ValueError("VAE graph requires TAEHV")
     if require_model:

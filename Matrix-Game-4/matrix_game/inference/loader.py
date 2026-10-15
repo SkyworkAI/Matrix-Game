@@ -24,12 +24,16 @@ class ModelComponents:
         torch.backends.cudnn.allow_tf32 = False
         self.attention_backend = "fa3" if FLASH_ATTN_3_AVAILABLE else ("fa2" if FLASH_ATTN_2_AVAILABLE else "sdpa")
         device, dtype = torch.device("cuda"), torch.bfloat16
-        self.gen = build_dit(str(self.args.model_dir), str(self.args.checkpoint), is_causal=True,
-                            dtype="bfloat16", timestep_shift=5, ckpt_keys=("generator_ema",)).to(device).eval().requires_grad_(False)
-        from matrix_game.inference.runtime import install_runtime
-        if self.args.dit_runtime.startswith("ring"):
-            LOG.warning("Ring/fused runtime changes floating-point reduction order; use native for baseline comparisons")
-        install_runtime(self.gen, self.args.dit_runtime)
+        if self.args.dit_runtime.startswith("rtx5090"):
+            from matrix_game.inference.rtx5090 import load_transformer
+            self.gen = load_transformer(self.args.checkpoint, sage=self.args.dit_runtime == "rtx5090-sage")
+        else:
+            self.gen = build_dit(str(self.args.model_dir), str(self.args.checkpoint), is_causal=True,
+                                dtype="bfloat16", timestep_shift=5, ckpt_keys=("generator_ema",)).to(device).eval().requires_grad_(False)
+            from matrix_game.inference.runtime import install_runtime
+            if self.args.dit_runtime.startswith("ring"):
+                LOG.warning("Ring/fused runtime changes floating-point reduction order; use native for baseline comparisons")
+            install_runtime(self.gen, self.args.dit_runtime)
         text = WanTextEncoder(t5_checkpoint_path=str(self.args.model_dir / "models_t5_umt5-xxl-enc-bf16.pth"),
                               tokenizer_path=str(self.args.model_dir / "google/umt5-xxl")).to(device, dtype).eval()
         if self.args.prompt_mode == "dynamic":
@@ -58,10 +62,17 @@ class ModelComponents:
             self.sink_latent = encode_sink_image(self.vae, self.args.sink_image, self.args.vae_backend,
                 first_frame=self.args.sink_mode == "first_frame").to(device, dtype)
             self.sink_sha256 = hashlib.sha256(self.args.sink_image.read_bytes()).hexdigest()
+        if self.args.dit_runtime.startswith("rtx5090"):
+            from matrix_game.inference.rtx5090 import warm_up
+            warm_up(self.gen, self.vae, self.prompt, self.sink_latent, self.args.sink_mode, self.args.sink_rope_mode,
+                    self.args.vae_backend)
         LOG.info("Model config: %s", self.config())
 
     def stream(self, **kwargs):
-        from matrix_game.inference.stream import CastleStream
+        if self.args.dit_runtime.startswith("rtx5090"):
+            from matrix_game.inference.rtx5090 import FastStream as CastleStream
+        else:
+            from matrix_game.inference.stream import CastleStream
         return CastleStream(self.gen, self.vae, self.prompt, vae_backend=self.args.vae_backend,
                             steps=self.args.steps, first_steps=self.args.first_steps,
                             sink_latent=self.sink_latent, sink_mode=self.args.sink_mode,
@@ -84,4 +95,4 @@ class ModelComponents:
                     early_publish=getattr(self.args, "early_publish", False),
                     profile_chunks=getattr(self.args, "profile_chunks", False),
                     reference_pipeline=getattr(self.args, "reference_pipeline", "stream"),
-                    experimental_runtime=self.args.dit_runtime.startswith("ring"))
+                    experimental_runtime=self.args.dit_runtime.startswith(("ring", "rtx5090")))

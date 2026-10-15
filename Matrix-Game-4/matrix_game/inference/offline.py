@@ -64,7 +64,10 @@ def main(argv=None):
     import torch
     from .loader import ModelComponents
     from .preprocessing import crop_and_resize, frames_to_tensor, tensor_to_uint8
-    from .stream import CastleStream
+    if args.dit_runtime.startswith("rtx5090"):
+        from .rtx5090 import FastStream as CastleStream
+    else:
+        from .stream import CastleStream
 
     torch.manual_seed(args.seed)
     reader = imageio_ffmpeg.read_frames(str(args.input), pix_fmt="rgb24")
