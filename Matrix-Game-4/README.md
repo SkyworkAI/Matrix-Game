@@ -14,6 +14,8 @@ browser demo. Racing includes time trials and pursuit, plus fixed/dynamic prompt
 **2026-10-15:** Optimized inference for NVIDIA GeForce RTX 5090 is now available.
 Use `--preset rtx5090`, or `--preset rtx5090-sage` with the optional SageAttention
 backend. See [RTX 5090](#rtx-5090) for setup and launch commands.
+We expect to release a version that runs on NVIDIA GeForce RTX 5080 and RTX 5070
+next week.
 
 ## Requirements
 
