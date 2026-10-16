@@ -83,6 +83,7 @@ class Session:
                        "monitor": monitor, "display_width": 1728 if monitor else 864}
         self.report.update(runtime.config())
         self.game = self.output = self.future = self.pump = self.watchdog = None
+        self.pending_prompt = None  # set by the browser's event-prompt message, read and cleared by produce()
         self.records = deque(maxlen=120)
         self.profile_rows = deque(maxlen=2048)
         self.serial = 0
@@ -201,13 +202,24 @@ class Session:
                         self.report["rgb_ready_ms"] = (time.perf_counter() - started) * 1000
 
                 if stream is not None:
-                    if self.runtime.args.prompt_mode == "dynamic" and chunks % self.runtime.args.prompt_interval_chunks == 0:
+                    pending = self.pending_prompt
+                    if pending is not None:
+                        self.pending_prompt = None
+                        if encoder is None:
+                            LOG.warning("Session %s: ignoring an event prompt; the server was not started with --prompt-mode dynamic", self.id)
+                        elif pending != current_prompt:
+                            with timer.measure("prompt_submit_ms"):
+                                embedded = encoder(pending)
+                                stream.set_prompt(embedded)
+                            current_prompt = pending
+                            prompt_updates += 1
+                    elif self.runtime.args.prompt_mode == "dynamic" and chunks % self.runtime.args.prompt_interval_chunks == 0:
                         candidate = states[-1].get("chunk_prompt")
                         if not candidate:
                             raise ValueError("Dynamic mode requires a frame-aligned native caption")
                         if candidate != current_prompt:
                             with timer.measure("prompt_submit_ms"):
-                                embedded = self.runtime.caption_encoder(candidate)
+                                embedded = encoder(candidate)
                                 stream.set_prompt(embedded)
                             current_prompt = candidate
                             prompt_updates += 1
@@ -317,6 +329,21 @@ class Session:
             profile_path.write_text(json.dumps(dict(config=self.runtime.config(),
                 summary=summarize(self.profile_rows), rows=list(self.profile_rows)), indent=2))
         LOG.info("Session %s stopped: %s", self.id, self.report)
+
+
+def event_prompt(message):
+    """A live, one-off prompt override from the browser (the \"event prompt\" / \"cast spell\" buttons).
+
+    Applied on the next chunk regardless of --prompt-mode; needs the server's text encoder kept resident, i.e. --prompt-mode dynamic
+    (see matrix_game/inference/loader.py). If dynamic mode is also receiving the game's own native captions, the next one of those
+    overwrites this after one chunk -- an event prompt is a one-chunk interruption, not a standing override.
+    """
+    if not isinstance(message, dict) or set(message) - {"type", "text"}:
+        raise ValueError("Invalid event prompt")
+    text = message.get("text")
+    if not isinstance(text, str) or not 0 < len(text) <= 8192:
+        raise ValueError("Invalid event prompt text")
+    return text
 
 
 def controls(message):
@@ -440,11 +467,15 @@ def application(runtime):
         try:
             async for msg in ws:
                 if msg.type == web.WSMsgType.TEXT:
+                    data = json.loads(msg.data)
+                    session.last_client = time.monotonic()
+                    if isinstance(data, dict) and data.get("type") == "event_prompt":
+                        session.pending_prompt = event_prompt(data)
+                        continue
                     validate = controls
                     if runtime.args.scene == "racing":
                         from matrix_game.server.racing import controls as validate
-                    value = validate(json.loads(msg.data))
-                    session.last_client = time.monotonic()
+                    value = validate(data)
                     await asyncio.to_thread(session.game.send, value)
         except (ValueError, json.JSONDecodeError):
             await ws.close(code=1008, message=b"Invalid controls")

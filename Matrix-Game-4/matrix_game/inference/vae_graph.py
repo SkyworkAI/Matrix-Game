@@ -8,6 +8,8 @@ from types import SimpleNamespace
 
 import torch
 
+from matrix_game.inference.resolution import HEIGHT, WIDTH
+
 
 class StatefulGraph:
     def __init__(self, fn, example, memory):
@@ -73,7 +75,7 @@ class StreamingVAEGraph(torch.nn.Module):
         try:
             self.clear_cache()
             for frames in (1, 4):
-                latent = self.encode_stream(torch.zeros(1, 3, frames, 480, 864, device=p.device, dtype=p.dtype)).latent_dist.mode()
+                latent = self.encode_stream(torch.zeros(1, 3, frames, HEIGHT, WIDTH, device=p.device, dtype=p.dtype)).latent_dist.mode()
                 self.decode_stream(latent)
             torch.cuda.synchronize(p.device)
         finally:
