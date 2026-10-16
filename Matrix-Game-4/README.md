@@ -262,6 +262,25 @@ LIBRARY_PATH="$PWD/../cuda-link" MAX_JOBS=4 EXT_PARALLEL=2 python -m pip install
 Then replace `--preset rtx5090` with `--preset rtx5090-sage` in either command
 above. No SageAttention build is needed when using plain `rtx5090`.
 
+## RTX 5080
+
+Use `--preset rtx5080`, or `--preset rtx5080-sage` with the
+[SageAttention build](#optional-sageattention). Fixed prompts only (`--prompt-mode fixed`):
+with 16 GB, T5 encodes the prompt and is released before the DiT is loaded.
+
+```bash
+CUDA_VISIBLE_DEVICES=0 bash scripts/serve.sh \
+  --scene ancient-egypt --resources resources --preset rtx5080-sage \
+  --prompt-mode fixed --fps 40
+```
+
+| Preset | Model FPS | GPU memory |
+| --- | --- | --- |
+| `rtx5080` | ~42 | ~9.6 GB |
+| `rtx5080-sage` | ~67 | ~12.8 GB |
+
+Model throughput on one RTX 5080 at 864 x 480, steady state, excluding video I/O.
+
 ## Layout
 
 ```text

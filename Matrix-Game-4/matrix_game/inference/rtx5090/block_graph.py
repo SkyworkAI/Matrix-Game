@@ -74,9 +74,12 @@ def run_block_stack(blocks, layers: list[LayerBuffers], plan: KVPlan,
 class BlockStackGraphs:
     """Capture-on-first-use cache of block-stack graphs, keyed as described in the module docstring."""
 
-    def __init__(self, blocks, block_fn=fused_block):
+    def __init__(self, blocks, block_fn=fused_block, compact: bool = False):
         self.blocks = blocks
         self.block_fn = block_fn  # the single-block function every graph of this cache captures
+        # `compact`: one capture stream (cuBLAS keeps a workspace per stream) and one memory pool.
+        self.compact = compact
+        self._pool = self._stream = None
         self._entries: dict[tuple, _Entry] = {}
         self._bound: tuple[torch.Tensor, ...] = ()  # the K/V buffers the captured graphs point at
         self.captures = 0
@@ -90,6 +93,7 @@ class BlockStackGraphs:
             torch.cuda.synchronize()
         self._entries.clear()
         self._bound = ()
+        self._pool = self._stream = None
 
     def run(self, layers: list[LayerBuffers], plan: KVPlan,
             x: torch.Tensor, e: torch.Tensor, rotations: torch.Tensor, kv_only: bool = False,
@@ -124,7 +128,12 @@ class BlockStackGraphs:
         static_rotations = rotations.clone(memory_format=torch.contiguous_format)
         static_sink = None if sink_rotations is None else sink_rotations.clone(memory_format=torch.contiguous_format)
 
-        stream = torch.cuda.Stream(device=x.device)
+        if not self.compact:
+            stream = torch.cuda.Stream(device=x.device)
+        else:
+            if self._stream is None:
+                self._stream = torch.cuda.Stream(device=x.device)
+            stream = self._stream
         stream.wait_stream(torch.cuda.current_stream(x.device))
         # Run the stack once eagerly on the capture stream first: kernel compilation and library
         # initialisation (cuBLAS handles, attention workspaces) must not happen during capture.
@@ -134,10 +143,13 @@ class BlockStackGraphs:
             run_block_stack(self.blocks, layers, plan, static_x, static_e, static_rotations, self.block_fn, kv_only, static_sink)
         torch.cuda.current_stream(x.device).wait_stream(stream)
 
-        # Each graph gets its own memory pool (the default), so graphs can be replayed in any
-        # order without their intermediates aliasing.
+        # By default each graph gets its own memory pool, so graphs can be replayed in any order.
+        # A shared pool (`compact`) lets one replay overwrite another graph's output, which is safe
+        # only because each output is consumed (head launched) before the next replay.
+        if self.compact and self._pool is None:
+            self._pool = torch.cuda.graph_pool_handle()
         graph = torch.cuda.CUDAGraph()
-        with torch.cuda.graph(graph, stream=stream):
+        with torch.cuda.graph(graph, pool=self._pool, stream=stream):
             output = run_block_stack(self.blocks, layers, plan, static_x, static_e, static_rotations, self.block_fn, kv_only, static_sink)
         self.captures += 1
         return _Entry(graph, static_x, static_e, static_rotations, static_sink, output)

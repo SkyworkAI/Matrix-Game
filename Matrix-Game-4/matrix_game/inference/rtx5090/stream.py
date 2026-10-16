@@ -115,6 +115,19 @@ class FastStream:
         sigma = self.scheduler.sigmas.double().to(self.device)[torch.argmin((timesteps - timestep.double()).abs())]
         return torch.where(timestep.double() == 0, torch.zeros_like(sigma), sigma)
 
+    # Host-side input handling, overridable by runtimes that keep the host ahead of the GPU.
+
+    def _valid_pixels(self, pixels) -> bool:
+        return bool(pixels.is_floating_point() and torch.isfinite(pixels).all()
+                    and pixels.min() >= -1 and pixels.max() <= 1)
+
+    def _upload_pixels(self, pixels, param) -> torch.Tensor:
+        """RGB [T, 3, H, W] -> [1, 3, T, H, W] on the VAE's device and dtype."""
+        return pixels.permute(1, 0, 2, 3).unsqueeze(0).to(param.device, param.dtype)
+
+    def _upload_noise(self, noise) -> torch.Tensor:
+        return noise.to(self.device, self.dtype)
+
     def _forward(self, latent, timestep, control, position, kv_only=False):
         """latent [1, 1, 48, h, w] (B, F, C), control [1, 1, 48, h, w] or None -> flow [1, 1, 48, h, w]."""
         x = latent.permute(0, 2, 1, 3, 4)
@@ -139,7 +152,7 @@ class FastStream:
             raise ValueError("Expected consecutive RGB frames: 1 initially, then 4 per chunk")
         if self.index >= self.max_latents:
             raise ValueError("Session reached its configured RoPE/frame budget")
-        if not pixels.is_floating_point() or not torch.isfinite(pixels).all() or pixels.min() < -1 or pixels.max() > 1:
+        if not self._valid_pixels(pixels):
             raise ValueError("RGB input must be finite floating point in [-1,1]")
         if initial_noise is not None and (tuple(initial_noise.shape) != self.shape or not torch.isfinite(initial_noise).all()):
             raise ValueError("Initial noise must be finite and match one latent frame")
@@ -153,7 +166,7 @@ class FastStream:
 
             mark()
             param = next(self.vae.parameters())
-            x = pixels.permute(1, 0, 2, 3).unsqueeze(0).to(param.device, param.dtype)
+            x = self._upload_pixels(pixels, param)
             control = self._encode(x, param)
             mark()
             if tuple(control.shape) != self.shape:
@@ -171,7 +184,7 @@ class FastStream:
                 if initial_noise is None:
                     rng = self.racing_rng if self.sink_mode == "first_frame" and self.index > 0 else self.initial_rng
                     initial_noise = torch.randn(self.shape, generator=rng)
-                latent = initial_noise.to(self.device, self.dtype)
+                latent = self._upload_noise(initial_noise)
                 for k, step in enumerate(steps):
                     timestep = torch.full((), float(step), device=self.device)
                     flow = self._forward(latent, timestep, control, position)

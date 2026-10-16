@@ -66,6 +66,8 @@ def main(argv=None):
     from .preprocessing import crop_and_resize, frames_to_tensor, tensor_to_uint8
     if args.dit_runtime.startswith("rtx5090"):
         from .rtx5090 import FastStream as CastleStream
+    elif args.dit_runtime.startswith("rtx5080"):
+        from .rtx5080 import FastStream as CastleStream
     else:
         from .stream import CastleStream
 

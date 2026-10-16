@@ -23,7 +23,8 @@ def configure_scene(args):
         args.sink_image = root / "models" / args.scene / "sink.png"
 
 
-OPTIMIZED_RUNTIMES = ("rtx5090", "rtx5090-sage")
+OPTIMIZED_RUNTIMES = ("rtx5090", "rtx5090-sage", "rtx5080", "rtx5080-sage")
+FIXED_PROMPT_RUNTIMES = ("rtx5080", "rtx5080-sage")
 
 
 def add_model_arguments(parser):
@@ -66,6 +67,8 @@ def resolve_model_arguments(args, require_model=True):
     realtime = args.preset == "realtime" or args.preset in OPTIMIZED_RUNTIMES
     if args.preset in OPTIMIZED_RUNTIMES:
         args.dit_runtime = args.dit_runtime or args.preset
+    if args.dit_runtime in FIXED_PROMPT_RUNTIMES and args.prompt_mode == "dynamic":
+        raise ValueError(f"The {args.dit_runtime} runtime supports fixed prompts only")
     args.vae_backend = args.vae_backend or ("taehv" if realtime else "wan")
     args.dit_runtime = args.dit_runtime or ("ring-fused" if args.preset == "realtime" else "native")
     args.steps = args.steps or ((1000,) if realtime else (1000, 500))

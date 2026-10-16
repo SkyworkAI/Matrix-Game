@@ -20,7 +20,8 @@ def fused_block(block, x: torch.Tensor, e: torch.Tensor, rotations: torch.Tensor
                 cache_k: torch.Tensor, cache_v: torch.Tensor, start: int, end: int, window_start: int,
                 cross_k: torch.Tensor, cross_v: torch.Tensor, self_attention=None,
                 stop_after_kv: bool = False, sink_k: torch.Tensor | None = None,
-                sink_rotations: torch.Tensor | None = None) -> torch.Tensor:
+                sink_rotations: torch.Tensor | None = None, project_qkv=None,
+                cross_attention=None) -> torch.Tensor:
     """
     block       CausalAttentionBlock with FP8 linears
     x           BF16 [B, S, dim], contiguous; S = F * frame_tokens
@@ -34,6 +35,8 @@ def fused_block(block, x: torch.Tensor, e: torch.Tensor, rotations: torch.Tensor
     sink_k      BF16 [B, frame_tokens, dim] projected (not yet normalised or rotated) keys of the sink
                 frame, written when the block at token 0 is the sink
     sink_rotations  RoPE table of the sink's current position for a fixed-distance sink, or None
+    project_qkv     optional replacement for the q / k / v projections: (self_attn, z) -> (q, k, v)
+    cross_attention optional replacement for the cross-attention call: (q, cross_k, cross_v) -> y
     returns     BF16 [B, S, dim]
     """
     b, s = x.shape[:2]
@@ -43,7 +46,10 @@ def fused_block(block, x: torch.Tensor, e: torch.Tensor, rotations: torch.Tensor
     attn = block.self_attn
     z, _ = ln_modulate(x, e, modulation, block.norm1.eps, 0, 1)
     # q, k and v read the same activation: it is quantised once for the three FP8 GEMMs.
-    q, k, v = project_shared_input(z, (attn.q, attn.k, attn.v))
+    if project_qkv is None:
+        q, k, v = project_shared_input(z, (attn.q, attn.k, attn.v))
+    else:
+        q, k, v = project_qkv(attn, z)
     v = v.view(b, s, attn.num_heads, attn.head_dim)
     cache_v[:, start:end].copy_(v)
     # RMSNorm + RoPE of q and k in one launch; the rotated k goes straight into its cache slot.
@@ -70,7 +76,8 @@ def fused_block(block, x: torch.Tensor, e: torch.Tensor, rotations: torch.Tensor
     # Cross-attention over the cached text keys / values.
     attn = block.cross_attn
     q = rms_norm(attn.q(z), attn.norm_q.weight, attn.norm_q.eps)
-    y = attention(q.view(b, s, attn.num_heads, attn.head_dim), cross_k, cross_v)
+    q = q.view(b, s, attn.num_heads, attn.head_dim)
+    y = attention(q, cross_k, cross_v) if cross_attention is None else cross_attention(q, cross_k, cross_v)
     y = attn.o(y.flatten(2))
 
     # x = x + y; z = LN(x) * (1 + e[4]) + e[3]
