@@ -12,17 +12,22 @@ layers outside the model. This release includes **Medieval Castle**, **Ancient
 Egypt**, and **City Racing**, with offline rendering and a single-user WebRTC
 browser demo. Racing includes time trials and pursuit, plus fixed/dynamic prompts.
 
+**2026-10-16:** Optimized inference for [RTX 5080](#rtx-5080) and
+[RTX 5070 Ti](#rtx-5070-ti) is now available. With fixed prompts and SageAttention,
+model throughput reaches up to **67 FPS on RTX 5080** and **58 FPS on RTX 5070 Ti**
+at 864 x 480 (steady state, excluding video I/O). Use `--preset rtx5080-sage` or
+`--preset rtx5070ti-sage`, respectively, with `--prompt-mode fixed`.
+
 **2026-10-15:** Optimized inference for NVIDIA GeForce RTX 5090 is now available.
 Use `--preset rtx5090`, or `--preset rtx5090-sage` with the optional SageAttention
 backend. See [RTX 5090](#rtx-5090) for setup and launch commands.
-We expect to release a version that runs on NVIDIA GeForce RTX 5080 and RTX 5070
-next week.
 
 ## Requirements
 
 - Model inference: Linux, NVIDIA GPU, Python 3.12. The A100 80 GB deployment uses
-  PyTorch 2.12.0/CUDA 13.2. A dedicated RTX 5090 runtime is also included; use the
-  environment below and select the matching preset explicitly.
+  PyTorch 2.12.0/CUDA 13.2. Dedicated RTX 5090, RTX 5080 and RTX 5070 Ti runtimes
+  are also included; use the environment below and select the matching preset
+  explicitly. RTX 5080 and RTX 5070 Ti support fixed prompts only.
 - Browser demo: the same Linux host also builds/runs the game and GStreamer.
   Safari and Chrome are the desktop client targets. No GPU is needed on the client.
 - Standalone game/recording: macOS or Linux, CMake, C++20, SDL2 and FFmpeg libraries.
@@ -46,9 +51,9 @@ python -m pip install -e '.[inference,server,download,test]'
 ```
 
 The optimized path requires matching PyTorch/Triton and a compatible NVIDIA
-driver. A separate FlashAttention installation is optional. The `rtx5090` preset
-uses PyTorch SDPA and does not require SageAttention; only `rtx5090-sage` requires
-the additional [SageAttention build](#optional-sageattention).
+driver. A separate FlashAttention installation is optional. The `rtx5090`,
+`rtx5080` and `rtx5070ti` presets do not require SageAttention; their `-sage`
+variants require the additional [SageAttention build](#optional-sageattention).
 See [installation](docs/installation.md) for native and media dependencies.
 
 ## Resources
@@ -101,8 +106,9 @@ dependencies.
 
 Start with the fast path: TAEHV encoding/decoding, one denoising step, a fixed
 scene prompt and the accelerated DiT runtime. Select it explicitly with
-`--preset realtime` on A100. On RTX 5090, use `--preset rtx5090` instead. Both
-presets support offline and online rendering; hardware selection is not automatic.
+`--preset realtime` on A100, `--preset rtx5090` on RTX 5090, `--preset rtx5080`
+on RTX 5080, or `--preset rtx5070ti` on RTX 5070 Ti. These presets support offline
+and online rendering; hardware selection is not automatic.
 
 ```bash
 matrix-game render --scene ancient-egypt --input lowpoly.mp4 \
@@ -167,8 +173,9 @@ CUDA_VISIBLE_DEVICES=0 bash scripts/serve.sh \
   --scene ancient-egypt --resources resources --preset realtime --fps 40
 ```
 
-On RTX 5090, replace `--preset realtime` with `--preset rtx5090`. See
-[RTX 5090](#rtx-5090) for the optional SageAttention variant.
+On RTX GPUs, replace `--preset realtime` with the matching `rtx5090`, `rtx5080`
+or `rtx5070ti` preset. See [RTX 5090](#rtx-5090), [RTX 5080](#rtx-5080) or
+[RTX 5070 Ti](#rtx-5070-ti) for the optional SageAttention variants.
 
 Open **http://127.0.0.1:8025/** on the server, or forward the required ports through
 SSH as described in [online deployment](docs/online.md). Add `--reference-only`

@@ -19,8 +19,9 @@ https://github.com/user-attachments/assets/4ded08da-1309-43c9-9662-6e2f2b3fbb41
 
 ## News
 
+- **October 16, 2026:** Optimized inference for [RTX 5080](Matrix-Game-4/README.md#rtx-5080) and [RTX 5070 Ti](Matrix-Game-4/README.md#rtx-5070-ti) is now available. With fixed prompts and SageAttention, model throughput reaches up to **67 FPS on RTX 5080** and **58 FPS on RTX 5070 Ti** at 864 x 480 (steady state, excluding video I/O).
 - **October 16, 2026:** The Matrix-Game 4.0 [technical report](Matrix-Game-4/docs/Matrix_Game_4_0.pdf) is now available.
-- **October 15, 2026:** [RTX 5090 optimized inference](Matrix-Game-4/README.md#rtx-5090) is now available, with FP8 linear layers, fused kernels, CUDA graphs and an optional SageAttention backend. We expect to release a version that runs on NVIDIA GeForce RTX 5080 and RTX 5070 next week.
+- **October 15, 2026:** [RTX 5090 optimized inference](Matrix-Game-4/README.md#rtx-5090) is now available, with FP8 linear layers, fused kernels, CUDA graphs and an optional SageAttention backend.
 - **October 15, 2026:** Released **Matrix-Game 4.0**. [Inference, browser demo and game source code](Matrix-Game-4) are now available, with model weights and game assets for Medieval Castle, Ancient Egypt and City Racing on [Hugging Face](https://huggingface.co/Skywork/Matrix-Game-4.0).
 - **March 27, 2026:** Released [Matrix-Game 3.0](Matrix-Game-3), a real-time streaming interactive world model with long-horizon memory.
 - **August 12, 2025:** Released [Matrix-Game 2.0](Matrix-Game-2), an interactive world foundation model for real-time long video generation.
@@ -34,7 +35,8 @@ https://github.com/user-attachments/assets/4ded08da-1309-43c9-9662-6e2f2b3fbb41
 
 Start with the [v4 README](Matrix-Game-4/README.md) for installation, resource
 downloads, offline rendering and the online browser demo. The release includes
-the three native games and single-GPU inference paths for A100 and RTX 5090.
+the three native games and single-GPU inference paths for A100, RTX 5090,
+RTX 5080 and RTX 5070 Ti.
 
 | Scene | Model Weights |
 | --- | --- |
