@@ -6,6 +6,12 @@
   "bundles": {
     "shared": [
       {
+        "path": "release-config.json",
+        "repo_path": "config.json",
+        "size": 1578,
+        "sha256": "705a2ac4b8220990983522a7cf01e2e71c9a7d80d2bc0b2345f298177a977c2f"
+      },
+      {
         "path": "base/models_t5_umt5-xxl-enc-bf16.pth",
         "size": 11361920418,
         "sha256": "7cace0da2b446bbbbc57d031ab6cf163a3d59b366da94e5afe36745b746fd81d",

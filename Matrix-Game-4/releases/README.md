@@ -4,7 +4,7 @@ Model checkpoints, sink images, the fast codec and game assets are published at
 [Skywork/Matrix-Game-4.0](https://huggingface.co/Skywork/Matrix-Game-4.0).
 Both manifests use this **model** repository, not a separate dataset repository.
 
-Pinned release revision: `4419accdb7bb7881234c5914de8cd915266e0325`.
+Pinned release revision: `2c53100457da7abcf0e966f75637c644d3423a63`.
 
 Game assets have their own manifest, separate from model weights. `game-assets.json`
 is an exact allowlist and SHA256 manifest, partitioned into shared, Castle,
@@ -20,7 +20,7 @@ Download only the game assets needed by a scene:
 ```bash
 matrix-game download --manifest releases/game-assets.json \
   --repo-id Skywork/Matrix-Game-4.0 --repo-type model \
-  --revision 4419accdb7bb7881234c5914de8cd915266e0325 \
+  --revision 2c53100457da7abcf0e966f75637c644d3423a63 \
   --scene ancient-egypt --resources resources
 ```
 
@@ -34,7 +34,7 @@ downloaded once, not once per scene:
 ```bash
 matrix-game download --manifest releases/models.json \
   --repo-id Skywork/Matrix-Game-4.0 --repo-type model \
-  --revision 4419accdb7bb7881234c5914de8cd915266e0325 \
+  --revision 2c53100457da7abcf0e966f75637c644d3423a63 \
   --scene ancient-egypt --resources resources
 matrix-game verify --manifest releases/models.json \
   --scene ancient-egypt --resources resources
@@ -51,6 +51,26 @@ The manifest's `repo_path` fields map them to `resources/models/castle/`,
 `resources/models/ancient-egypt/` and `resources/models/racing/` on disk, as
 required by the scene profiles. The same filename need not have the same path
 on the Hub and in the installed resource directory.
+
+### Release Configuration
+
+The Hub's root `config.json` describes the release version, DiT architecture,
+upstream dependency revision and per-scene file paths. Its source is
+[`releases/config.json`](config.json) in this repository. The model manifest
+downloads and verifies it once as `resources/release-config.json`, separate from
+the optional `resources/base/config.json` used by the DiT loader. It is a release
+descriptor, not a Transformers or Diffusers pipeline configuration.
+
+Including this configuration in normal model downloads also enables the Hub's
+[default download statistics](https://huggingface.co/docs/hub/models-download-stats).
+Game-asset-only downloads do not fetch it, and game startup makes no additional
+statistics requests. Existing installations can rerun the model download
+command above to obtain it; already verified weights are reused.
+
+When publishing a new configuration, upload it to the Hub root and update the
+`releases/models.json` mirror in the same commit. Update its length and SHA256 in
+the manifest, then pin the resulting Hub commit in the source README and this
+document. Keep unrelated upstream dependency revisions unchanged.
 
 ## Shared Dependencies
 

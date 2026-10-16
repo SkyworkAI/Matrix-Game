@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "kind": "matrix-game-model-release",
+  "name": "Matrix-Game 4.0",
+  "version": "4.0.0rc1",
+  "repo_id": "Skywork/Matrix-Game-4.0",
+  "source": "https://github.com/SkyworkAI/Matrix-Game/tree/main/Matrix-Game-4",
+  "manifest": "releases/models.json",
+  "base_model": {
+    "repo_id": "alibaba-pai/Wan2.2-Fun-5B-Control",
+    "revision": "b8bc1a65ab71d054ba4636dc0dac104aa4df2686"
+  },
+  "checkpoint": {
+    "format": "safetensors",
+    "dtype": "bfloat16",
+    "parameters_per_scene": 5001016512
+  },
+  "architecture": {
+    "class": "CausalWanModel",
+    "dit_config": {
+      "model_type": "ti2v",
+      "patch_size": [1, 2, 2],
+      "text_len": 512,
+      "in_dim": 148,
+      "dim": 3072,
+      "ffn_dim": 14336,
+      "freq_dim": 256,
+      "text_dim": 4096,
+      "out_dim": 48,
+      "num_heads": 24,
+      "num_layers": 30,
+      "qk_norm": true,
+      "cross_attn_norm": true,
+      "eps": 1e-6
+    }
+  },
+  "scenes": {
+    "castle": {
+      "weights": "fps-castle/model.safetensors",
+      "metadata": "fps-castle/model.json",
+      "inference": "fps-castle/inference.json",
+      "sink_image": "fps-castle/sink.png"
+    },
+    "ancient-egypt": {
+      "weights": "fps-egypt/model.safetensors",
+      "metadata": "fps-egypt/model.json",
+      "inference": "fps-egypt/inference.json",
+      "sink_image": "fps-egypt/sink.png"
+    },
+    "racing": {
+      "weights": "driving_game/model.safetensors",
+      "metadata": "driving_game/model.json",
+      "inference": "driving_game/inference.json",
+      "sink_image": "driving_game/sink.png"
+    }
+  }
+}

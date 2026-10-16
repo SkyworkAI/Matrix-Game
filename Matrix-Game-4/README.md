@@ -74,12 +74,12 @@ shared dependencies:
 ```bash
 matrix-game download --manifest releases/game-assets.json \
   --repo-id Skywork/Matrix-Game-4.0 --repo-type model \
-  --revision 4419accdb7bb7881234c5914de8cd915266e0325 \
+  --revision 2c53100457da7abcf0e966f75637c644d3423a63 \
   --scene ancient-egypt --resources resources
 
 matrix-game download --manifest releases/models.json \
   --repo-id Skywork/Matrix-Game-4.0 --repo-type model \
-  --revision 4419accdb7bb7881234c5914de8cd915266e0325 \
+  --revision 2c53100457da7abcf0e966f75637c644d3423a63 \
   --scene ancient-egypt --resources resources
 ```
 
