@@ -68,6 +68,8 @@ def main(argv=None):
         from .rtx5090 import FastStream as CastleStream
     elif args.dit_runtime.startswith("rtx5080"):
         from .rtx5080 import FastStream as CastleStream
+    elif args.dit_runtime.startswith("rtx5070ti"):
+        from .rtx5070ti import FastStream as CastleStream
     else:
         from .stream import CastleStream
 

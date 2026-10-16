@@ -8,7 +8,7 @@ import json
 from types import SimpleNamespace
 
 from matrix_game.resources import checked_path, digest, files_for, install_file, matches, main
-from matrix_game.scenes import add_model_arguments, resolve_model_arguments, parse_steps
+from matrix_game.scenes import FIXED_PROMPT_RUNTIMES, OPTIMIZED_RUNTIMES, add_model_arguments, resolve_model_arguments, parse_steps
 from matrix_game.inference.offline import frame_blocks
 
 
@@ -159,6 +159,16 @@ class ConfigTests(unittest.TestCase):
         self.assertEqual((fast.steps,fast.first_steps,fast.vae_backend,fast.dit_runtime,fast.vae_graph), ((1000,),(1000,),"taehv","ring-fused",True))
         self.assertEqual((quality.steps,quality.first_steps,quality.vae_backend,quality.dit_runtime,quality.vae_graph), ((1000,500),(1000,500),"wan","native",False))
         self.assertIsNotNone(fast.sink_image)
+
+    def test_optimized_runtime_presets(self):
+        for preset in OPTIMIZED_RUNTIMES:
+            args = self.config("--scene", "racing", "--preset", preset)
+            self.assertEqual((args.steps, args.vae_backend, args.dit_runtime, args.vae_graph), ((1000,), "taehv", preset, True))
+            if preset in FIXED_PROMPT_RUNTIMES:
+                with self.assertRaises(ValueError):
+                    self.config("--scene", "racing", "--preset", preset, "--prompt-mode", "dynamic")
+            else:
+                self.config("--scene", "racing", "--preset", preset, "--prompt-mode", "dynamic")
 
     def test_override_and_invalid_config(self):
         args=self.config("--preset","quality","--steps","1000","--no-sink-image")

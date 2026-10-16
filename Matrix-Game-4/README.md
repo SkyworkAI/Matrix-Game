@@ -281,6 +281,26 @@ CUDA_VISIBLE_DEVICES=0 bash scripts/serve.sh \
 
 Model throughput on one RTX 5080 at 864 x 480, steady state, excluding video I/O.
 
+## RTX 5070 Ti
+
+Use `--preset rtx5070ti`, or `--preset rtx5070ti-sage` with the
+[SageAttention build](#optional-sageattention). Fixed prompts only, as on the RTX 5080.
+The block linears use INT8 (W8A8, no calibration), which is faster than FP8 at this
+model's GEMM shapes on this GPU; tuning is in `matrix_game/inference/rtx5070ti/config.py`.
+
+```bash
+CUDA_VISIBLE_DEVICES=0 bash scripts/serve.sh \
+  --scene ancient-egypt --resources resources --preset rtx5070ti-sage \
+  --prompt-mode fixed --fps 40
+```
+
+| Preset | Model FPS | GPU memory |
+| --- | --- | --- |
+| `rtx5070ti` | ~41 | ~9.2 GB |
+| `rtx5070ti-sage` | ~58 | ~10.9 GB |
+
+Model throughput on one RTX 5070 Ti at 864 x 480, steady state, excluding video I/O.
+
 ## Layout
 
 ```text

@@ -23,8 +23,8 @@ def configure_scene(args):
         args.sink_image = root / "models" / args.scene / "sink.png"
 
 
-OPTIMIZED_RUNTIMES = ("rtx5090", "rtx5090-sage", "rtx5080", "rtx5080-sage")
-FIXED_PROMPT_RUNTIMES = ("rtx5080", "rtx5080-sage")
+OPTIMIZED_RUNTIMES = ("rtx5090", "rtx5090-sage", "rtx5080", "rtx5080-sage", "rtx5070ti", "rtx5070ti-sage")
+FIXED_PROMPT_RUNTIMES = ("rtx5080", "rtx5080-sage", "rtx5070ti", "rtx5070ti-sage")
 
 
 def add_model_arguments(parser):

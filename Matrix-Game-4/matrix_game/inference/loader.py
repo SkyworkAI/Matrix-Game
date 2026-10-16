@@ -29,6 +29,11 @@ class ModelComponents:
             self.prompt = self._encode_fixed_prompt(device, dtype)
             from matrix_game.inference.rtx5080 import load_transformer
             self.gen = load_transformer(self.args.checkpoint, sage=self.args.dit_runtime == "rtx5080-sage")
+        elif self.args.dit_runtime.startswith("rtx5070ti"):
+            # encode the fixed prompt and free T5.
+            self.prompt = self._encode_fixed_prompt(device, dtype)
+            from matrix_game.inference.rtx5070ti import load_transformer
+            self.gen = load_transformer(self.args.checkpoint, sage=self.args.dit_runtime == "rtx5070ti-sage")
         elif self.args.dit_runtime.startswith("rtx5090"):
             from matrix_game.inference.rtx5090 import load_transformer
             self.gen = load_transformer(self.args.checkpoint, sage=self.args.dit_runtime == "rtx5090-sage")
@@ -66,7 +71,7 @@ class ModelComponents:
             self.sink_latent = encode_sink_image(self.vae, self.args.sink_image, self.args.vae_backend,
                 first_frame=self.args.sink_mode == "first_frame").to(device, dtype)
             self.sink_sha256 = hashlib.sha256(self.args.sink_image.read_bytes()).hexdigest()
-        if self.args.dit_runtime.startswith(("rtx5090", "rtx5080")):
+        if self.args.dit_runtime.startswith(("rtx5090", "rtx5080", "rtx5070ti")):
             warm_up = self._runtime().warm_up
             warm_up(self.gen, self.vae, self.prompt, self.sink_latent, self.args.sink_mode, self.args.sink_rope_mode,
                     self.args.vae_backend)
@@ -94,7 +99,7 @@ class ModelComponents:
         return import_module("matrix_game.inference." + self.args.dit_runtime.split("-")[0])
 
     def stream(self, **kwargs):
-        if self.args.dit_runtime.startswith(("rtx5090", "rtx5080")):
+        if self.args.dit_runtime.startswith(("rtx5090", "rtx5080", "rtx5070ti")):
             CastleStream = self._runtime().FastStream
         else:
             from matrix_game.inference.stream import CastleStream
@@ -120,4 +125,4 @@ class ModelComponents:
                     early_publish=getattr(self.args, "early_publish", False),
                     profile_chunks=getattr(self.args, "profile_chunks", False),
                     reference_pipeline=getattr(self.args, "reference_pipeline", "stream"),
-                    experimental_runtime=self.args.dit_runtime.startswith(("ring", "rtx5090", "rtx5080")))
+                    experimental_runtime=self.args.dit_runtime.startswith(("ring", "rtx5090", "rtx5080", "rtx5070ti")))
