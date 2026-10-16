@@ -3,6 +3,7 @@
 Streaming neural rendering for executable low-poly games.
 
 [Project website](https://matrix-game-v4-0.github.io/page/)
+| [Technical report](docs/Matrix_Game_4_0.pdf)
 | [Models and game assets](https://huggingface.co/Skywork/Matrix-Game-4.0)
 
 The game engine owns gameplay, physics and input. A causal video model renders

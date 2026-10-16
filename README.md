@@ -4,6 +4,7 @@
 
 <p align="center">
   <a href="https://matrix-game-v4-0.github.io/page/">Project Website</a> |
+  <a href="Matrix-Game-4/docs/Matrix_Game_4_0.pdf">Technical Report</a> |
   <a href="https://huggingface.co/Skywork/Matrix-Game-4.0">Models &amp; Game Assets</a> |
   <a href="Matrix-Game-4">Code &amp; Quick Start</a> |
   <a href="#previous-versions">Previous Versions</a>
@@ -18,6 +19,7 @@ https://github.com/user-attachments/assets/4ded08da-1309-43c9-9662-6e2f2b3fbb41
 
 ## News
 
+- **October 16, 2026:** The Matrix-Game 4.0 [technical report](Matrix-Game-4/docs/Matrix_Game_4_0.pdf) is now available.
 - **October 15, 2026:** [RTX 5090 optimized inference](Matrix-Game-4/README.md#rtx-5090) is now available, with FP8 linear layers, fused kernels, CUDA graphs and an optional SageAttention backend. We expect to release a version that runs on NVIDIA GeForce RTX 5080 and RTX 5070 next week.
 - **October 15, 2026:** Released **Matrix-Game 4.0**. [Inference, browser demo and game source code](Matrix-Game-4) are now available, with model weights and game assets for Medieval Castle, Ancient Egypt and City Racing on [Hugging Face](https://huggingface.co/Skywork/Matrix-Game-4.0).
 - **March 27, 2026:** Released [Matrix-Game 3.0](Matrix-Game-3), a real-time streaming interactive world model with long-horizon memory.
