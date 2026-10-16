@@ -33,6 +33,23 @@ SIZES = ("864x480", "1280x704", "1728x960")
 NAME_PATTERN = re.compile(r"^[A-Za-z0-9_-]{1,60}$")
 TAKE_PATTERN = re.compile(r"^take-\d+$")
 IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp"}
+DEFAULT_PROMPT = ("Daytime city, cloudy sky. Center: player-controlled modern four-door sedan with a curved roof and a separate rear trunk, "
+                   "seen from behind in the foreground. Around: urban streets and multi-story buildings.")
+PRESET_PROMPTS = {
+    "Default": DEFAULT_PROMPT,
+    "Sunny taxi": ("Sunny daytime city, bright warm sunlight, long sharp shadows on the road. Center: player-controlled worn yellow NYC taxi "
+                   "cab with a TAXI roof sign and a rusty trunk, seen from behind in the foreground. Around: urban streets, stone and concrete "
+                   "multi-story buildings, parked cars."),
+    "Snowy sedan": ("Heavy snowstorm in a city, everything covered in thick white snow: snow-covered road, snow-covered sidewalks, snow piled "
+                     "on cars, ledges, awnings and rooftops, snowflakes falling through the air, grey overcast sky, slush and dark tire tracks "
+                     "in the snow, cold white-blue light, no dry pavement anywhere. Center: player-controlled blue four-door sedan with a "
+                     "curved roof and a separate rear trunk, seen from behind in the foreground, dusted with snow. Around: snowy urban streets "
+                     "and multi-story buildings, pedestrians in winter coats."),
+    "Night city": ("Nighttime city, dark sky, streetlights and neon signs reflecting on wet asphalt. Center: player-controlled modern "
+                    "four-door sedan with a curved roof and a separate rear trunk, headlights and taillights lit, seen from behind in the "
+                    "foreground. Around: illuminated storefronts and multi-story buildings."),
+}
+EVENT_LINE = re.compile(r"^\s*(\d+)\s*:\s*(\S.*)$")
 FRAMES_PATTERN = re.compile(r"(\d+) frames \|")
 FPS_PATTERN = re.compile(r"\| ([\d.]+) processing FPS")
 DONE_PATTERN = re.compile(r"finished in (\d+) s")
@@ -58,7 +75,7 @@ def list_state() -> dict:
         settings = path.parent / "ui_params.json"
         renders.append(dict(name=path.parent.name, url=f"/files/outputs/{path.parent.name}/rendered.mp4",
                             params=json.loads(settings.read_text(encoding="utf-8")) if settings.exists() else None))
-    return dict(takes=takes, renders=renders, presets=list(PRESETS), steps=list(STEPS), sizes=list(SIZES))
+    return dict(takes=takes, renders=renders, presets=list(PRESETS), steps=list(STEPS), sizes=list(SIZES), prompt_presets=PRESET_PROMPTS)
 
 
 def convert_input(take: str) -> str:
@@ -111,6 +128,27 @@ def free_name(base: str) -> str:
     return result.stdout.strip().splitlines()[-1]
 
 
+def build_captions(base: str, events: list[tuple[int, str]], total_frames: int) -> list[dict]:
+    """One caption per chunk (frame 0 alone, then consecutive groups of 4), each "base. event" for the latest event at or before that chunk."""
+    events = sorted(events)
+    ranges = [(0, 0)]
+    start = 1
+    while start < total_frames:
+        end = min(start + 3, total_frames - 1)
+        ranges.append((start, end))
+        start = end + 1
+    records = []
+    current = ""
+    index = 0
+    for frame_start, frame_end in ranges:
+        while index < len(events) and events[index][0] <= frame_start:
+            current = events[index][1]
+            index += 1
+        prompt = f"{base}. {current}" if current else base
+        records.append(dict(frame_start=frame_start, frame_end=frame_end, prompt=prompt))
+    return records
+
+
 def render(job: Job) -> None:
     params = job.params
     try:
@@ -125,7 +163,16 @@ def render(job: Job) -> None:
             extra += f" --steps {steps} --first-steps {steps}"
         if params.get("seed"):
             extra += f" --seed {int(params['seed'])}"
-        if params.get("prompt"):
+        if params.get("events"):
+            total = take_info(REPO / "captures" / take)["frames"]
+            records = build_captions(params["prompt"] or DEFAULT_PROMPT, params["events"], total)
+            local_captions = REPO / "captures" / take / f"captions_{name}.jsonl"
+            local_captions.write_text("\n".join(json.dumps(record) for record in records) + "\n", encoding="utf-8")
+            remote_captions = f"captures/{take}/captions_{name}.jsonl"
+            job.run(SCP + [str(local_captions), f"{DGX}:{DGX_REPO}/{remote_captions}"])
+            extra += f" --prompt-mode dynamic --captions {remote_captions}"
+            job.log(f"event prompt: {len(records)} chunk captions written to {remote_captions}")
+        elif params.get("prompt"):
             extra += " --prompt " + shlex.quote(params["prompt"])
         if params.get("sink_image"):
             remote_image = f"captures/sink_{name}{Path(params['sink_image']).suffix.lower()}"
@@ -189,7 +236,20 @@ def start_job(body: dict, kind: str) -> dict:
     seed = str(body.get("seed", "")).strip()
     if seed and not seed.isdigit():
         raise ValueError("seed must be a whole number")
-    params = dict(take=take, preset=preset, steps=body.get("steps", "4"), size=size, name=name, prompt=body.get("prompt", "").strip(), sink_image=sink, seed=seed)
+    total_frames = take_info(REPO / "captures" / take)["frames"]
+    events: list[tuple[int, str]] = []
+    for line_number, line in enumerate(body.get("events", "").splitlines(), 1):
+        if not line.strip():
+            continue
+        match = EVENT_LINE.match(line)
+        if not match:
+            raise ValueError(f"event line {line_number} must look like '120: turning left', got {line!r}")
+        frame = int(match.group(1))
+        if frame >= total_frames:
+            raise ValueError(f"event line {line_number}: frame {frame} is past the take's {total_frames} frames")
+        events.append((frame, match.group(2).strip()))
+    params = dict(take=take, preset=preset, steps=body.get("steps", "4"), size=size, name=name, prompt=body.get("prompt", "").strip(),
+                  events=events, sink_image=sink, seed=seed)
     with JOB_LOCK:
         if any(job.status == "running" for job in JOBS.values()):
             raise ValueError("a render is already running")
@@ -316,7 +376,11 @@ table{border-collapse:collapse;width:100%;font-size:12px}td{padding:3px 6px;bord
 <label for="take">Take</label><select id="take"></select>
 <div class="row"><div><label for="preset">Preset</label><select id="preset"></select></div><div><label for="steps">Denoising steps</label><select id="steps"></select></div></div>
 <div class="row"><div><label for="size">Size (unvalidated above 864x480)</label><select id="size"></select></div><div><label for="seed">Seed</label><input id="seed" placeholder="0"></div></div>
-<label for="prompt">Prompt (empty = the scene's default caption)</label><textarea id="prompt" placeholder="Sunny daytime city, bright warm sunlight. Center: player-controlled yellow taxi seen from behind..."></textarea>
+<label for="prompt">Prompt (empty = the scene's default caption; the base description when Events below are used)</label>
+<div id="presets" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px"></div>
+<textarea id="prompt" placeholder="Sunny daytime city, bright warm sunlight. Center: player-controlled yellow taxi seen from behind..."></textarea>
+<label for="events">Events (optional): one "frame: what happens" per line, holds the base look and changes it per event</label>
+<textarea id="events" placeholder="0: driving straight&#10;120: turning left at an intersection&#10;300: hits a snowbank, snow spraying"></textarea>
 <label for="sink">Reference image, full path (empty = built-in grey sedan)</label><input id="sink" placeholder="C:\Users\kschmid\Downloads\image.jpg">
 <label for="name">Output name (a number is added if it exists on the DGX)</label><input id="name" placeholder="racing_take001_ui">
 <button id="go">Render on the DGX</button><button id="bench" style="background:var(--panel);color:var(--ink);border:1px solid var(--line)">Measure latency (take, preset, steps, size above)</button>
@@ -332,6 +396,7 @@ function fill(sel,values){sel.innerHTML=values.map(v=>`<option>${v}</option>`).j
 function load(slot,url,label){const v=$('v'+slot);v.src=url;v.load();$('c'+slot).textContent=slot.toUpperCase()+': '+label}
 async function refresh(){const s=await (await fetch('/api/state')).json();
  fill($('take'),s.takes.map(t=>t.name));fill($('preset'),s.presets);fill($('steps'),s.steps);fill($('size'),s.sizes);$('steps').value='4';$('preset').value='quality';
+ $('presets').innerHTML='';for(const [label,text] of Object.entries(s.prompt_presets)){const b=document.createElement('button');b.type='button';b.className='small';b.textContent=label;b.onclick=()=>{$('prompt').value=text};$('presets').appendChild(b)}
  $('hist').innerHTML='';for(const r of s.renders){const d=document.createElement('div');d.className='item';const p=r.params;
   const info=p?` (${p.preset}${p.preset==='quality'?', '+p.steps+' steps':''}, ${p.size})`:'';
   d.innerHTML=`<span>${r.name}${info}</span>`;
@@ -345,7 +410,7 @@ function showMetrics(r){if(!r)return;let rows;if(r.kind==='bench'){rows=[['prese
  $('metrics').innerHTML='<table>'+rows.map(x=>'<tr><td>'+x[0]+'</td><td>'+x[1]+'</td></tr>').join('')+'</table>'+(r.note?'<div class="cap">'+r.note+'</div>':'')}
 $('bench').onclick=async()=>{$('log').textContent='';$('go').disabled=true;$('bench').disabled=true;const body={take:$('take').value,preset:$('preset').value,steps:$('steps').value,size:$('size').value};const j=await (await fetch('/api/bench',{method:'POST',body:JSON.stringify(body)})).json();if(j.error){$('state').textContent=j.error;$('go').disabled=false;$('bench').disabled=false;return}poll(j.id,0)};
 $('go').onclick=async()=>{$('log').textContent='';$('go').disabled=true;$('bench').disabled=true;
- const body={take:$('take').value,preset:$('preset').value,steps:$('steps').value,size:$('size').value,seed:$('seed').value,prompt:$('prompt').value,sink_image:$('sink').value,name:$('name').value};
+ const body={take:$('take').value,preset:$('preset').value,steps:$('steps').value,size:$('size').value,seed:$('seed').value,prompt:$('prompt').value,events:$('events').value,sink_image:$('sink').value,name:$('name').value};
  const r=await fetch('/api/render',{method:'POST',body:JSON.stringify(body)});const j=await r.json();
  if(j.error){$('state').textContent=j.error;$('go').disabled=false;$('bench').disabled=false;return}poll(j.id,0)};
 $('inputA').onclick=async()=>{const j=await (await fetch('/api/input?take='+$('take').value)).json();if(j.error){$('state').textContent=j.error;return}load('a',j.url,'input of '+$('take').value)};
