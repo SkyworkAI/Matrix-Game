@@ -1,0 +1,57 @@
+$schema: reactor/v2
+
+model:
+  name: matrix-game-4
+  version: v0.2.0
+  description: Native game controls with frame-paired Matrix-Game 4.0 neural rendering.
+  resources:
+    gpu:
+      type: NVIDIA_B200
+      count: 1
+    cpu:
+      request: "8"
+      limit: "16"
+    memory:
+      request: 64Gi
+      limit: 128Gi
+
+runtime:
+  import: matrix_game4:MatrixGame4
+  config: matrix_game4.yaml
+  weights_path: ~/.cache/reactor_registry/matrix-game-4
+  recording:
+    enabled: true
+    video_track: main_video
+
+build:
+  runtime_version: "3.8.3"
+  python_requirements: requirements.txt
+  cuda_version: "13.2.0"
+  python_version: "3.12"
+  system_packages:
+    - build-essential
+    - cmake
+    - pkg-config
+    - python3.12-dev
+    - git
+    - libsdl2-dev
+    - libglew-dev
+    - libgl-dev
+    - libegl-dev
+    - libavcodec-dev
+    - libavformat-dev
+    - libavutil-dev
+    - libswscale-dev
+    - zlib1g-dev
+    - ffmpeg
+  runtime_env:
+    NVIDIA_DRIVER_CAPABILITIES: compute,utility,graphics
+    OMP_NUM_THREADS: "8"
+    OPENBLAS_NUM_THREADS: "1"
+  run:
+    - git init /opt/matrix-game4-source && git -C /opt/matrix-game4-source remote add origin https://github.com/SkyworkAI/Matrix-Game.git
+    - git -C /opt/matrix-game4-source fetch --depth 1 origin 5446525c80da2a4a2f87801addbbc7faa8d2486e && git -C /opt/matrix-game4-source checkout --detach FETCH_HEAD
+    - ln -s /opt/matrix-game4-source/Matrix-Game-4 /opt/matrix-game4
+    - pip install --no-deps /opt/matrix-game4
+    - bash /opt/matrix-game4/scripts/build_game.sh
+    - cmake -S /opt/matrix-game4/game/racing -B /opt/matrix-game4/game/racing/build -DCMAKE_BUILD_TYPE=Release && cmake --build /opt/matrix-game4/game/racing/build --parallel 4
