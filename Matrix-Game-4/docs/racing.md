@@ -52,8 +52,9 @@ changed text is encoded with resident T5 and invalidates cross-attention KV only
 eight entries. Updating captions does not reset the visual KV or VAE history.
 
 Racing keeps its sink 11 positions ahead of the current block once the 21-latent
-window is full (future sink RoPE, `matrix_game/inference/sink_policy.py`). The
-configured image is encoded with
+window is full (future sink RoPE, `matrix_game/inference/sink_policy.py`). A sink
+image is required: `--sink-image`, or `models/racing/sink.png` by default.
+It is encoded with
 the selected VAE, decoded as output frame zero, and written to clean KV without
 denoising. Low-poly VAE history remains independent. Later blocks contain one
 latent / four RGB frames. The realtime preset uses TAEHV for the sink and both

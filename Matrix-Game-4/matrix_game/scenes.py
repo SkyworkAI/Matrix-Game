@@ -20,7 +20,7 @@ def configure_scene(args):
     args.checkpoint = args.checkpoint or root / "models" / args.scene / "model.safetensors"
     args.taehv_path = args.taehv_path or root / "base/taew2_2.pth"
     args.asset_root = args.asset_root or root / ("racing" if args.scene == "racing" else "game")
-    if args.sink_image is None and not args.no_sink_image:
+    if args.sink_image is None:
         args.sink_image = root / "models" / args.scene / "sink.png"
 
 
@@ -43,9 +43,7 @@ def add_model_arguments(parser):
     parser.add_argument("--prompt", help="Override the fixed scene caption")
     parser.add_argument("--prompt-interval-chunks", type=int, default=1)
     parser.add_argument("--t5-runtime", choices=("native", "graph"), default="graph")
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument("--sink-image", type=Path)
-    group.add_argument("--no-sink-image", action="store_true")
+    parser.add_argument("--sink-image", type=Path)
 
 
 def parse_steps(value):
@@ -81,8 +79,7 @@ def resolve_model_arguments(args, require_model=True):
     if require_model:
         files = [args.checkpoint, args.model_dir / "models_t5_umt5-xxl-enc-bf16.pth"]
         files.append(args.taehv_path if args.vae_backend == "taehv" else args.model_dir / "Wan2.2_VAE.pth")
-        if args.sink_image is not None:
-            files.append(args.sink_image)
+        files.append(args.sink_image)
         missing = [str(p) for p in files if not p.is_file()]
         if not (args.model_dir / "google/umt5-xxl").is_dir():
             missing.append(str(args.model_dir / "google/umt5-xxl"))

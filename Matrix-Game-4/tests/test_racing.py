@@ -28,7 +28,7 @@ class RacingStreamTests(SinkTests):
         self.assertEqual((self.vae.encoder_frames, self.vae.decoder_frames), (5, 5))
 
     def test_prompt_update_preserves_self_kv_and_frame_count(self):
-        stream = self.stream(sink_mode="first_frame", sink_rope_mode="future")
+        stream = self.stream(sink_latent=torch.full(SHAPE, .75), sink_mode="first_frame", sink_rope_mode="future")
         cache = stream.kv[0]
         stream.xc[0]["is_init"] = True
         new = self.prompt + 1

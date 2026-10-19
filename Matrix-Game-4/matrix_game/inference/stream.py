@@ -74,10 +74,12 @@ class CastleStream:
         param = next(generator.parameters())
         self.device, self.dtype = param.device, param.dtype
         self.shape = (1, 1, 48, 30, 54)
-        if sink_latent is not None and (tuple(sink_latent.shape) != self.shape
-                                       or not sink_latent.is_floating_point() or not torch.isfinite(sink_latent).all()):
+        if sink_latent is None:
+            raise ValueError("A sink latent is required; the generated first frame is not used as the sink")
+        if (tuple(sink_latent.shape) != self.shape
+                or not sink_latent.is_floating_point() or not torch.isfinite(sink_latent).all()):
             raise ValueError("Sink must be one finite floating-point latent frame")
-        self.sink_offset = int(sink_latent is not None and sink_mode == "kv_only")
+        self.sink_offset = int(sink_mode == "kv_only")
         self.index = self.frame = 0
         self.failed = self.closed = False
         self.max_latents = max_latents

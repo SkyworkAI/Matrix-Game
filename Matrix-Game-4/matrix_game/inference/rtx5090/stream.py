@@ -60,8 +60,10 @@ class FastStream:
         self.max_latents = max_latents
         self.shape = LATENT_SHAPE
         self.sink_mode, self.sink_rope_mode = sink_mode, sink_rope_mode
+        if sink_latent is None:
+            raise ValueError("A sink latent is required; the generated first frame is not used as the sink")
         self.first_frame_latent = sink_latent if sink_mode == "first_frame" else None
-        self.sink_offset = int(sink_latent is not None and sink_mode == "kv_only")
+        self.sink_offset = int(sink_mode == "kv_only")
         transformer.ensure_rope_positions(rope_positions_needed(sink_rope_mode, max(8192, max_latents + self.sink_offset)))
         self.scheduler = FlowMatchScheduler(shift=TIMESTEP_SHIFT, sigma_min=0.0, extra_one_step=True)
         self.scheduler.set_timesteps(1000, training=True)
