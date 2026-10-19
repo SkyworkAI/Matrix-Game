@@ -13,7 +13,8 @@ def configure_scene(args):
     profile = SCENES[args.scene]
     args.prompt = getattr(args, "prompt", None) or profile["prompt"]
     args.sink_mode = "first_frame" if args.scene == "racing" else "kv_only"
-    args.sink_rope_mode = "absolute" if args.scene == "racing" else "fixed"
+    # Racing keeps its sink a fixed distance ahead of the current block (see inference/sink_policy.py).
+    args.sink_rope_mode = "future" if args.scene == "racing" else "fixed"
     root = args.resources.resolve()
     args.model_dir = args.model_dir or root / "base"
     args.checkpoint = args.checkpoint or root / "models" / args.scene / "model.safetensors"

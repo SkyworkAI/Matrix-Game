@@ -1,4 +1,5 @@
 from matrix_game.inference.wan.modules.attention import attention
+from matrix_game.inference.sink_policy import check_sink_rope_mode, rotated_sink_position
 from matrix_game.inference.wan.modules.model import (
     WanRMSNorm,
     rope_apply,
@@ -191,6 +192,7 @@ class CausalWanSelfAttention(nn.Module):
                 RoPE 坐标 p（本次输入首帧）且 p > local_attn_size=W 时，sink 的 K 从缓存里另存的不带 RoPE 的 k
                 （kv_cache["k_sink_raw"]，由调用方预分配，写 sink 槽时原地写入）在位置 p-W+s 现加 RoPE，与 query 的相对距离
                 恒为 W-s；p <= W 时 sink 用自己的位置（就是缓存里那份）。窗口帧仍用各自的绝对位置。
+                "future" 同 fixed，只是 sink 第 s 帧放在 p+FUTURE_SINK_OFFSET+s（query 前方固定距离，见 sink_policy.py）。
             kv_mem(dict|None): 本层的记忆槽 {"k": 不带 RoPE 的 k [B, cap, H, D], "v": [B, cap, H, D], "n": 有效潜变量数 m}，
                 调用方在模型外面填好（预分配张量），模型里只读。第 r 个（r=0 最旧）在 p-W-(m-r) 现加 RoPE；拼成
                 [记忆 | sink | 窗口] 只进 K/V、不进 Q。m=0 或 None 时什么都不拼。
@@ -388,16 +390,17 @@ class CausalWanSelfAttention(nn.Module):
                 else self.local_attn_size * frame_seqlen
             recent_start = local_end_index - (max_attention_size - sink_tokens)
             W_att = self.local_attn_size
-            if sink_rope_mode not in (None, "absolute", "fixed"):
-                raise ValueError(f"sink_rope_mode 只能是 absolute / fixed，收到 {sink_rope_mode}")
-            if sink_rope_mode == "fixed" and W_att != -1 and sink_tokens > 0 and rope_frame > W_att:
-                # 固定相对距离。sink 第 s 帧在 p-W+s 现加 RoPE（p=rope_frame 是本次 query 的位置）；
-                # p > W 时缓存一定已满（或已扩容），可见集合是 sink 加最近 W-S 帧，只换 sink 的 K、V 不变
-                assert "k_sink_raw" in kv_cache, "sink_rope_mode=fixed 要在 kv_cache 里预分配 k_sink_raw（见 pipeline/lowpoly_rollout.py）"
+            check_sink_rope_mode(sink_rope_mode)
+            sink_base = rotated_sink_position(sink_rope_mode, rope_frame, W_att) \
+                if W_att != -1 and sink_tokens > 0 else None
+            if sink_base is not None:
+                # 固定相对距离。sink 第 s 帧在 sink_base+s 现加 RoPE（fixed 是 p-W，future 是 p+FUTURE_SINK_OFFSET，
+                # p=rope_frame 是本次 query 的位置）；p > W 时缓存一定已满（或已扩容），可见集合是 sink 加最近 W-S 帧，只换 sink 的 K、V 不变
+                assert "k_sink_raw" in kv_cache, "sink_rope_mode=fixed/future 要在 kv_cache 里预分配 k_sink_raw（见 pipeline/lowpoly_rollout.py）"
                 assert recent_start >= sink_tokens, (recent_start, sink_tokens)
                 sink_grid = grid_sizes.clone()
                 sink_grid[:, 0] = self.sink_size
-                sink_pos = torch.arange(self.sink_size, dtype=torch.long) + (rope_frame - W_att)
+                sink_pos = torch.arange(self.sink_size, dtype=torch.long) + sink_base
                 k_sink = rope_apply_frames(kv_cache["k_sink_raw"][:, :sink_tokens], sink_grid, freqs, sink_pos).type_as(v)
                 k_att = torch.cat([k_sink, kv_cache["k"][:, recent_start:local_end_index]], dim=1)
                 v_att = torch.cat([kv_cache["v"][:, :sink_tokens], kv_cache["v"][:, recent_start:local_end_index]], dim=1)

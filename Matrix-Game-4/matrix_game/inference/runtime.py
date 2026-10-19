@@ -1,4 +1,4 @@
-"""Single-GPU inference runtime for absolute and fixed-relative sinks.
+"""Single-GPU inference runtime for absolute and fixed-relative (fixed, future) sinks.
 
 Port of the racing runtime's host KV planning, FP64 RoPE kernel and graph replay.
 Only the bounded, chunk1, BF16 inference path is supported; fail closed for
@@ -157,8 +157,9 @@ class CastleRuntime:
         from matrix_game.inference.wan.modules.attention import FLASH_ATTN_2_AVAILABLE, FLASH_ATTN_3_AVAILABLE
         from matrix_game.inference.wan.modules.causal_model import _sp_on
         from matrix_game.inference.rope_kernel import build_causal_rope_rotations
+        from matrix_game.inference.sink_policy import SINK_ROPE_MODES, rotated_sink_position
         if (unsupported or torch.is_grad_enabled() or model.training or _sp_on()
-                or sink_rope_mode not in (None, "absolute", "fixed") or x.dtype != torch.bfloat16
+                or sink_rope_mode not in (None,) + SINK_ROPE_MODES or x.dtype != torch.bfloat16
                 or not x.is_cuda or FLASH_ATTN_3_AVAILABLE):
             raise ValueError(f"Unsupported runtime: extra={unsupported}, grad={torch.is_grad_enabled()}, "
                              f"training={model.training}, sp={_sp_on()}, sink={sink_rope_mode}, "
@@ -174,8 +175,9 @@ class CastleRuntime:
         rotations = build_causal_rope_rotations(model.freqs, 1, h, w, position)
         window = model.blocks[0].self_attn.local_attn_size
         steady = position > window
-        fixed = steady and sink_rope_mode == "fixed"
-        sink_rotations = build_causal_rope_rotations(model.freqs, 1, h, w, position - window) if fixed else None
+        sink_position = rotated_sink_position(sink_rope_mode, position, window)
+        fixed = sink_position is not None  # the sink's keys are re-rotated (fixed or future policy)
+        sink_rotations = build_causal_rope_rotations(model.freqs, 1, h, w, sink_position) if fixed else None
 
         def cu(n):
             if not FLASH_ATTN_2_AVAILABLE:

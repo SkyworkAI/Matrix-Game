@@ -60,7 +60,8 @@ class CastleStream:
         from matrix_game.inference.wrappers import frame_seq_length_of
 
         self.gen, self.vae, self.prompt = generator, vae, prompt_embeds
-        if sink_mode not in ("kv_only", "first_frame") or sink_rope_mode not in ("absolute", "fixed"):
+        from matrix_game.inference.sink_policy import SINK_ROPE_MODES, rope_positions_needed
+        if sink_mode not in ("kv_only", "first_frame") or sink_rope_mode not in SINK_ROPE_MODES:
             raise ValueError("Invalid sink policy")
         self.sink_mode, self.sink_rope_mode = sink_mode, sink_rope_mode
         self.first_frame_latent = sink_latent if sink_mode == "first_frame" else None
@@ -90,7 +91,8 @@ class CastleStream:
             generator, scheduler, warp_steps(scheduler, list(steps)),
             warp_steps(scheduler, list(first_steps)),
             local_attn_size=21, sink_size=1, sink_rope_mode=sink_rope_mode,
-            memory_mode="none", rope_max_len=max(8192, max_latents + self.sink_offset),
+            memory_mode="none",
+            rope_max_len=rope_positions_needed(sink_rope_mode, max(8192, max_latents + self.sink_offset)),
         )
         set_attention_window(generator, 21, 1)
         self.rollout._prepare_rope()
