@@ -3,6 +3,8 @@ import argparse
 import json
 from pathlib import Path
 
+from matrix_game.inference.sink_policy import SINK_ROPE_MODES
+
 SCENES = {
     name: json.loads((Path(__file__).parent / "configs" / (name + ".json")).read_text())
     for name in ("castle", "ancient-egypt", "racing")
@@ -13,8 +15,9 @@ def configure_scene(args):
     profile = SCENES[args.scene]
     args.prompt = getattr(args, "prompt", None) or profile["prompt"]
     args.sink_mode = "first_frame" if args.scene == "racing" else "kv_only"
-    # Racing keeps its sink a fixed distance ahead of the current block (see inference/sink_policy.py).
-    args.sink_rope_mode = "future" if args.scene == "racing" else "fixed"
+    # Racing keeps its sink a fixed distance ahead of the current block (see inference/sink_policy.py);
+    # --sink-rope-mode overrides the scene default.
+    args.sink_rope_mode = getattr(args, "sink_rope_mode", None) or ("future" if args.scene == "racing" else "fixed")
     root = args.resources.resolve()
     args.model_dir = args.model_dir or root / "base"
     args.checkpoint = args.checkpoint or root / "models" / args.scene / "model.safetensors"
@@ -44,6 +47,8 @@ def add_model_arguments(parser):
     parser.add_argument("--prompt-interval-chunks", type=int, default=1)
     parser.add_argument("--t5-runtime", choices=("native", "graph"), default="graph")
     parser.add_argument("--sink-image", type=Path)
+    parser.add_argument("--sink-rope-mode", choices=SINK_ROPE_MODES,
+                        help="Sink RoPE policy; default future for racing, fixed for the shooters")
 
 
 def parse_steps(value):

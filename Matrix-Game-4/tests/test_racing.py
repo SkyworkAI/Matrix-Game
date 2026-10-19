@@ -50,6 +50,15 @@ class RacingOptionsTests(unittest.TestCase):
         self.assertEqual(args.prompt_interval_chunks, 1)
         self.assertEqual(args.asset_root.name, "racing")
 
+    def test_sink_rope_mode_flag(self):
+        parser = argparse.ArgumentParser()
+        add_model_arguments(parser)
+        for argv, mode in ((["--scene", "racing"], "future"),
+                           (["--scene", "racing", "--sink-rope-mode", "absolute"], "absolute"),
+                           (["--scene", "castle"], "fixed"),
+                           (["--scene", "castle", "--sink-rope-mode", "future"], "future")):
+            self.assertEqual(resolve_model_arguments(parser.parse_args(argv), False).sink_rope_mode, mode)
+
     def test_inputs(self):
         self.assertEqual(game_options({"mode": "pursuit"})["route"], "avenue")
         self.assertEqual(controls(dict(sequence=1, drive=[1, -.5, 0, 0]))["drive"], [1, -.5, 0, 0])
