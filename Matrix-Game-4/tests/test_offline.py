@@ -68,4 +68,4 @@ class OfflineTests(unittest.TestCase):
             self.assertEqual(prompt_calls, ["opening", "turn", "exit"])
             self.assertEqual(calls, [(0,1),(1,4),(5,4),(9,4)])
             self.assertEqual(stream_options[-1]["sink_mode"], "first_frame")
-            self.assertEqual(stream_options[-1]["sink_rope_mode"], "absolute")
+            self.assertEqual(stream_options[-1]["sink_rope_mode"], "future")

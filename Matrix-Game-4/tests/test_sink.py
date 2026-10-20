@@ -131,14 +131,11 @@ class SinkTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             stream.push(torch.zeros(4, 3, 480, 864), frame_start=9)
 
-    def test_no_sink_preserves_bootstrap_positions(self):
-        stream = self.stream()
+    def test_missing_sink_is_rejected(self):
+        for mode in ("kv_only", "first_frame"):
+            with self.assertRaises(ValueError):
+                self.stream(sink_mode=mode)
         self.assertEqual(self.gen.calls, [])
-        for index, frame in enumerate((0, 1, 5)):
-            count = 1 if index == 0 else 4
-            chunk = stream.push(torch.zeros(count, 3, 480, 864), frame_start=frame)
-            self.assertEqual(chunk.denoising_steps, 2 if index < 2 else 1)
-            self.assertEqual(self.gen.calls[-1]["current_start"], index * stream.fsl)
 
     def test_new_sessions_prefill_new_caches(self):
         sink = torch.ones(SHAPE)

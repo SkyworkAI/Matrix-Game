@@ -32,7 +32,9 @@ modes alter floating-point reduction order. Keep `native` for reference checks.
 ## Racing Model
 
 Racing shares the backbone, codec wrappers, ring/fused kernels and CUDA graphs,
-but uses **absolute sink RoPE**. Its supplied sink is encoded by the selected
+but uses **future sink RoPE**: once the 21-latent window is full, the sink's keys
+are re-rotated to 11 positions ahead of the current block
+(`matrix_game/inference/sink_policy.py`). Its supplied sink is encoded by the selected
 codec, decoded as frame zero, and committed to clean KV without denoising.
 It seeds decoder history, not the independent low-poly encoder history. The
 realtime preset uses TAEHV for the sink, reference encoding and output decoding.

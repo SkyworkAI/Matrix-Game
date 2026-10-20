@@ -4,7 +4,7 @@ import unittest
 import torch
 
 from matrix_game.inference.runtime import plan_cache
-from test_sink import SinkTests
+from test_sink import SHAPE, SinkTests
 
 
 class RingTests(unittest.TestCase):
@@ -28,7 +28,7 @@ class RingTests(unittest.TestCase):
 
 class PublicationTests(SinkTests):
     def test_publish_before_clean_and_owned_storage(self):
-        stream = self.stream()
+        stream = self.stream(sink_latent=torch.full(SHAPE, .75))
         retained = []
         def receive(rgb):
             self.assertNotEqual(float(self.gen.calls[-1]["timestep"]), 0)
@@ -44,7 +44,7 @@ class PublicationTests(SinkTests):
         self.assertEqual(float(self.gen.calls[-1]["timestep"]), 0)
 
     def test_callback_failure_invalidates_session(self):
-        stream = self.stream()
+        stream = self.stream(sink_latent=torch.full(SHAPE, .75))
         def fail(_):
             raise RuntimeError("broken transport")
         with self.assertRaisesRegex(RuntimeError, "broken transport"):

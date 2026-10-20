@@ -1,5 +1,7 @@
 import argparse
+import contextlib
 import hashlib
+import io
 import tempfile
 import unittest
 from unittest.mock import Mock, patch
@@ -171,9 +173,10 @@ class ConfigTests(unittest.TestCase):
                 self.config("--scene", "racing", "--preset", preset, "--prompt-mode", "dynamic")
 
     def test_override_and_invalid_config(self):
-        args=self.config("--preset","quality","--steps","1000","--no-sink-image")
+        args=self.config("--preset","quality","--steps","1000")
         self.assertEqual(args.first_steps,(1000,))
-        self.assertIsNone(args.sink_image)
+        self.assertEqual(args.sink_image.name, "sink.png")
+        with self.assertRaises(SystemExit), contextlib.redirect_stderr(io.StringIO()): self.config("--no-sink-image")
         with self.assertRaises(ValueError): self.config("--vae-backend","wan","--vae-graph")
         for bad in ("", "500", "1000,0", "1000,500,750", "1000,1000", "a"):
             with self.assertRaises(argparse.ArgumentTypeError):parse_steps(bad)

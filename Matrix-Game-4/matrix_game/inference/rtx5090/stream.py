@@ -15,6 +15,7 @@ import torch
 
 from matrix_game.inference.rollout import warp_steps
 from matrix_game.inference.scheduler import FlowMatchScheduler
+from matrix_game.inference.sink_policy import SINK_ROPE_MODES, rope_positions_needed, rotated_sink_position
 from matrix_game.inference.stream import Chunk
 
 LATENT_SHAPE = (1, 1, 48, 30, 54)   # one latent frame [B, F, C, h, w]
@@ -40,16 +41,17 @@ def load_transformer(checkpoint, *, sage: bool = False, device="cuda"):
 class FastStream:
     """Accept [-1, 1] RGB [T, 3, 480, 864]: 1 frame first, then 4 per chunk.
 
-    Racing: the sink is frame zero (absolute RoPE). Shooters: the sink is a KV-only prefix at position
-    zero whose keys follow the current block at a fixed distance once the window is full.
+    Racing: the sink is frame zero whose keys stay a fixed distance ahead of the current block once the
+    window is full (future policy). Shooters: the sink is a KV-only prefix at position zero whose keys
+    follow the current block at a fixed distance once the window is full (fixed policy).
     """
 
     def __init__(self, transformer, vae, prompt_embeds, *, seed=0, max_latents=8192, vae_backend="taehv",
                  steps=(1000,), first_steps=(1000,), profile=False, sink_latent=None,
-                 sink_mode="first_frame", sink_rope_mode="absolute"):
+                 sink_mode="first_frame", sink_rope_mode="future"):
         if vae_backend not in ("wan", "taehv"):
             raise ValueError("Expected wan or taehv VAE backend")
-        if sink_mode not in ("kv_only", "first_frame") or sink_rope_mode not in ("absolute", "fixed"):
+        if sink_mode not in ("kv_only", "first_frame") or sink_rope_mode not in SINK_ROPE_MODES:
             raise ValueError("Invalid sink policy")
         if max_latents < 1:
             raise ValueError("max_latents must be positive")
@@ -58,9 +60,11 @@ class FastStream:
         self.max_latents = max_latents
         self.shape = LATENT_SHAPE
         self.sink_mode, self.sink_rope_mode = sink_mode, sink_rope_mode
+        if sink_latent is None:
+            raise ValueError("A sink latent is required; the generated first frame is not used as the sink")
         self.first_frame_latent = sink_latent if sink_mode == "first_frame" else None
-        self.sink_offset = int(sink_latent is not None and sink_mode == "kv_only")
-        transformer.ensure_rope_positions(max(8192, max_latents + self.sink_offset))
+        self.sink_offset = int(sink_mode == "kv_only")
+        transformer.ensure_rope_positions(rope_positions_needed(sink_rope_mode, max(8192, max_latents + self.sink_offset)))
         self.scheduler = FlowMatchScheduler(shift=TIMESTEP_SHIFT, sigma_min=0.0, extra_one_step=True)
         self.scheduler.set_timesteps(1000, training=True)
         self.steps = warp_steps(self.scheduler, list(steps))
@@ -136,10 +140,10 @@ class FastStream:
         if control is not None:
             y[:, :48] = control.permute(0, 2, 1, 3, 4)
         t = timestep.reshape(1, 1).to(self.device, torch.float32)
-        fixed = self.sink_rope_mode == "fixed" and position > WINDOW
+        sink_position = rotated_sink_position(self.sink_rope_mode, position, WINDOW)
         with torch.autocast("cuda", dtype=self.dtype):
             flow = self.transformer(x, t, self.context, y, self.kv, self.xc, position * FRAME_TOKENS, kv_only=kv_only,
-                                    sink_position=position - WINDOW if fixed else None)
+                                    sink_position=sink_position)
         return None if flow is None else flow.permute(0, 2, 1, 3, 4)
 
     @torch.no_grad()

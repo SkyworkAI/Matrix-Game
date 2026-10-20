@@ -66,11 +66,12 @@ class ModelComponents:
                 raise ValueError("VAE graph requires TAEHV")
             from matrix_game.inference.vae_graph import StreamingVAEGraph
             self.vae = StreamingVAEGraph(self.vae)
-        if self.args.sink_image is not None:
-            from matrix_game.inference.stream import encode_sink_image
-            self.sink_latent = encode_sink_image(self.vae, self.args.sink_image, self.args.vae_backend,
-                first_frame=self.args.sink_mode == "first_frame").to(device, dtype)
-            self.sink_sha256 = hashlib.sha256(self.args.sink_image.read_bytes()).hexdigest()
+        if self.args.sink_image is None:
+            raise ValueError("A sink image is required")
+        from matrix_game.inference.stream import encode_sink_image
+        self.sink_latent = encode_sink_image(self.vae, self.args.sink_image, self.args.vae_backend,
+            first_frame=self.args.sink_mode == "first_frame").to(device, dtype)
+        self.sink_sha256 = hashlib.sha256(self.args.sink_image.read_bytes()).hexdigest()
         if self.args.dit_runtime.startswith(("rtx5090", "rtx5080", "rtx5070ti")):
             warm_up = self._runtime().warm_up
             warm_up(self.gen, self.vae, self.prompt, self.sink_latent, self.args.sink_mode, self.args.sink_rope_mode,
@@ -114,10 +115,9 @@ class ModelComponents:
                     vae_backend=self.args.vae_backend, steps=list(self.args.steps),
                     first_steps=list(self.args.first_steps), sink_rope_mode=self.args.sink_rope_mode,
                     sink_mode=self.args.sink_mode, sink_encoder=self.args.vae_backend,
-                    sink_source="image" if self.args.sink_image is not None else "generated_first_frame",
-                    sink_image=self.args.sink_image.name if self.args.sink_image is not None else None,
+                    sink_source="image", sink_image=self.args.sink_image.name,
                     sink_sha256=self.sink_sha256, prompt=self.args.prompt,
-                    hq_first_frame=self.args.sink_mode == "first_frame" and self.args.sink_image is not None,
+                    hq_first_frame=self.args.sink_mode == "first_frame",
                     prompt_mode=self.args.prompt_mode, prompt_interval_chunks=self.args.prompt_interval_chunks,
                     t5_runtime=self.args.t5_runtime, dit_parallel="single", dit_runtime=self.args.dit_runtime,
                     attention_backend=self.attention_backend,
