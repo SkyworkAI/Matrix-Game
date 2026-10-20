@@ -66,7 +66,7 @@ def distributed_attention(
         v,
         k_lens=seq_lens,
         window_size=window_size,
-        fa_version=fa_version,
+        version=fa_version,
     )
 
     # scatter q/k/v sequence
