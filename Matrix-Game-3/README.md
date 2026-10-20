@@ -22,12 +22,13 @@ In addition, the model trained on a combination of unreal and real-world data, a
 
 ## Requirements
 It supports one gpu or multi-gpu inference. We tested this repo on the following setup:
-* A/H series GPUs are tested.
+* NVIDIA A/H series GPUs are tested.
+* AMD Instinct MI300X GPUs are also supported (ROCm 7.x + AITER).
 * Linux operating system.
 * 64 GB RAM.
 
 ## ⚙️ Quick Start
-### Installation
+### Installation (NVIDIA)
 Create a conda environment and install dependencies:
 ```
 conda create -n matrix-game-3.0 python=3.12 -y
@@ -37,6 +38,20 @@ conda activate matrix-game-3.0
 git clone https://github.com/SkyworkAI/Matrix-Game-3.0.git
 cd Matrix-Game-3.0
 pip install -r requirements.txt
+```
+
+### Installation (AMD ROCm)
+For AMD GPUs (e.g. MI300X) with ROCm 7.x:
+```bash
+conda create -n matrix-game-3.0 python=3.10 -y
+conda activate matrix-game-3.0
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm7.2
+git clone https://github.com/SkyworkAI/Matrix-Game-3.0.git
+cd Matrix-Game-3.0
+grep -v -E "^torch|flash.attn" requirements.txt | pip install -r /dev/stdin
+pip install opencv-python-headless
+# Install AITER (AMD flash attention CK backend)
+pip install aiter  # or: git clone https://github.com/ROCm/aiter && cd aiter && git submodule update --init 3rdparty/composable_kernel && pip install .
 ```
 
 ### Model Download
