@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Literal
+
 from reactor_runtime import (
     InputField,
     InputState,
@@ -26,43 +28,6 @@ class MatrixGame4State(InputState):
     )
     seed: int = InputField(
         default=0, ge=0, le=2147483647, description="Inference seed for the next start."
-    )
-    forward: float = InputField(
-        default=0.0,
-        ge=-1,
-        le=1,
-        description="Shooter movement: -1 backward, 1 forward; held until changed.",
-    )
-    right: float = InputField(
-        default=0.0,
-        ge=-1,
-        le=1,
-        description="Shooter movement: -1 left, 1 right; held until changed.",
-    )
-    fire: bool = InputField(default=False, description="Hold the shooter trigger.")
-    ads: bool = InputField(default=False, description="Hold shooter aim-down-sights.")
-    shield: bool = InputField(default=False, description="Hold the shooter's shield.")
-    crouch: bool = InputField(default=False, description="Hold shooter crouch.")
-    weapon: int = InputField(
-        default=0,
-        ge=0,
-        le=2,
-        description="Shooter weapon: 0 pistol, 1 rifle, 2 shotgun.",
-    )
-    throttle: float = InputField(
-        default=0.0,
-        ge=-1,
-        le=1,
-        description="Racing throttle: -1 reverse, 1 accelerate.",
-    )
-    steer: float = InputField(
-        default=0.0, ge=-1, le=1, description="Racing steering: -1 left, 1 right."
-    )
-    brake: float = InputField(
-        default=0.0, ge=0, le=1, description="Racing service brake."
-    )
-    handbrake: bool = InputField(
-        default=False, description="Hold the racing handbrake."
     )
     race_mode: str = InputField(
         default="time_trial",
@@ -93,6 +58,17 @@ class MatrixGame4State(InputState):
         description="Rear tire grip for the next racing start.",
     )
 
+    _forward: float = 0.0
+    _right: float = 0.0
+    _fire: bool = False
+    _ads: bool = False
+    _shield: bool = False
+    _crouch: bool = False
+    _weapon: int = 0
+    _throttle: float = 0.0
+    _steer: float = 0.0
+    _brake: float = 0.0
+    _handbrake: bool = False
     _running: bool = False
     _world_id: int = 0
     _applied_world_id: int | None = None
@@ -109,7 +85,7 @@ class MatrixGame4State(InputState):
 
 class StateUpdate(ModelMessage):
     scene: str | None = MessageField(
-        description="Scene of the displayed world; null before the first start. The next-start selection is in controls.scene."
+        description="Scene of the displayed world; null before the first start."
     )
     running: bool = MessageField(description="Whether a game is active.")
     world_id: int = MessageField(description="Current game identity; changes on start.")
@@ -122,14 +98,49 @@ class StateUpdate(ModelMessage):
     last_chunk_seconds: float | None = MessageField(
         description="Generation time of the latest completed chunk; null before generation."
     )
-    controls: dict = MessageField(
-        description="All current controls and next-start settings. Control changes affect future captured frames; buffered frames keep playing."
+    next_scene: Literal["ancient-egypt", "castle", "racing"] = MessageField(
+        description="Selected scene for the next start."
     )
+    seed: int = MessageField(description="Inference seed for the next start.")
+    paused: bool = MessageField(
+        description="Whether game capture and generation are held."
+    )
+    forward: float = MessageField(description="Held shooter forward/backward movement.")
+    right: float = MessageField(description="Held shooter right/left movement.")
+    fire: bool = MessageField(description="Whether the shooter trigger is held.")
+    ads: bool = MessageField(description="Whether shooter aim is held.")
+    shield: bool = MessageField(description="Whether the shield is held.")
+    crouch: bool = MessageField(description="Whether crouch is held.")
+    weapon: Literal[0, 1, 2] = MessageField(
+        description="Selected shooter weapon: 0 pistol, 1 rifle, 2 shotgun."
+    )
+    throttle: float = MessageField(description="Held racing throttle/reverse input.")
+    steer: float = MessageField(description="Held racing steering input.")
+    brake: float = MessageField(description="Held service brake input.")
+    handbrake: bool = MessageField(description="Whether the handbrake is held.")
+    race_mode: Literal["drive", "time_trial", "pursuit"] = MessageField(
+        description="Racing mode for the next start."
+    )
+    active_race_mode: Literal["drive", "time_trial", "pursuit"] = MessageField(
+        description="Racing mode applied to the current world."
+    )
+    route: Literal["downtown", "avenue", "skyway"] = MessageField(
+        description="Selected route for the next start; pursuit uses avenue."
+    )
+    front_drive: float = MessageField(
+        description="Next-start front-wheel drive fraction."
+    )
+    front_grip: float = MessageField(description="Next-start front tire grip.")
+    rear_grip: float = MessageField(description="Next-start rear tire grip.")
 
 
 class GameFinished(ModelMessage):
     world_id: int = MessageField(description="The game that finished.")
-    reason: str = MessageField(description="native_game_ended or rollout_limit.")
+    reason: Literal["native_game_ended", "rollout_limit", "native_game_error"] = (
+        MessageField(
+            description="`native_game_ended`, `rollout_limit`, or `native_game_error`. Start a new game to continue."
+        )
+    )
 
 
 class MatrixGame4Output(Output):

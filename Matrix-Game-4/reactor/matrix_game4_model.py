@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from matrix_game4_backend import MatrixGame4Backend, NativeSettings
+from matrix_game4_backend import MAX_CHUNKS, MatrixGame4Backend, NativeSettings
 
 
 @dataclass(frozen=True)
@@ -98,7 +98,7 @@ class MatrixGame4Model:
             raise InvalidStep("The previous chunk failed; start a fresh world")
         index = 0 if fresh else self._chunk_index
         first = 0 if fresh else self._next_frame
-        if input.frame_start != first or index >= 8192:
+        if input.frame_start != first or index >= MAX_CHUNKS:
             raise InvalidStep("Nonconsecutive frames or exhausted native horizon")
         if input.frames is None:
             if fresh:
@@ -147,7 +147,7 @@ class MatrixGame4Model:
             raise
         self._chunk_index += 1
         self._next_frame += count
-        complete = self._chunk_index == 8192
+        complete = self._chunk_index == MAX_CHUNKS
         return MatrixGame4Result(
             world_id=self._world_id,
             chunk_index=self._chunk_index,

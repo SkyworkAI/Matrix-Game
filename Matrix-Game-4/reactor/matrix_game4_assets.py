@@ -24,7 +24,6 @@ class AppSettings:
     prompt_interval_chunks: int
     game_root: Path
     asset_root: Path
-    log_root: Path
     allow_software_rendering: bool
 
 
@@ -52,15 +51,13 @@ def prepare(config_path: Path | None, weights_root: Path) -> dict[str, AppSettin
     root = Path(
         os.environ.get("MATRIX_GAME4_RESOURCES", weights_root / "resources")
     ).resolve()
-    logs = Path(weights_root) / "runtime"
-    logs.mkdir(parents=True, exist_ok=True)
     return {
-        scene: _prepare_scene(source, root, logs, values, scene)
+        scene: _prepare_scene(source, root, values, scene)
         for scene in ("ancient-egypt", "castle", "racing")
     }
 
 
-def _prepare_scene(source, root, logs, values, scene) -> AppSettings:
+def _prepare_scene(source, root, values, scene) -> AppSettings:
     from matrix_game.resources import main as resources
     from matrix_game.scenes import add_model_arguments, resolve_model_arguments
 
@@ -115,6 +112,5 @@ def _prepare_scene(source, root, logs, values, scene) -> AppSettings:
         prompt_interval_chunks=args.prompt_interval_chunks,
         game_root=game_root,
         asset_root=args.asset_root,
-        log_root=logs,
         allow_software_rendering=bool(values.get("allow_software_rendering", False)),
     )

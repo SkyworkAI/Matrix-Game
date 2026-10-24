@@ -2,7 +2,7 @@ $schema: reactor/v2
 
 model:
   name: matrix-game-4
-  version: v0.2.0
+  version: v0.3.0
   description: Native game controls with frame-paired Matrix-Game 4.0 neural rendering.
   resources:
     gpu:

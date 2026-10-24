@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 import threading
-import uuid
 from dataclasses import dataclass
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import numpy as np
 
@@ -17,6 +18,10 @@ class ReferenceChunk:
     states: list[dict]
 
 
+class NativeGameError(RuntimeError):
+    """The native game could not supply valid input for another model step."""
+
+
 class NativeGame:
     def __init__(self, settings: AppSettings, options: dict) -> None:
         from matrix_game.server.app import validate_renderer
@@ -26,9 +31,10 @@ class NativeGame:
 
         self.cancel = threading.Event()
         self.game = None
+        self._logs = TemporaryDirectory(prefix="matrix-game4-")
         kwargs = {
             "fps": 40,
-            "log_path": settings.log_root / f"game-{uuid.uuid4().hex}.log",
+            "log_path": Path(self._logs.name) / "game.log",
             "asset_root": settings.asset_root,
             "prepare": ReferencePreprocessor(model=False),
         }
@@ -48,22 +54,31 @@ class NativeGame:
             raise
 
     def send(self, value: dict) -> None:
-        self.game.send(value)
+        try:
+            self.game.send(value)
+        except (OSError, EOFError) as error:
+            raise NativeGameError("Native game control connection failed") from error
 
     def next(self) -> ReferenceChunk | None:
-        value = self.game.next(self.cancel)
-        if value is None:
-            return None
-        reference, states = value
-        return ReferenceChunk(
-            frames=np.stack([np.asarray(frame) for frame in reference.images]),
-            states=states,
-        )
+        try:
+            value = self.game.next(self.cancel)
+            if value is None:
+                return None
+            reference, states = value
+            return ReferenceChunk(
+                frames=np.stack([np.asarray(frame) for frame in reference.images]),
+                states=states,
+            )
+        except (OSError, EOFError, RuntimeError, ValueError) as error:
+            raise NativeGameError("Native game capture failed") from error
 
     def close(self) -> None:
         self.cancel.set()
-        if self.game is not None:
-            self.game.close()
+        try:
+            if self.game is not None:
+                self.game.close()
+        finally:
+            self._logs.cleanup()
 
 
 def control_packet(state, scene: str, sequence: int, **impulses) -> dict:
@@ -73,7 +88,12 @@ def control_packet(state, scene: str, sequence: int, **impulses) -> dict:
         return controls(
             dict(
                 sequence=sequence,
-                drive=[state.throttle, state.steer, state.brake, int(state.handbrake)],
+                drive=[
+                    state._throttle,
+                    state._steer,
+                    state._brake,
+                    int(state._handbrake),
+                ],
                 **impulses,
             )
         )
@@ -82,13 +102,13 @@ def control_packet(state, scene: str, sequence: int, **impulses) -> dict:
     return controls(
         dict(
             sequence=sequence,
-            forward=state.forward,
-            right=state.right,
-            fire=state.fire,
-            ads=state.ads,
-            shield=state.shield,
-            crouch=state.crouch,
-            weapon=state.weapon,
+            forward=state._forward,
+            right=state._right,
+            fire=state._fire,
+            ads=state._ads,
+            shield=state._shield,
+            crouch=state._crouch,
+            weapon=state._weapon,
             **impulses,
         )
     )

@@ -9,6 +9,8 @@ from pathlib import Path
 
 import numpy as np
 
+MAX_CHUNKS = 8192
+
 
 @dataclass(frozen=True)
 class NativeSettings:
@@ -28,7 +30,7 @@ class MatrixGame4Backend:
 
     def start(self, seed: int) -> None:
         self.close()
-        self.stream = self.components.stream(seed=seed, max_latents=8192)
+        self.stream = self.components.stream(seed=seed, max_latents=MAX_CHUNKS)
         self.prompt = self.components.args.prompt
 
     def generate(self, frames: np.ndarray, frame_start: int, caption: str | None):

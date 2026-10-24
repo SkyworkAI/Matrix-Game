@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import logging
 from pathlib import Path
 from typing import Literal
 
@@ -24,7 +25,7 @@ from reactor_runtime import (
 from reactor_runtime.distributed import DistributedRunner
 
 from matrix_game4_assets import prepare
-from matrix_game4_game import NativeGame, control_packet
+from matrix_game4_game import NativeGame, NativeGameError, control_packet
 from matrix_game4_model import (
     MatrixGame4Input,
     MatrixGame4Model,
@@ -37,6 +38,8 @@ from matrix_game4_types import (
     MatrixGame4State,
     StateUpdate,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class MatrixGame4(ReactorApp):
@@ -75,28 +78,45 @@ class MatrixGame4(ReactorApp):
             raise ApplicationError("Press start to begin a game")
         if state.paused:
             raise ApplicationError("paused")
-        self._send_controls()
-        reference = await asyncio.to_thread(self._game.next)
-        state._reference = reference
         settings = self._settings[state._active_scene]
         caption = None
-        if reference is not None:
-            expected = list(
-                range(state._frame_end + 1, state._frame_end + 1 + state._frames_wanted)
-            )
-            if [s["frame"] for s in reference.states] != expected or len(
-                reference.frames
-            ) != state._frames_wanted:
-                raise ValueError("Native reference frame IDs are not consecutive")
-            if (
-                settings.prompt_mode == "dynamic"
-                and state._completed_chunks % settings.prompt_interval_chunks == 0
-            ):
-                caption = reference.states[-1].get("chunk_prompt")
-                if not caption:
-                    raise ValueError(
-                        "Dynamic racing needs the native frame-aligned caption"
+        try:
+            self._send_controls()
+            reference = await asyncio.to_thread(self._game.next)
+            if reference is not None:
+                expected = list(
+                    range(
+                        state._frame_end + 1,
+                        state._frame_end + 1 + state._frames_wanted,
                     )
+                )
+                if (
+                    [s.get("frame") for s in reference.states] != expected
+                    or reference.frames.dtype != np.uint8
+                    or reference.frames.shape != (state._frames_wanted, 480, 864, 3)
+                ):
+                    raise NativeGameError("Native reference frames are misaligned")
+                if (
+                    settings.prompt_mode == "dynamic"
+                    and state._completed_chunks % settings.prompt_interval_chunks == 0
+                ):
+                    caption = reference.states[-1].get("chunk_prompt")
+                    if not isinstance(caption, str) or not caption.strip():
+                        raise NativeGameError("Native racing caption is missing")
+        except NativeGameError as error:
+            logger.warning("Ending game after an input failure", exc_info=True)
+            await self._close_game()
+            self._engine.reset()
+            state._running = False
+            state._reference = None
+            self._release_controls()
+            self.output.flush()
+            await self.send(self._status())
+            await self.send(
+                GameFinished(world_id=state._world_id, reason="native_game_error")
+            )
+            raise ApplicationError("Game input failed; start a new game") from error
+        state._reference = reference
         return MatrixGame4Input(
             world_id=state._world_id,
             start=WorldStart(seed=state._active_seed, scene=state._active_scene)
@@ -170,25 +190,34 @@ class MatrixGame4(ReactorApp):
 
     @event(
         name="start",
-        description="Start a fresh native game using the selected scene, seed and racing settings. Clears the previous video and starts generation. Fails with `invalid_scene` when the selected scene is unavailable.",
+        description="Start a fresh native game using the selected scene, seed and racing settings. Clears the previous video and starts generation. Fails with `game_unavailable` when the native game cannot launch.",
     )
     async def start(self) -> StateUpdate:
         state = self.state
-        if state.scene not in self._settings:
-            raise CommandError("invalid_scene", "Choose an available scene")
         await self._close_game()
         state._running = False
-        self._game = await asyncio.to_thread(
-            NativeGame,
-            self._settings[state.scene],
-            {
-                "mode": state.race_mode,
-                "route": state.route,
-                "front_drive": state.front_drive,
-                "front_grip": state.front_grip,
-                "rear_grip": state.rear_grip,
-            },
-        )
+        state._reference = None
+        self._release_controls()
+        self.output.flush()
+        try:
+            self._game = await asyncio.to_thread(
+                NativeGame,
+                self._settings[state.scene],
+                {
+                    "mode": state.race_mode,
+                    "route": state.route,
+                    "front_drive": state.front_drive,
+                    "front_grip": state.front_grip,
+                    "rear_grip": state.rear_grip,
+                },
+            )
+        except (OSError, EOFError, RuntimeError, ValueError) as error:
+            logger.warning("Native game could not start", exc_info=True)
+            self._engine.reset()
+            await self.send(self._status())
+            raise CommandError(
+                "game_unavailable", "The game could not start. Please try again."
+            ) from error
         state._world_id += 1
         state._active_seed = state.seed
         state._active_scene = state.scene
@@ -201,7 +230,6 @@ class MatrixGame4(ReactorApp):
         state.paused = False
         self._release_controls()
         state._running = True
-        self.output.flush()
         update = self._status()
         await self.send(update)
         return update
@@ -251,12 +279,25 @@ class MatrixGame4(ReactorApp):
         steer: float = InputField(default=0, ge=-1, le=1),
         brake: float = InputField(default=0, ge=0, le=1),
         handbrake: bool = InputField(default=False),
+        weapon: int | None = InputField(
+            default=None,
+            ge=0,
+            le=2,
+            description="Shooter weapon: 0 pistol, 1 rifle, 2 shotgun. Omit to keep the current weapon.",
+        ),
     ) -> StateUpdate:
         self._require_game()
         state = self.state
-        state.forward, state.right = forward, right
-        state.fire, state.ads, state.shield, state.crouch = fire, ads, shield, crouch
-        state.throttle, state.steer, state.brake, state.handbrake = (
+        if weapon is not None:
+            state._weapon = weapon
+        state._forward, state._right = forward, right
+        state._fire, state._ads, state._shield, state._crouch = (
+            fire,
+            ads,
+            shield,
+            crouch,
+        )
+        state._throttle, state._steer, state._brake, state._handbrake = (
             throttle,
             steer,
             brake,
@@ -326,7 +367,7 @@ class MatrixGame4(ReactorApp):
 
     @connected
     async def on_connected(self, client: ClientInfo) -> None:
-        await self.send(self._status())
+        await client.send(self._status())
 
     @disconnected
     async def on_disconnected(self, client: ClientInfo) -> None:
@@ -364,8 +405,12 @@ class MatrixGame4(ReactorApp):
 
     def _release_controls(self) -> None:
         state = self.state
-        state.forward = state.right = state.throttle = state.steer = state.brake = 0.0
-        state.fire = state.ads = state.shield = state.crouch = state.handbrake = False
+        state._forward = state._right = state._throttle = state._steer = (
+            state._brake
+        ) = 0.0
+        state._fire = state._ads = state._shield = state._crouch = state._handbrake = (
+            False
+        )
 
     def _status(self) -> StateUpdate:
         state = self.state
@@ -376,26 +421,24 @@ class MatrixGame4(ReactorApp):
             completed_chunks=state._completed_chunks,
             frame_end=state._frame_end,
             last_chunk_seconds=state._last_seconds,
-            controls={
-                "paused": state.paused,
-                "scene": state.scene,
-                "seed": state.seed,
-                "forward": state.forward,
-                "right": state.right,
-                "fire": state.fire,
-                "ads": state.ads,
-                "shield": state.shield,
-                "crouch": state.crouch,
-                "weapon": state.weapon,
-                "throttle": state.throttle,
-                "steer": state.steer,
-                "brake": state.brake,
-                "handbrake": state.handbrake,
-                "race_mode": state.race_mode,
-                "active_race_mode": state._active_race_mode,
-                "route": state.route,
-                "front_drive": state.front_drive,
-                "front_grip": state.front_grip,
-                "rear_grip": state.rear_grip,
-            },
+            paused=state.paused,
+            next_scene=state.scene,
+            seed=state.seed,
+            forward=state._forward,
+            right=state._right,
+            fire=state._fire,
+            ads=state._ads,
+            shield=state._shield,
+            crouch=state._crouch,
+            weapon=state._weapon,
+            throttle=state._throttle,
+            steer=state._steer,
+            brake=state._brake,
+            handbrake=state._handbrake,
+            race_mode=state.race_mode,
+            active_race_mode=state._active_race_mode,
+            route=state.route,
+            front_drive=state.front_drive,
+            front_grip=state.front_grip,
+            rear_grip=state.rear_grip,
         )

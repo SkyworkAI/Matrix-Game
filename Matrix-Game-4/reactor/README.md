@@ -138,6 +138,13 @@ matching the native engine. Application **Pause / Resume** is available in every
 mode. After **Disconnect**, the client waits for session cleanup before allowing
 another connection.
 
+SDK clients send held inputs through `set_controls`, including the optional
+`weapon` selection; omitting `weapon` keeps the current weapon. `state_update`
+reports typed top-level fields for controls, active scene and next-start settings.
+A failed native game launch returns `game_unavailable`. A game capture failure
+ends that game with `game_finished.reason = native_game_error`; **Start game**
+can begin another world without reloading the model weights.
+
 ## Validation and limits
 
 On one B200, the original loader/stream and this adapter's model half produced
@@ -165,10 +172,16 @@ Castle, Racing and back to Egypt: 48 / 48 / 43 / 48 chunks, 736 frames in total.
 Keyboard/mouse input, on-screen controls, focus-loss release, pause/resume and
 TURN/TCP reconnect passed without browser errors.
 
-All 27 CPU tests pass. They exercise the application against a scripted model
+All 52 CPU tests pass. They exercise the application against a scripted model
 half, model bookkeeping with fake compute, real Runtime hooks and worker IPC,
 including refused steps, failed generation, world identity, seed isolation,
-frame pairing, pause/resume and viewer disconnects.
+frame pairing, pause/resume, viewer disconnects, typed control contracts and
+native-game failure recovery. Run them from this directory with plain pytest;
+no async pytest plugin is required:
+
+```sh
+PYTHONPATH=. python -m pytest tests/ -q
+```
 
 The released inference presets remain intact. `realtime` uses the upstream
 single-step fast path; `quality` selects the upstream two-step alternative.
