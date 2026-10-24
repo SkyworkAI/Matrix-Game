@@ -1,0 +1,498 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap");
+
+:root {
+  font-family: "DM Sans", system-ui, sans-serif;
+  color: #eeece7;
+  background: #121310;
+  font-synthesis: none;
+  color-scheme: dark;
+  --line: #30312a;
+  --gold: #bb9b62;
+  --muted: #999b8c;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: #25261e;
+  color: inherit;
+  padding: 11px 16px;
+  border-radius: 8px;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+button:hover:enabled {
+  background: #35362b;
+  border-color: #73664d;
+}
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+header {
+  height: 74px;
+  padding: 0 30px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+.brand svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.brand strong {
+  font-size: 20px;
+  letter-spacing: -0.4px;
+}
+.brand span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+.connection {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 13px;
+}
+.connection.live::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #b9ce87;
+  margin-right: 8px;
+}
+.workspace {
+  display: grid;
+  grid-template-columns: 310px minmax(0, 1fr);
+  min-height: calc(100vh - 74px);
+  max-width: 2200px;
+  margin: auto;
+}
+aside {
+  border-right: 1px solid var(--line);
+  padding: 28px 24px;
+  background: #191a15;
+}
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 1.8px;
+  color: #a9a78f;
+  font-weight: 700;
+}
+h1 {
+  font-size: 32px;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin: 16px 0;
+}
+p {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #a7a998;
+}
+.scene-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 26px 0 12px;
+}
+.scene-heading > span:last-child {
+  font-size: 10px;
+  color: #7d8071;
+}
+.scene-grid {
+  display: grid;
+  gap: 9px;
+}
+.scene-card {
+  display: flex;
+  position: relative;
+  align-items: center;
+  padding: 0;
+  overflow: hidden;
+  text-align: left;
+  background: #20211a;
+  width: 100%;
+  min-height: 75px;
+}
+.scene-card img {
+  width: 100px;
+  height: 75px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.scene-card.selected {
+  border-color: var(--gold);
+  background: #2d2b20;
+  box-shadow: 0 0 0 1px #bb9b6230;
+}
+.scene-card:disabled {
+  opacity: 0.65;
+}
+.scene-card.selected:disabled {
+  opacity: 1;
+}
+.scene-copy {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.scene-copy strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+.scene-copy small {
+  font-size: 10px;
+  color: var(--muted);
+}
+.selected-mark {
+  position: absolute;
+  right: 8px;
+  top: 7px;
+  color: var(--gold);
+  font-size: 11px;
+}
+.hint {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+.scene-detail {
+  min-height: 36px;
+  margin: 10px 0 20px;
+}
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  gap: 7px;
+  margin: 15px 0;
+  color: #c4c6b8;
+}
+input,
+select {
+  min-width: 0;
+  width: 100%;
+  border: 1px solid #3d3f33;
+  background: #20211a;
+  color: inherit;
+  border-radius: 7px;
+  padding: 10px;
+}
+aside > button {
+  width: 100%;
+}
+.primary {
+  background: var(--gold);
+  color: #191b13;
+  border-color: var(--gold);
+  font-weight: 700;
+  margin: 10px 0;
+}
+.primary:hover:enabled {
+  background: #ccb07c;
+}
+.row {
+  display: flex;
+  gap: 8px;
+}
+.row button {
+  flex: 1;
+}
+.help {
+  margin-top: 24px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+.help h2 {
+  font-size: 13px;
+  font-weight: 600;
+}
+.help p {
+  font-size: 11px;
+}
+.notice {
+  color: #c7ab78;
+  font-size: 11px;
+}
+[role="alert"] {
+  color: #ffb7ac;
+  border: 1px solid #733f35;
+  border-radius: 8px;
+  padding: 10px;
+  overflow-wrap: anywhere;
+}
+.stage {
+  min-width: 0;
+  padding: 36px 30px;
+  align-self: start;
+}
+.stage-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.stage-heading h2 {
+  font-size: 25px;
+  letter-spacing: -0.7px;
+  margin: 8px 0;
+}
+.stage-heading .eyebrow {
+  margin: 0;
+}
+.tag {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #a5a88f;
+  border: 1px solid var(--line);
+  padding: 7px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+.labels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  text-align: center;
+  color: #aaa98e;
+  letter-spacing: 1.6px;
+  font-size: 10px;
+  padding: 12px;
+}
+.video-shell {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1728/480;
+  background: #080907;
+  border: 1px solid #3b3d30;
+  border-radius: 12px;
+  overflow: hidden;
+  outline: none;
+}
+.video {
+  width: 100%;
+  height: 100%;
+}
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #a4a58f;
+  font-size: 14px;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, #26271b, #10110e);
+}
+.video-shell:focus {
+  border-color: var(--gold);
+}
+footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 0 0;
+  color: #a1a38e;
+  font-size: 11px;
+}
+.caption {
+  font-size: 11px;
+  color: #7f826e;
+  margin: 10px 0 30px;
+}
+.control-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+  margin-bottom: 14px;
+}
+.input-summary {
+  color: #cfbb92;
+  font-size: 12px;
+  text-align: right;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.controls button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 69px;
+  height: 61px;
+  padding: 9px 10px;
+  background: #21231b;
+  touch-action: none;
+  user-select: none;
+}
+.controls kbd {
+  font:
+    600 13px "DM Sans",
+    system-ui,
+    sans-serif;
+}
+.controls button span {
+  font-size: 10px;
+  color: #a1a58e;
+}
+.controls button.pressed {
+  border-color: #d6ba80;
+  background: #b99b62;
+  color: #1a1c12;
+  box-shadow: 0 0 18px #bb9b6225;
+}
+.controls button.pressed span {
+  color: #272a1b;
+}
+.controls button:disabled {
+  opacity: 0.45;
+}
+.stage-bottom {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  color: #777e69;
+  font-size: 10px;
+}
+@media (min-width: 1800px) {
+  .stage {
+    padding: 42px;
+  }
+}
+@media (max-width: 1000px) {
+  .workspace {
+    grid-template-columns: 270px minmax(0, 1fr);
+  }
+  aside {
+    padding: 24px 18px;
+  }
+  .stage {
+    padding: 26px 20px;
+  }
+  .scene-card img {
+    width: 80px;
+  }
+  .brand strong {
+    font-size: 17px;
+  }
+  .tag {
+    font-size: 9px;
+    letter-spacing: 0;
+  }
+}
+@media (max-width: 750px) {
+  header {
+    padding: 0 16px;
+    gap: 10px;
+  }
+  .brand {
+    gap: 8px;
+  }
+  .brand strong {
+    font-size: 15px;
+  }
+  .brand span {
+    display: none;
+  }
+  header button {
+    padding: 9px 12px;
+  }
+  .workspace {
+    display: flex;
+    flex-direction: column;
+  }
+  .stage {
+    width: 100%;
+    padding: 24px 16px;
+  }
+  aside {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  h1 br {
+    display: none;
+  }
+  .scene-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .scene-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .scene-card img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1.8;
+  }
+  .scene-copy {
+    padding: 10px 8px;
+  }
+  .scene-copy strong {
+    font-size: 12px;
+  }
+  .scene-copy small {
+    font-size: 9px;
+  }
+  .scene-detail {
+    min-height: 0;
+  }
+  .help {
+    display: none;
+  }
+  .video-shell {
+    min-height: 160px;
+  }
+  .stage-heading h2 {
+    font-size: 21px;
+  }
+  .tag {
+    white-space: normal;
+    text-align: right;
+  }
+  .controls {
+    gap: 6px;
+  }
+  .controls button {
+    min-width: 62px;
+  }
+  .stage-bottom {
+    gap: 16px;
+  }
+}

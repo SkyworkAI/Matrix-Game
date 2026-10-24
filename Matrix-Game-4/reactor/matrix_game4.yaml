@@ -1,0 +1,5 @@
+# All three released scenes stay loaded; select one in the client before Start.
+preset: realtime
+# Racing uses the native engine's frame-aligned captions. Shooters use fixed text.
+prompt_mode: dynamic
+prompt_interval_chunks: 1

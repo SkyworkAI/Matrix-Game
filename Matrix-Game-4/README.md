@@ -200,6 +200,42 @@ frame; racing displays its supplied reference as frame zero, then generates the
 following frames. See [City Racing](docs/racing.md) and
 [architecture](docs/architecture.md) for prompt and temporal-position details.
 
+## Inference with Reactor Runtime
+
+The optional [Reactor integration](reactor/README.md) serves the original game
+controls and streaming neural renderer through [Reactor](https://reactor.inc).
+Its browser client presents the low-poly draft and generated view side by side
+in the same video frames. It has been tested on one B200 with native-output
+comparisons and live controls; see the integration guide for measured results
+and the observed long-rollout visual limitations.
+
+With Docker, NVIDIA Container Toolkit and the
+[Reactor CLI](https://docs.reactor.inc/deploy/platform/installation) installed,
+run these commands from `Matrix-Game-4/`. The service loads the three released
+scenes for selection in the client:
+
+```bash
+cd reactor
+reactor build
+reactor run --gpus device=0 --port 8080
+```
+
+Wait for `http://localhost:8080/health` to report `"state":"available"`.
+In a second terminal, from `Matrix-Game-4/`:
+
+```bash
+cd reactor/demo
+npm ci
+npm run dev -- --host 127.0.0.1
+```
+
+Open the printed frontend URL, normally `http://localhost:5173`. Click
+**Connect**, select a scene card, seed and any racing options, then **Start game**.
+Click the video to capture keyboard and mouse input; Esc releases them. The
+on-screen buttons show live inputs and can also be held to control the game.
+Use **Stop → choose scene → Start game** to switch scenes.
+For SSH access, follow the guide's [HTTP and WebRTC instructions](reactor/README.md#remote-access-over-ssh).
+
 ## A100 Performance
 
 Reference measurements on **one NVIDIA A100-SXM4-80GB**, at **864 x 480**,
