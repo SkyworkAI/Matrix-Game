@@ -10,7 +10,7 @@ https://github.com/user-attachments/assets/5b95bb21-bc77-4bb5-bc2b-7b12de2d3f21
 
 ## 📝 Overview
 **Matrix-Game-3.0** is an open-sourced, memory-augmented interactive world model designed for 720p real-time long-form video generation.
-- **Upgraded Data Engine**: Combines Unreal Engine-based synthetic data, large-scale automated AAA game data, and real-world video augmentation to generate high-quality Video–Pose–Action–Prompt data. 
+- **Upgraded Data Engine**: Combines Unreal Engine-based synthetic data, large-scale automated game data, and real-world video augmentation to generate high-quality Video–Pose–Action–Prompt data. 
 - **Long-horizon Memory & Consistency**: Uses prediction residuals and frame re-injection for self-correction, while camera-aware memory ensures long-term spatiotemporal consistency. 
 - **Real-Time Interactivity & Open Access**: It employs a multi-segment autoregressive distillation strategy based on Distribution Matching Distillation (DMD), combined with model quantization and VAE decoder distillation to support [40fps] real-time generation at 720p resolution with a 5B model, while maintaining stable memory consistency over minute-long sequence.
 - **Scale Up 28B-MoE Model**: Scaling up to a 2×14B model further improves generation quality, dynamics, and generalization. 
