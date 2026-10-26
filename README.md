@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://matrix-game-v4-0.github.io/page/">Project Website</a> |
-  <a href="Matrix-Game-4/docs/Matrix_Game_4_0.pdf">Technical Report</a> |
+  <a href="https://arxiv.org/abs/2610.27999">Technical Report</a> |
   <a href="https://huggingface.co/Skywork/Matrix-Game-4.0">Models &amp; Game Assets</a> |
   <a href="Matrix-Game-4">Code &amp; Quick Start</a> |
   <a href="#previous-versions">Previous Versions</a>
@@ -20,7 +20,7 @@ https://github.com/user-attachments/assets/4ded08da-1309-43c9-9662-6e2f2b3fbb41
 ## News
 
 - **October 16, 2026:** Optimized inference for [RTX 5080](Matrix-Game-4/README.md#rtx-5080) and [RTX 5070 Ti](Matrix-Game-4/README.md#rtx-5070-ti) is now available. With fixed prompts and SageAttention, model throughput reaches up to **67 FPS on RTX 5080** and **58 FPS on RTX 5070 Ti** at 864 x 480 (steady state, excluding video I/O).
-- **October 16, 2026:** The Matrix-Game 4.0 [technical report](Matrix-Game-4/docs/Matrix_Game_4_0.pdf) is now available.
+- **October 16, 2026:** The Matrix-Game 4.0 [technical report](https://arxiv.org/abs/2610.27999) is now available.
 - **October 15, 2026:** [RTX 5090 optimized inference](Matrix-Game-4/README.md#rtx-5090) is now available, with FP8 linear layers, fused kernels, CUDA graphs and an optional SageAttention backend.
 - **October 15, 2026:** Released **Matrix-Game 4.0**. [Inference, browser demo and game source code](Matrix-Game-4) are now available, with model weights and game assets for Medieval Castle, Ancient Egypt and City Racing on [Hugging Face](https://huggingface.co/Skywork/Matrix-Game-4.0).
 - **March 27, 2026:** Released [Matrix-Game 3.0](Matrix-Game-3), a real-time streaming interactive world model with long-horizon memory.
@@ -56,6 +56,22 @@ Earlier implementations remain available in their original directories:
 - [Matrix-Game 3.0](Matrix-Game-3): streaming interaction with long-horizon memory.
 - [Matrix-Game 2.0](Matrix-Game-2): real-time interactive long video generation.
 - [Matrix-Game 1.0](Matrix-Game-1): the first Matrix-Game world model.
+
+## Citation
+
+If you use Matrix-Game 4.0 in your research, please cite:
+
+```bibtex
+@misc{zhang2026matrixgame40harnessingvideo,
+      title={Matrix-Game 4.0: Harnessing Video Models for Real-Time Playable Game Worlds},
+      author={Jihai Zhang and Runjia Qian and Kaiqin Kong and Biao Jiang and Puyi Wang and Siru Chen and Tianle Li and Guanjie Chen and Junyi Wu and Chubin Chen and Yuanhang Li and Kaichen Huang and Haobo Zhang and Yangguang Li and Wei Yu and Guibin Chen and Yu Cheng and Yahui Zhou},
+      year={2026},
+      eprint={2610.27999},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2610.27999},
+}
+```
 
 ## License
 

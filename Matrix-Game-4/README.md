@@ -3,7 +3,7 @@
 Streaming neural rendering for executable low-poly games.
 
 [Project website](https://matrix-game-v4-0.github.io/page/)
-| [Technical report](docs/Matrix_Game_4_0.pdf)
+| [Technical report](https://arxiv.org/abs/2610.27999)
 | [Models and game assets](https://huggingface.co/Skywork/Matrix-Game-4.0)
 
 The game engine owns gameplay, physics and input. A causal video model renders
@@ -325,6 +325,22 @@ releases/                      # Resource manifests, not large binary assets
 See [architecture](docs/architecture.md) for the streaming contract and
 [testing](docs/testing.md) for validation commands. Only one active game session
 and one scene model per server process are supported.
+
+## Citation
+
+If you use Matrix-Game 4.0 in your research, please cite:
+
+```bibtex
+@misc{zhang2026matrixgame40harnessingvideo,
+      title={Matrix-Game 4.0: Harnessing Video Models for Real-Time Playable Game Worlds},
+      author={Jihai Zhang and Runjia Qian and Kaiqin Kong and Biao Jiang and Puyi Wang and Siru Chen and Tianle Li and Guanjie Chen and Junyi Wu and Chubin Chen and Yuanhang Li and Kaichen Huang and Haobo Zhang and Yangguang Li and Wei Yu and Guibin Chen and Yu Cheng and Yahui Zhou},
+      year={2026},
+      eprint={2610.27999},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2610.27999},
+}
+```
 
 ## Security and License
 
