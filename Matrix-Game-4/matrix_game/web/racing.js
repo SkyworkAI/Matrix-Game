@@ -1,11 +1,13 @@
 'use strict';
+const ROUTE_LABELS={downtown:'Downtown Weave',avenue:'Citywide Circuit',skyway:'Skyway Multi-Level'};
+const routeLabel=r=>ROUTE_LABELS[r.route_id]||r.route_name;
 const RacingHud={
- labels(s){return {speed:`${Math.round(Math.abs(s.speed_kmh||0))} km/h`,mode:s.pursuit?'Pursuit':s.race?.route_name||'Free drive',
+ labels(s){return {speed:`${Math.round(Math.abs(s.speed_kmh||0))} km/h`,mode:s.pursuit?'Pursuit':(s.race?routeLabel(s.race):'Free drive'),
    progress:s.pursuit?`${Number(s.pursuit.capture_held_s||0).toFixed(1)} / 5 s`:s.race?`${s.race.next}/${s.race.total}`:''};},
  draw(ctx,s,w,h){
   const scale=Math.min(w/864,h/480),labels=this.labels(s);ctx.save();ctx.scale(scale,scale);w/=scale;h/=scale;
   ctx.fillStyle='#101818dd';ctx.fillRect(14,14,235,s.race?82:48);ctx.fillStyle='#fff';ctx.font='18px system-ui';ctx.fillText(labels.speed,25,42);
-  if(s.race){ctx.font='13px system-ui';ctx.fillText(s.pursuit?'PURSUIT':s.race.route_name,25,63);
+  if(s.race){ctx.font='13px system-ui';ctx.fillText(s.pursuit?'PURSUIT':routeLabel(s.race),25,63);
    let line=s.race.countdown>0?`START ${Math.ceil(s.race.countdown)}`:s.race.finished?'FINISHED':s.pursuit?
      `${Number(s.pursuit.distance_m||0).toFixed(1)} m  ${labels.progress}`:
      `${Number(s.race.elapsed||0).toFixed(2)} s  +${Number(s.race.penalty||0).toFixed(1)} s  ${labels.progress}`;

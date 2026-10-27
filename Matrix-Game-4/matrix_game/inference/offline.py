@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import time
 
+from matrix_game.inference.resolution import HEIGHT, WIDTH
 from matrix_game.scenes import add_model_arguments, resolve_model_arguments, SCENES
 
 
@@ -93,7 +94,7 @@ def main(argv=None):
         current_prompt = args.prompt
         args.output.mkdir(parents=True)
         partial = args.output / "rendered.partial.mp4"
-        writer = imageio_ffmpeg.write_frames(str(partial), (864, 480), fps=fps, codec="libx264",
+        writer = imageio_ffmpeg.write_frames(str(partial), (WIDTH, HEIGHT), fps=fps, codec="libx264",
                     pix_fmt_in="rgb24", pix_fmt_out="yuv420p", macro_block_size=1,
                     output_params=["-crf", "16", "-preset", "fast", "-movflags", "+faststart"])
         writer.send(None)
@@ -110,7 +111,7 @@ def main(argv=None):
                 if index % args.prompt_interval_chunks == 0 and candidate != current_prompt:
                     stream.set_prompt(components.caption_encoder(candidate))
                     current_prompt = candidate
-            frames = [crop_and_resize(Image.fromarray(np.frombuffer(r, np.uint8).reshape(height, width, 3)), 480, 864) for r in raw]
+            frames = [crop_and_resize(Image.fromarray(np.frombuffer(r, np.uint8).reshape(height, width, 3)), HEIGHT, WIDTH) for r in raw]
             result = stream.push(frames_to_tensor(frames), frame_start=written)
             rgb = tensor_to_uint8(result.pixels)[:valid]
             if len(rgb) != valid:
@@ -134,7 +135,7 @@ def main(argv=None):
             count = sum(1 for _ in check)
         finally:
             check.close()
-        if count != written or encoded["size"] != (864, 480) or abs(encoded["fps"] - fps) > .01:
+        if count != written or encoded["size"] != (WIDTH, HEIGHT) or abs(encoded["fps"] - fps) > .01:
             raise RuntimeError("Encoded output failed frame-count verification")
         partial.rename(args.output / "rendered.mp4")
         report = dict(components.config(), frames=written, padded_frames=padded, fps=fps,

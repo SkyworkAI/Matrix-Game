@@ -14,6 +14,13 @@ video{display:block;width:100%;height:100%;object-fit:contain;background:#080808
 #hud{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 [hidden]{display:none!important}#notice{position:absolute;top:8px;left:12px;right:12px;text-align:center;text-shadow:0 1px 4px #000;pointer-events:none}
 #panel-labels{position:absolute;top:-24px;left:0;right:0;height:24px;pointer-events:none;display:grid;grid-template-columns:1fr 1fr}#panel-labels span{justify-self:center;align-self:start;padding:4px 10px;font-size:12px}
+#keys{position:absolute;left:12px;bottom:12px;display:grid;grid-template-columns:repeat(4,38px);grid-template-areas:'. w . .' 'a s d r' 'sp sp sp sp';gap:4px;pointer-events:none}
+#keys .cap{display:flex;align-items:center;justify-content:center;height:30px;font-size:12px;font-weight:600;border:1px solid #888;border-radius:5px;background:#101818aa;color:#ddd}
+#keys .cap.on{background:#5ed79f;border-color:#5ed79f;color:#06281a}
+#keys .KeyW{grid-area:w}#keys .KeyA{grid-area:a}#keys .KeyS{grid-area:s}#keys .KeyD{grid-area:d}#keys .KeyR{grid-area:r}#keys .Space{grid-area:sp}
+#events input{width:160px;background:#101818cc;border:1px solid #666;border-radius:4px;padding:6px 8px;color:#fff;font:inherit}
+#lagpanel{position:absolute;right:12px;top:40px;min-width:170px;padding:8px 10px;border-radius:6px;background:#101818cc;font:12px/1.5 ui-monospace,Consolas,monospace;pointer-events:none}
+#lagpanel b{color:#5ed79f;font-weight:600}
 #stats{font-size:12px;color:#ccc;white-space:nowrap}#play{background:#275f49}#stop{background:#51342e}
 #stage:fullscreen{background:#111;height:100%;width:100%}@media(max-width:680px){header{gap:8px;padding:8px}h1{flex:1}#stats{margin-left:auto}.monitor-option{font-size:13px}#panel-labels span{font-size:10px;margin-top:4px;padding:2px 5px}}
 </style>
@@ -23,7 +30,7 @@ video{display:block;width:100%;height:100%;object-fit:contain;background:#080808
 <script src="/racing.js"></script>
 </head>
 <body>
-<header><h1>__SCENE_NAME__</h1><span id="stats">Disconnected</span><select id="mode" aria-label="Video source"><option value="model">Model</option><option value="reference">Reference</option></select><label class="monitor-option"><input id="monitor" type="checkbox">Reference + Render</label><label class="monitor-option"><input id="sound" type="checkbox" checked>Sound</label><button id="play">Play</button><button id="stop" disabled>Stop</button><button id="fullscreen" title="Fullscreen" aria-label="Fullscreen">&#x26F6;</button></header>
+<header><h1>__SCENE_NAME__</h1><span id="stats">Disconnected</span><select id="mode" aria-label="Video source"><option value="model">Model</option><option value="reference">Reference</option></select><label class="monitor-option"><input id="monitor" type="checkbox">Reference + Render</label><label class="monitor-option"><input id="sound" type="checkbox" checked>Sound</label><label class="monitor-option"><input id="eventsshow" type="checkbox" checked>Prompt</label><div id="events" hidden style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><input id="customEvent" placeholder="what happens (e.g. a dragon flies overhead)" maxlength="300"><button type="button" id="customCast">Cast</button></div><label class="monitor-option"><input id="lagshow" type="checkbox" checked>Latency</label><button id="savelag" disabled title="Download the latency samples of this session as CSV">Save latency</button><button id="savesessions" title="Download one summary row per session (total latency and FPS), kept in this browser">Session log</button><button id="play">Play</button><button id="stop" disabled>Stop</button><button id="fullscreen" title="Fullscreen" aria-label="Fullscreen">&#x26F6;</button></header>
 <section id="racing-options" hidden style="padding:8px 16px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">
 <select id="race-mode" aria-label="Game mode"><option value="time_trial">Time trial</option><option value="pursuit">Pursuit</option><option value="drive">Free drive</option></select>
 <select id="route" aria-label="Route"><option value="downtown">Downtown</option><option value="avenue">Avenue</option><option value="skyway">Skyway</option></select>
@@ -31,7 +38,7 @@ video{display:block;width:100%;height:100%;object-fit:contain;background:#080808
 <label>Front grip <input id="front-grip" type="range" min="0.9" max="1.2" step="0.05" value="1.15"><output>1.15</output></label>
 <label>Rear grip <input id="rear-grip" type="range" min="0.9" max="1.2" step="0.05" value="0.9"><output>0.90</output></label>
 </section>
-<main id="stage"><div id="surface"><video id="video" muted autoplay playsinline></video><canvas id="hud" hidden aria-label="Game HUD"></canvas><div id="panel-labels" hidden><span>Reference</span><span>Render</span></div></div><div id="notice">Ready</div></main>
+<main id="stage"><div id="surface"><video id="video" muted autoplay playsinline></video><canvas id="hud" hidden aria-label="Game HUD"></canvas><div id="keys" hidden aria-label="Keys pressed"></div><div id="lagpanel" hidden aria-label="Latency"></div><div id="panel-labels" hidden><span>Reference</span><span>Render</span></div></div><div id="notice">Ready</div></main>
 <script>
 'use strict';
 const $=id=>document.getElementById(id),video=$('video'),surface=$('surface');
@@ -44,6 +51,31 @@ let lookReset=false,lastInputSend=0;
 const inputPeriodMs=1000/120;
 let presented=[],clientStats={presented:0,matched:0,gameFrame:-1,rtp:null,error:null,actionToPhotoMs:null};
 let displayFps=0;
+const lag=[],lagLog=[],fpsLog=[];let lastLagSeq=-1,sessionStart=0,sessionMeta=null;
+const SESSION_KEY='racingLatencySessions',SESSION_COLUMNS=['started','duration_s','video_source','game_mode','route','samples','lag_mean_ms','lag_median_ms','lag_p95_ms','lag_max_ms','shown_fps_mean','shown_fps_min','render_fps_mean'];
+function readSessions(){try{return JSON.parse(localStorage.getItem(SESSION_KEY)||'[]');}catch(e){return [];}}
+function logSession(){if(!sessionMeta||!lagLog.length)return;const lags=lagLog.map(r=>r[2]),shown=fpsLog.map(r=>r[0]),render=fpsLog.map(r=>r[1]).filter(v=>v>0),mean=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
+ const row={started:sessionMeta.started,duration_s:((performance.now()-sessionStart)/1000).toFixed(1),video_source:sessionMeta.video_source,game_mode:sessionMeta.game_mode,route:sessionMeta.route,samples:lags.length,
+  lag_mean_ms:mean(lags).toFixed(1),lag_median_ms:pct(lags,.5).toFixed(1),lag_p95_ms:pct(lags,.95).toFixed(1),lag_max_ms:Math.max(...lags).toFixed(1),shown_fps_mean:mean(shown).toFixed(2),shown_fps_min:(shown.length?Math.min(...shown):0).toFixed(2),render_fps_mean:mean(render).toFixed(2)};
+ try{const all=readSessions();all.push(row);localStorage.setItem(SESSION_KEY,JSON.stringify(all.slice(-500)));}catch(e){clientStats.error=e.message;}return row;}
+function saveSessions(){const all=readSessions();if(!all.length){note('No sessions logged yet');return;}const stamp=new Date().toISOString().replace(/[-:]/g,'').replace('T','-').slice(0,15);
+ const csv=[SESSION_COLUMNS.join(','),...all.map(r=>SESSION_COLUMNS.map(c=>r[c]).join(','))].join('\n')+'\n';
+ const link=document.createElement('a');link.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));link.download=`latency-sessions-${stamp}.csv`;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(link.href),5000);note(`Saved ${link.download} (${all.length} sessions)`);}
+$('savesessions').onclick=saveSessions;
+function updateEvents(){$('events').hidden=!session||!Object.keys(EVENT_PROMPTS).length||!$('eventsshow').checked;}
+$('eventsshow').onchange=updateEvents;
+const keyCaps=[['KeyW','W',['ArrowUp']],['KeyA','A',['ArrowLeft']],['KeyS','S',['ArrowDown']],['KeyD','D',['ArrowRight']],['Space','SPACE',[]],['KeyR','R',[]]];
+for(const [code,label] of keyCaps){const cap=document.createElement('span');cap.className='cap '+code;cap.dataset.code=code;cap.textContent=label;$('keys').appendChild(cap);}
+function showKeys(){for(const cap of $('keys').children){const def=keyCaps.find(k=>k[0]===cap.dataset.code);cap.classList.toggle('on',keys.has(def[0])||def[2].some(c=>keys.has(c)));}$('keys').hidden=!session;}
+function pct(values,p){if(!values.length)return 0;const s=[...values].sort((a,b)=>a-b);return s[Math.min(s.length-1,Math.ceil(s.length*p)-1)];}
+function lagPanel(){const box=$('lagpanel');box.hidden=!session||!$('lagshow').checked||!lagLog.length;if(box.hidden)return;
+ const recent=lagLog.slice(-600).map(r=>r[2]),server=clientStats.server?.online_fps??clientStats.server?.model_fps??0;
+ box.innerHTML=`lag now <b>${Math.round(recent.at(-1))} ms</b><br>median <b>${Math.round(pct(recent,.5))} ms</b><br>p95 <b>${Math.round(pct(recent,.95))} ms</b><br>max <b>${Math.round(Math.max(...recent))} ms</b><br>shown <b>${displayFps.toFixed(1)} FPS</b><br>render <b>${Number(server).toFixed(1)} FPS</b><br>samples <b>${lagLog.length}</b>`;$('savelag').disabled=!lagLog.length;}
+function saveLag(){if(!lagLog.length)return;const stamp=new Date().toISOString().replace(/[-:]/g,'').replace('T','-').slice(0,15);
+ const rows=['time_s,input_sequence,lag_ms,shown_fps,render_fps',...lagLog.map(r=>r.map((v,i)=>i===0?v.toFixed(3):i===2?v.toFixed(1):i>=3?Number(v).toFixed(2):v).join(','))];
+ const link=document.createElement('a');link.href=URL.createObjectURL(new Blob([rows.join('\n')+'\n'],{type:'text/csv'}));link.download=`latency-${racing?'racing':'game'}-${stamp}.csv`;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(link.href),5000);note(`Saved ${link.download} (${lagLog.length} samples)`);}
+$('savelag').onclick=saveLag;$('lagshow').onchange=lagPanel;
+function lagText(){if(!lag.length)return '';const sorted=[...lag].sort((a,b)=>a-b);return ` | lag ${Math.round(lag.at(-1))} ms (median ${Math.round(sorted[sorted.length>>1])})`;}
 let expectedDisplayTime=0;
 const sound=racing?new RacingAudio():new CastleAudio();
 async function unlockSound(){try{await sound.unlock();}catch(e){sound.error=e.message;$('sound').title=e.message;}}
@@ -67,6 +99,11 @@ function layout(){
 function options(){ $('monitor').disabled=starting||!!session||$('mode').value!=='model';for(const input of $('racing-options').querySelectorAll('input,select'))input.disabled=starting||!!session;if(racing&&$('race-mode').value==='pursuit'){$('route').value='avenue';$('route').disabled=true;}layout(); }
 $('race-mode').onchange=options;
 $('monitor').onchange=layout;$('mode').onchange=options;new ResizeObserver(layout).observe($('stage'));
+const EVENT_PROMPTS=racing?{'Cast spell':'Daytime city, cloudy sky. Center: player-controlled modern four-door sedan with a curved roof and a separate rear trunk, seen from behind in the foreground, a glowing magical spell bursting from the roof in sparks of light. Around: urban streets and multi-story buildings.','Make it rain':'Rainstorm in a city, dark clouds, heavy rain falling, wet reflective asphalt, water spraying from the tires. Center: player-controlled modern four-door sedan with a curved roof and a separate rear trunk, seen from behind in the foreground. Around: urban streets and multi-story buildings.','Night falls':'Nighttime city, dark sky, streetlights and neon signs reflecting on wet asphalt. Center: player-controlled modern four-door sedan with a curved roof and a separate rear trunk, headlights and taillights lit, seen from behind in the foreground. Around: illuminated storefronts and multi-story buildings.'}:{};
+for(const [label,prompt] of Object.entries(EVENT_PROMPTS)){const b=document.createElement('button');b.type='button';b.textContent=label;b.onclick=()=>{if(ws&&ws.readyState===WebSocket.OPEN){ws.send(JSON.stringify({type:'event_prompt',text:prompt}));note(label);}};$('events').appendChild(b);}
+function castCustom(){const text=$('customEvent').value.trim();if(!text||!ws||ws.readyState!==WebSocket.OPEN)return;const prompt=`Daytime city, cloudy sky. Center: player-controlled modern four-door sedan with a curved roof and a separate rear trunk, seen from behind in the foreground, ${text}. Around: urban streets and multi-story buildings.`;ws.send(JSON.stringify({type:'event_prompt',text:prompt}));note('Cast: '+text);}
+$('customCast').onclick=castCustom;$('customEvent').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();castCustom();}});
+$('customEvent').addEventListener('keydown',e=>e.stopPropagation());$('customEvent').addEventListener('keyup',e=>e.stopPropagation());
 const actionKeys=racing?{KeyR:'recover',KeyP:'pause',Enter:'resume'}:{Space:'jump',ShiftLeft:'dash',KeyR:'reload',KeyT:'trap',KeyH:'cover'};
 const handled=new Set(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Digit1','Digit2','Digit3','KeyF','KeyC','Space',...Object.keys(actionKeys)]);
 function note(text){$('notice').textContent=text;}
@@ -79,14 +116,14 @@ function send(force=false){
  if(pendingActions.length){clientStats.lastAction=pendingActions.at(-1);clientStats.lastActionSequence=seq;pendingActions=[];}
  dx=dy=0;actions=[];weapon=-1;lookReset=false;lastInputSend=performance.now();
 }
-function resetInput(){keys.clear();dx=dy=0;fire=ads=false;weapon=-1;actions=[];pendingActions=[];lookReset=true;send(true);}
+function resetInput(){keys.clear();dx=dy=0;fire=ads=false;weapon=-1;actions=[];pendingActions=[];lookReset=true;send(true);showKeys();}
 function markInput(kind){pendingActions.push({kind,time:performance.now()});}
 document.addEventListener('keydown',e=>{
  if(!session||!handled.has(e.code))return;e.preventDefault();
  if(document.pointerLockElement!==surface)return;
- if(!keys.has(e.code)){keys.add(e.code);if(actionKeys[e.code])actions.push(actionKeys[e.code]);if(/^Digit[123]$/.test(e.code))weapon=Number(e.code.slice(-1))-1;markInput(e.code);send();}
+ if(!keys.has(e.code)){keys.add(e.code);if(actionKeys[e.code])actions.push(actionKeys[e.code]);if(/^Digit[123]$/.test(e.code))weapon=Number(e.code.slice(-1))-1;markInput(e.code);send();showKeys();}
 });
-document.addEventListener('keyup',e=>{if(session&&handled.has(e.code)){e.preventDefault();keys.delete(e.code);markInput(e.code+':up');send();}});
+document.addEventListener('keyup',e=>{if(session&&handled.has(e.code)){e.preventDefault();keys.delete(e.code);markInput(e.code+':up');send();showKeys();}});
 document.addEventListener('mousemove',e=>{if(document.pointerLockElement===surface){dx=Math.max(-2000,Math.min(2000,dx+e.movementX));dy=Math.max(-2000,Math.min(2000,dy+e.movementY));}});
 document.addEventListener('mousedown',e=>{if(document.pointerLockElement!==surface)return;e.preventDefault();if(e.button===0)fire=true;if(e.button===2)ads=true;markInput('mouse'+e.button);send();});
 document.addEventListener('mouseup',e=>{if(e.button===0)fire=false;if(e.button===2)ads=false;send();});
@@ -106,17 +143,18 @@ function match(){
 function frame(now,meta){
  lastVideoAt=now;expectedDisplayTime=meta.expectedDisplayTime??now;lastRtp=meta.rtpTimestamp??null;clientStats.presented++;presented.push(now);presented=presented.filter(t=>t>now-3000);
  if(lastRtp!==null)match();else{$('hud').hidden=true;clientStats.error='Browser does not expose RTP timestamps';}
+ if(lastState&&lastState.input_sequence!==lastLagSeq){lastLagSeq=lastState.input_sequence;const sent=inputClock.get(lastState.input_sequence);if(sent!==undefined){const ms=Math.max(0,expectedDisplayTime-sent);lag.push(ms);if(lag.length>120)lag.shift();if(lagLog.length<200000)lagLog.push([(sent-sessionStart)/1000,lastLagSeq,ms,displayFps,clientStats.server?.online_fps??clientStats.server?.model_fps??0]);}}
  if(session&&document.pointerLockElement===surface)note('');
  video.requestVideoFrameCallback(frame);
 }
 if(video.requestVideoFrameCallback)video.requestVideoFrameCallback(frame);else{$('play').disabled=true;note('This browser does not support video frame callbacks');}
 async function stop(){
- if(stopping)return;stopping=true;resetInput();const old=session;session=null;
+ if(stopping)return;stopping=true;resetInput();const old=session;if(old&&lagLog.length){logSession();saveLag();}session=null;
  sound.reset();
  document.exitPointerLock?.();reader?.close();reader=null;pc=null;ws?.close();ws=null;video.srcObject=null;
  metadata.clear();$('hud').hidden=true;lastRtp=null;lastState=null;
  if(old)try{const response=await fetch(`/api/${old.id}/stop`,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});if(!response.ok&&response.status!==410)throw Error(await response.text());}catch(e){clientStats.error=e.message;}
- $('play').disabled=false;$('mode').disabled=false;$('stop').disabled=true;stopping=false;options();note('Stopped');
+ $('play').disabled=false;$('mode').disabled=false;$('stop').disabled=true;stopping=false;options();showKeys();lagPanel();updateEvents();if(!lagLog.length)note('Stopped');
 }
 $('play').onclick=async()=>{
  if(starting||session)return;starting=true;$('play').disabled=true;$('mode').disabled=true;options();note('Starting');
@@ -125,10 +163,10 @@ $('play').onclick=async()=>{
   await audioReady;
   const game_options=racing?{mode:$('race-mode').value,route:$('route').value,front_drive:Number($('front-drive').value),front_grip:Number($('front-grip').value),rear_grip:Number($('rear-grip').value)}:undefined;
   const response=await fetch('/api/start',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:$('mode').value,monitor:isDual(),game_options})});
-  if(!response.ok)throw Error(await response.text());session=await response.json();seq=0;metadata.clear();presented=[];lastState=null;lastVideoAt=0;clientStats={presented:0,matched:0,gameFrame:-1,error:null};$('stop').disabled=false;layout();
+  if(!response.ok)throw Error(await response.text());session=await response.json();seq=0;lag.length=0;lagLog.length=0;fpsLog.length=0;sessionMeta={started:new Date().toISOString(),video_source:$('mode').value,game_mode:racing?$('race-mode').value:'',route:racing?$('route').value:''};lastLagSeq=-1;sessionStart=performance.now();$('savelag').disabled=true;metadata.clear();presented=[];lastState=null;lastVideoAt=0;clientStats={presented:0,matched:0,gameFrame:-1,error:null};$('stop').disabled=false;layout();
   const id=session.id,current=()=>session?.id===id;
   ws=new WebSocket(`${location.protocol==='https:'?'wss':'ws'}://${location.host}/api/${id}/ws`);
-  ws.onopen=()=>{if(current())send(true);};
+  ws.onopen=()=>{if(current())send(true);};updateEvents();
   ws.onmessage=e=>{if(!current())return;const msg=JSON.parse(e.data);if(msg.type==='webrtc_frames'&&msg.generation_id===id){for(const r of msg.frames)metadata.set(r.rtp_timestamp,r);while(metadata.size>160)metadata.delete(metadata.keys().next().value);if(performance.now()-lastVideoAt<500)match();}else if(msg.type==='stats'){clientStats.server=msg.report;}else if(msg.type==='ended'){clientStats.ended=msg.reason;clientStats.error=null;void stop().then(()=>note(msg.reason==='defeated'?'Game over':'Finished'));}};
   ws.onclose=()=>{if(current()&&!stopping){note('Connection closed');clientStats.error='Control channel closed';void stop();}};
   reader=new MediaMTXWebRTCReader({url:session.whep,onTrack:e=>{if(!current())return;clientStats.error=null;pc=e.target;for(const receiver of pc.getReceivers()){if('playoutDelayHint' in receiver)receiver.playoutDelayHint=0;if('jitterBufferTarget' in receiver)receiver.jitterBufferTarget=0;}video.srcObject=e.streams[0]??new MediaStream([e.track]);video.play().catch(()=>{if(current())note('Click to play');});},onError:e=>{if(current()){clientStats.error=String(e);note(String(e));}}});
@@ -139,8 +177,8 @@ $('stop').onclick=stop;$('fullscreen').onclick=()=>document.fullscreenElement?do
 setInterval(()=>{
  const now=performance.now();presented=presented.filter(t=>t>now-3000);
  const fps=presented.length>1?(presented.length-1)*1000/(presented.at(-1)-presented[0]):0;
- displayFps=fps;drawHud();
- $('stats').textContent=session?`${fps.toFixed(1)} FPS | ${$('mode').value==='model'?'render':'source'} ${(clientStats.server?.online_fps??clientStats.server?.model_fps??0).toFixed(1)} FPS`:'Disconnected';
+ displayFps=fps;drawHud();lagPanel();if(session&&fps>0)fpsLog.push([fps,clientStats.server?.online_fps??clientStats.server?.model_fps??0]);
+ $('stats').textContent=session?`${fps.toFixed(1)} FPS | ${$('mode').value==='model'?'render':'source'} ${(clientStats.server?.online_fps??clientStats.server?.model_fps??0).toFixed(1)} FPS${lagText()}`:'Disconnected';
  if(session&&lastVideoAt&&now-lastVideoAt>1500){$('hud').hidden=true;note('Waiting for video');}
 },500);
 window.addEventListener('pagehide',()=>{resetInput();if(session)navigator.sendBeacon(`/api/${session.id}/stop`,new Blob(['{}'],{type:'application/json'}));});
