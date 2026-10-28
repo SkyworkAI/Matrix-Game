@@ -197,8 +197,50 @@ are cached, but frequent T5 updates reduce throughput.
 The scene profiles also select the reference-image behavior automatically:
 shooters use the reference as visual context and generate the first visible
 frame; racing displays its supplied reference as frame zero, then generates the
-following frames. See [City Racing](docs/racing.md) and
-[architecture](docs/architecture.md) for prompt and temporal-position details.
+following frames. See [City Racing](docs/racing.md),
+[architecture](docs/architecture.md) and [Future Sink](#future-sink-racing) for
+prompt and temporal-position details.
+
+## Future Sink (Racing)
+
+Racing shows its sink image as frame zero and keeps it in the KV cache as the
+visual reference for the whole session. With **future sink RoPE**, once the
+21-latent window is full (output frame 85 onwards), the sink's keys are
+re-rotated to 11 positions ahead of the current block, so the sink stays at a
+constant distance from the frames being generated. With the previous
+`absolute` policy the sink stays at position zero and its distance grows with
+the session. In 4001-frame renders of two test drives with the default sink
+image, `absolute` melted buildings and road surfaces after about 1800 to 2900
+frames on both `realtime` and `quality`; `future` did not.
+
+Future sink is the racing default, so no extra flag is needed. To choose the
+policy explicitly, pass `--sink-rope-mode` to `matrix-game render` or
+`scripts/serve.sh`. It works with every preset:
+
+```bash
+# Future sink (racing default)
+matrix-game render --scene racing --input lowpoly.mp4 --resources resources \
+  --preset realtime --prompt-mode fixed --sink-rope-mode future \
+  --output outputs/racing-future
+
+# Previous behavior, for comparison
+matrix-game render --scene racing --input lowpoly.mp4 --resources resources \
+  --preset realtime --prompt-mode fixed --sink-rope-mode absolute \
+  --output outputs/racing-absolute
+```
+
+| `--sink-rope-mode` | Sink keys once the window is full | Default for |
+| --- | --- | --- |
+| `future` | 11 positions ahead of the current block | Racing |
+| `fixed` | 21 positions behind the current block | Castle, Ancient Egypt |
+| `absolute` | Position zero; the distance grows with the session | None |
+
+Only the sink's keys move. Its values and the window frames keep their
+positions, the weights are unchanged, and the policies differ only from output
+frame 85 onwards. The offset is `FUTURE_SINK_OFFSET` in
+`matrix_game/inference/sink_policy.py`, and `render.json` records the policy as
+`sink_rope_mode`. A sink image is required: `--sink-image`, or
+`models/<scene>/sink.png` by default.
 
 ## A100 Performance
 

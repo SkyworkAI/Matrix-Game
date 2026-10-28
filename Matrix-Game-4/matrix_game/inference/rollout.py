@@ -63,14 +63,15 @@ class CausalV2VRollout:
         # 两者权重相同（FSDP 混合精度把 fp32 主权重转 bf16 计算，副本就是同一份 bf16），缓存是外部张量，两边通用。None 时与原来相同。
         self.nograd_generator = None
         # sink 固定相对距离、KV 记忆库、RoPE 表长（见文件头）
-        if sink_rope_mode not in ("absolute", "fixed"):
-            raise ValueError(f"sink_rope_mode 只能是 absolute / fixed，收到 {sink_rope_mode}")
+        from matrix_game.inference.sink_policy import SINK_ROPE_MODES
+        if sink_rope_mode not in SINK_ROPE_MODES:
+            raise ValueError(f"sink_rope_mode 只能是 {' / '.join(SINK_ROPE_MODES)}，收到 {sink_rope_mode}")
         if memory_mode not in ("none", "kvbank"):
             raise ValueError(f"memory_mode 只能是 none / kvbank，收到 {memory_mode}")
         self.sink_rope_mode = sink_rope_mode
         self.memory_mode = memory_mode
         self.memory_max_frames = int(memory_max_frames)
-        # None：fixed 模式加到 8192 行，absolute 模式不动（构造时的 1024 行）；整数：至少这么多行（只加长）
+        # None：fixed 模式加到 8192 行、future 模式再多 FUTURE_SINK_OFFSET 行，absolute 模式不动（构造时的 1024 行）；整数：至少这么多行（只加长）
         self.rope_max_len = None if rope_max_len in (None, 0) else int(rope_max_len)
         self.mem_log = []
 
@@ -78,7 +79,8 @@ class CausalV2VRollout:
     def _rope_len_target(self):
         if self.rope_max_len is not None:
             return self.rope_max_len
-        return 8192 if self.sink_rope_mode == "fixed" else None
+        from matrix_game.inference.sink_policy import rope_positions_needed
+        return None if self.sink_rope_mode == "absolute" else rope_positions_needed(self.sink_rope_mode, 8192)
 
 
     def _prepare_rope(self):
