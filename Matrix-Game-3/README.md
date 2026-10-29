@@ -6,7 +6,6 @@
 <font size=7><div align='center' >  [[🤗 HuggingFace](https://huggingface.co/Skywork/Matrix-Game-3.0)] [[📖 Technical Report](assets/pdf/report.pdf)] [[🚀 Project Website](https://matrix-game-v3.github.io/)] </div></font>
 
 
-https://github.com/user-attachments/assets/5b95bb21-bc77-4bb5-bc2b-7b12de2d3f21
 
 ## 📝 Overview
 **Matrix-Game-3.0** is an open-sourced, memory-augmented interactive world model designed for 720p real-time long-form video generation.
