@@ -1,0 +1,24 @@
+# Model dependencies resolved with Reactor Runtime during `reactor build`.
+# `build.runtime_version` in reactor.yaml selects the Runtime release.
+--extra-index-url https://download.pytorch.org/whl/cu132
+
+# Native inference release, installed without training dependencies.
+torch==2.12.0
+torchvision==0.27.0
+diffusers==0.39.0
+transformers==5.17.0
+accelerate==1.15.0
+safetensors==0.8.0
+einops>=0.8
+ftfy>=6
+regex
+sentencepiece>=0.2
+tqdm>=4.66
+imageio-ffmpeg>=0.5
+
+# Native game control, resource manifests, and adapter configuration.
+numpy>=1.26,<3
+pillow>=10,<12
+aiohttp>=3.10,<4
+huggingface-hub>=0.26,<2
+pyyaml

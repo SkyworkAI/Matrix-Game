@@ -1,0 +1,8 @@
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.venv/
+demo/node_modules/
+demo/dist/
+weights/
+resources/
