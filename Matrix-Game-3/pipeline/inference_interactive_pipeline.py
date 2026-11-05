@@ -803,7 +803,4 @@ class MatrixGame3Pipeline:
                 else:
                     video = None
 
-            if dist.is_initialized():
-                dist.barrier()
-                dist.destroy_process_group()
-            exit()
+            return video
