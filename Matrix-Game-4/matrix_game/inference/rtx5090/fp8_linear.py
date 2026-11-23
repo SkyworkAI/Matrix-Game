@@ -22,6 +22,8 @@ activation scale depends only on the input, which makes this bit-identical to th
 
 from __future__ import annotations
 
+import functools
+
 import torch
 import triton
 import triton.language as tl
@@ -30,6 +32,18 @@ from torch import nn
 _E4M3_MAX = 448.0
 _MIN_SCALE = 1.0 / (_E4M3_MAX * 512.0)  # floor for both scales: an all-zero tensor must not divide by zero
 _MAX_FEATURES = 32768                   # one Triton program reduces / quantizes a whole row
+
+
+@functools.cache
+def e4m3_format() -> tuple[torch.dtype, float]:
+    """The e4m3 variant the current GPU's FP8 GEMMs take, and its largest finite value.
+
+    MI300-series (gfx94x) GPUs only multiply the FNUZ encoding, whose largest finite value is 240;
+    every other GPU uses the OCP ``float8_e4m3fn`` (448).
+    """
+    if torch.version.hip and "gfx94" in torch.cuda.get_device_properties(torch.cuda.current_device()).gcnArchName:
+        return torch.float8_e4m3fnuz, 240.0
+    return torch.float8_e4m3fn, _E4M3_MAX
 
 
 # ----------------------------------------------------------------------------------------------
@@ -47,19 +61,19 @@ def _row_absmax(x_ptr, out_ptr, cols, stride_m, stride_k, BLOCK: tl.constexpr):
 
 @triton.jit
 def _scale_quantize_rows(x_ptr, y_ptr, max_ptr, scale_ptr, rows, cols, stride_m, stride_k,
-                         BLOCK: tl.constexpr, ROWS: tl.constexpr, MIN_SCALE: tl.constexpr):
+                         BLOCK: tl.constexpr, ROWS: tl.constexpr, MIN_SCALE: tl.constexpr, MAX: tl.constexpr):
     # Scale and quantisation in one launch: every row program reduces the row maxima to the tensor
     # scale itself (the same value in all programs), then divides, saturates and rounds its row.
     row = tl.program_id(0)
     index = tl.arange(0, ROWS)
     values = tl.load(max_ptr + index, index < rows, 0.0)
-    scale = tl.maximum(tl.max(values, 0) / 448.0, MIN_SCALE)
+    scale = tl.maximum(tl.max(values, 0) / MAX, MIN_SCALE)
     if row == 0:
         tl.store(scale_ptr, scale)
     offs = tl.arange(0, BLOCK)
     mask = offs < cols
     x = tl.load(x_ptr + row * stride_m + offs * stride_k, mask=mask, other=0.0)
-    q = tl.minimum(tl.maximum(x.to(tl.float32) / scale, -448.0), 448.0).to(tl.float8e4nv)
+    q = tl.minimum(tl.maximum(x.to(tl.float32) / scale, -MAX), MAX).to(y_ptr.dtype.element_ty)
     tl.store(y_ptr + row * cols + offs, q, mask=mask)
 
 
@@ -75,13 +89,14 @@ def quantize_activation(x: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
     if rows < 1 or not 0 < cols <= _MAX_FEATURES:
         raise ValueError(f"activation quantizer needs M > 0 and 0 < K <= {_MAX_FEATURES}")
     block = max(16, triton.next_power_of_2(cols))
+    dtype, max_value = e4m3_format()
     row_max = torch.empty((rows,), device=x.device, dtype=torch.float32)
     scale = torch.empty((1,), device=x.device, dtype=torch.float32)
-    y = torch.empty((rows, cols), device=x.device, dtype=torch.float8_e4m3fn)
+    y = torch.empty((rows, cols), device=x.device, dtype=dtype)
     with torch.cuda.device(x.device):
         _row_absmax[(rows,)](x, row_max, cols, x.stride(0), x.stride(1), BLOCK=block)
         _scale_quantize_rows[(rows,)](x, y, row_max, scale, rows, cols, x.stride(0), x.stride(1), BLOCK=block,
-                                      ROWS=triton.next_power_of_2(rows), MIN_SCALE=_MIN_SCALE)
+                                      ROWS=triton.next_power_of_2(rows), MIN_SCALE=_MIN_SCALE, MAX=max_value)
     return y, scale
 
 
@@ -91,9 +106,10 @@ def quantize_activation(x: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
 
 def _quantize_weight(weight: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
     """``[N, K]`` weight -> (e4m3 ``[N, K]``, FP32 scale ``[1]``), computed on the CPU in FP32."""
+    dtype, max_value = e4m3_format()
     weight = weight.detach().cpu().float()
-    scale = torch.clamp(weight.abs().max() / _E4M3_MAX, min=_MIN_SCALE)
-    return (weight / scale).to(torch.float8_e4m3fn), scale.reshape(1)
+    scale = torch.clamp(weight.abs().max() / max_value, min=_MIN_SCALE)
+    return (weight / scale).to(dtype), scale.reshape(1)
 
 
 class FP8Linear(nn.Module):
@@ -122,7 +138,7 @@ class FP8Linear(nn.Module):
         return f"in_features={self.in_features}, out_features={self.out_features}, bias={self.bias is not None}"
 
     def _check(self, x: torch.Tensor) -> None:
-        if self.weight.dtype != torch.float8_e4m3fn or self.weight_scale.dtype != torch.float32:
+        if self.weight.dtype != e4m3_format()[0] or self.weight_scale.dtype != torch.float32:
             raise RuntimeError("FP8Linear storage was cast; move this module by device only")
         if x.device != self.weight.device or not x.is_cuda:
             raise RuntimeError("FP8Linear input and weight must share a CUDA device")

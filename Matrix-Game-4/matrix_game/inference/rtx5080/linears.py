@@ -13,7 +13,7 @@ import triton.language as tl
 from torch import nn
 from triton.language.extra import libdevice
 
-from ..rtx5090.fp8_linear import _MAX_FEATURES, _MIN_SCALE, FP8Linear, _row_absmax
+from ..rtx5090.fp8_linear import _MAX_FEATURES, _MIN_SCALE, FP8Linear, _row_absmax, e4m3_format
 
 ROW_MULTIPLE = 16
 
@@ -24,18 +24,18 @@ def padded_rows(rows: int) -> int:
 
 @triton.jit
 def _scale_quantize_rows_padded(x_ptr, y_ptr, max_ptr, scale_ptr, rows, cols, stride_m, stride_k,
-                                BLOCK: tl.constexpr, ROWS: tl.constexpr, MIN_SCALE: tl.constexpr):
+                                BLOCK: tl.constexpr, ROWS: tl.constexpr, MIN_SCALE: tl.constexpr, MAX: tl.constexpr):
     # `_scale_quantize_rows` over padded rows; rows >= `rows` are stored as zeros.
     row = tl.program_id(0)
     index = tl.arange(0, ROWS)
     values = tl.load(max_ptr + index, index < rows, 0.0)
-    scale = tl.maximum(tl.max(values, 0) / 448.0, MIN_SCALE)
+    scale = tl.maximum(tl.max(values, 0) / MAX, MIN_SCALE)
     if row == 0:
         tl.store(scale_ptr, scale)
     offs = tl.arange(0, BLOCK)
     mask = offs < cols
     x = tl.load(x_ptr + row * stride_m + offs * stride_k, mask=mask & (row < rows), other=0.0)
-    q = tl.minimum(tl.maximum(x.to(tl.float32) / scale, -448.0), 448.0).to(tl.float8e4nv)
+    q = tl.minimum(tl.maximum(x.to(tl.float32) / scale, -MAX), MAX).to(y_ptr.dtype.element_ty)
     tl.store(y_ptr + row * cols + offs, q, mask=mask)
 
 
@@ -51,13 +51,15 @@ def quantize_activation_padded(x: torch.Tensor) -> tuple[torch.Tensor, torch.Ten
         raise ValueError(f"activation quantizer needs M > 0 and 0 < K <= {_MAX_FEATURES}")
     block = max(16, triton.next_power_of_2(cols))
     padded = padded_rows(rows)
+    dtype, max_value = e4m3_format()
     row_max = torch.empty((rows,), device=x.device, dtype=torch.float32)
     scale = torch.empty((1,), device=x.device, dtype=torch.float32)
-    y = torch.empty((padded, cols), device=x.device, dtype=torch.float8_e4m3fn)
+    y = torch.empty((padded, cols), device=x.device, dtype=dtype)
     with torch.cuda.device(x.device):
         _row_absmax[(rows,)](x, row_max, cols, x.stride(0), x.stride(1), BLOCK=block)
         _scale_quantize_rows_padded[(padded,)](x, y, row_max, scale, rows, cols, x.stride(0), x.stride(1),
-                                               BLOCK=block, ROWS=triton.next_power_of_2(rows), MIN_SCALE=_MIN_SCALE)
+                                               BLOCK=block, ROWS=triton.next_power_of_2(rows), MIN_SCALE=_MIN_SCALE,
+                                               MAX=max_value)
     return y, scale
 
 
