@@ -11,6 +11,7 @@ import torch
 import triton
 import triton.language as tl
 from torch import nn
+from triton.language.extra import libdevice
 
 from ..rtx5090.fp8_linear import _MAX_FEATURES, _MIN_SCALE, FP8Linear, _row_absmax
 
@@ -129,7 +130,7 @@ def _bias_transpose_kernel(src_ptr, bias_ptr, dst_ptr, M, N, ld_src,
     if GELU:
         v = y.to(tl.float32)
         inner = 0.7978845608028654 * (v + 0.044715 * v * v * v)
-        y = (0.5 * v * (1.0 + tl.extra.cuda.libdevice.tanh(inner))).to(tl.bfloat16)
+        y = (0.5 * v * (1.0 + libdevice.tanh(inner))).to(tl.bfloat16)
     tl.store(dst_ptr + rm[:, None] * N + rn[None, :], y, mask=mask)
 
 
