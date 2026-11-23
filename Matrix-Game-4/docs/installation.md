@@ -6,7 +6,8 @@ Use Python 3.12 for inference. The release dependency versions were taken from
 the running service, not the old training repository's requirements file.
 Install PyTorch with a CUDA build compatible with your NVIDIA driver, then the
 extras shown in the [v4 README](../README.md). CUDA 13.2 / torch 2.12.0 is the source deployment
-baseline; other combinations need numerical and throughput checks.
+baseline; other combinations need numerical and throughput checks. On AMD GPUs,
+install the ROCm build of PyTorch instead (see [AMD ROCm](../README.md#amd-rocm)).
 
 ## Ubuntu Native Dependencies
 
@@ -66,5 +67,5 @@ Run it with the supplied loopback-only configuration. No binary is downloaded
 or executed implicitly by this project.
 
 The model and game share a machine but may use separate GPUs. The model respects
-`CUDA_VISIBLE_DEVICES`; this does not select the OpenGL device. Do not interpret
+`CUDA_VISIBLE_DEVICES` (`HIP_VISIBLE_DEVICES` on ROCm); this does not select the OpenGL device. Do not interpret
 a two-GPU host as two-GPU DiT parallelism: this release's model runtime is single-GPU.

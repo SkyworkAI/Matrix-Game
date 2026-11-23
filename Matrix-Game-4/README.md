@@ -27,7 +27,8 @@ backend. See [RTX 5090](#rtx-5090) for setup and launch commands.
 - Model inference: Linux, NVIDIA GPU, Python 3.12. The A100 80 GB deployment uses
   PyTorch 2.12.0/CUDA 13.2. Dedicated RTX 5090, RTX 5080 and RTX 5070 Ti runtimes
   are also included; use the environment below and select the matching preset
-  explicitly. RTX 5080 and RTX 5070 Ti support fixed prompts only.
+  explicitly. RTX 5080 and RTX 5070 Ti support fixed prompts only. AMD GPUs are
+  supported with ROCm; see [AMD ROCm](#amd-rocm).
 - Browser demo: the same Linux host also builds/runs the game and GStreamer.
   Safari and Chrome are the desktop client targets. No GPU is needed on the client.
 - Standalone game/recording: macOS or Linux, CMake, C++20, SDL2 and FFmpeg libraries.
@@ -55,6 +56,24 @@ driver. A separate FlashAttention installation is optional. The `rtx5090`,
 `rtx5080` and `rtx5070ti` presets do not require SageAttention; their `-sage`
 variants require the additional [SageAttention build](#optional-sageattention).
 See [installation](docs/installation.md) for native and media dependencies.
+
+### AMD ROCm
+
+On AMD GPUs, install the ROCm build of PyTorch instead of the CUDA build; the
+rest of the installation is unchanged:
+
+```bash
+python -m pip install torch==2.12.0 torchvision==0.27.0 --index-url https://download.pytorch.org/whl/rocm7.2
+python -m pip install -e '.[inference,server,download,test]'
+```
+
+The `realtime`, `quality`, `baseline`, `rtx5090`, `rtx5080` and `rtx5070ti`
+presets were tested on AMD Instinct MI355X. `rtx5090` and `rtx5080` need a GPU
+with FP8 matrix multiplication. `rtx5070ti` runs its MXFP8 layer in BF16 on AMD
+GPUs other than the MI350 series. The `-sage` presets need SageAttention, which
+has no ROCm build. FlashAttention remains optional; see its
+[ROCm instructions](https://github.com/Dao-AILab/flash-attention#amd-rocm-support).
+The model respects `HIP_VISIBLE_DEVICES` as well as `CUDA_VISIBLE_DEVICES`.
 
 ## Resources
 
