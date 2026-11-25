@@ -155,12 +155,25 @@ class Int8Linear(nn.Module):
 # MXFP8 (e4m3 values, power-of-two e8m0 scale per 32 elements along K)
 # ----------------------------------------------------------------------------------------------
 
+# ROCm's MX GEMM (hipBLASLt, gfx950) takes unswizzled row-major [M, K / 32] scales, M a multiple of 32,
+# no bias and BF16 output.
+_ROCM_MX_ROWS = 32
+
+
+def mxfp8_supported() -> bool:
+    """False on AMD GPUs without MX GEMMs (all but gfx950); those run the MXFP8 roles in BF16."""
+    if not torch.version.hip:
+        return True
+    return torch.cuda.get_device_properties(torch.cuda.current_device()).gcnArchName.startswith("gfx950")
+
+
 @triton.jit
-def _mxfp8_quantize_kernel(x_ptr, q_ptr, s_ptr, cols, stride_m, col_tiles, BLOCK: tl.constexpr):
+def _mxfp8_quantize_kernel(x_ptr, q_ptr, s_ptr, cols, stride_m, col_tiles, BLOCK: tl.constexpr,
+                           ROW_MAJOR_SCALES: tl.constexpr):
     # One program per row. Each block of 32 gets the smallest power-of-two scale 2^e with
     # max|block| / 2^e <= 448, so no value saturates; the e8m0 byte is e + 127. Scales are stored in
     # the cuBLAS block-scale layout: 128 x 4 tiles in row-major tile order, each as [32, 4, 4] =
-    # (row % 32, row // 32 % 4, col % 4).
+    # (row % 32, row // 32 % 4, col % 4), or row-major [M, K / 32] with ROW_MAJOR_SCALES.
     row = tl.program_id(0)
     offs = tl.arange(0, BLOCK)
     x = tl.load(x_ptr + row * stride_m + offs, mask=offs < cols, other=0.0).to(tl.float32)
@@ -171,23 +184,34 @@ def _mxfp8_quantize_kernel(x_ptr, q_ptr, s_ptr, cols, stride_m, col_tiles, BLOCK
     q = (xb * tl.exp2(-e)[:, None]).to(tl.float8e4nv)
     tl.store(q_ptr + row * cols + offs, tl.reshape(q, (BLOCK,)), mask=offs < cols)
     c = tl.arange(0, BLOCK // 32)
-    off = ((row // 128) * col_tiles + c // 4) * 512 + (row % 32) * 16 + ((row // 32) % 4) * 4 + c % 4
+    if ROW_MAJOR_SCALES:
+        off = row * (col_tiles * 4) + c
+    else:
+        off = ((row // 128) * col_tiles + c // 4) * 512 + (row % 32) * 16 + ((row // 32) % 4) * 4 + c % 4
     tl.store(s_ptr + off, (e + 127.0).to(tl.uint8), mask=c < cols // 32)
 
 
 def quantize_mxfp8(x: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
-    """BF16 [M, K] (unit column stride, K % 128 == 0) -> (e4m3 [M, K], swizzled e8m0 scales)."""
+    """BF16 [M, K] (unit column stride, K % 128 == 0) -> (e4m3 [M, K], swizzled e8m0 scales).
+
+    On ROCm the rows are padded with zeros to a multiple of 32 and the scales are row-major.
+    """
     rows, cols = x.shape
     if x.dtype != torch.bfloat16 or x.stride(1) != 1 or cols % 128 or cols > _MAX_FEATURES:
         raise ValueError("MXFP8 quantizer expects BF16 [M, K] with K % 128 == 0 and unit column stride")
     col_tiles = cols // 128
-    q = torch.empty((rows, cols), device=x.device, dtype=torch.float8_e4m3fn)
-    # Zeroed: the layout pads the rows to 128, and padded scales must not hold garbage (0xFF is NaN).
-    scales = torch.zeros(triton.cdiv(rows, 128) * 128 * col_tiles * 4, device=x.device, dtype=torch.uint8)
+    rocm = torch.version.hip is not None
+    padded = triton.cdiv(rows, _ROCM_MX_ROWS) * _ROCM_MX_ROWS if rocm else rows
+    q = torch.empty((padded, cols), device=x.device, dtype=torch.float8_e4m3fn)
+    if padded > rows:
+        q[rows:].zero_()
+    # Zeroed: the layout pads the rows (to 128, or 32 on ROCm), and padded scales must not hold garbage (0xFF is NaN).
+    scale_rows = padded if rocm else triton.cdiv(rows, 128) * 128
+    scales = torch.zeros(scale_rows * col_tiles * 4, device=x.device, dtype=torch.uint8)
     block = triton.next_power_of_2(cols)
     with torch.cuda.device(x.device):
         _mxfp8_quantize_kernel[(rows,)](x, q, scales, cols, x.stride(0), col_tiles, BLOCK=block,
-                                        num_warps=8 if block >= 8192 else 4)
+                                        ROW_MAJOR_SCALES=rocm, num_warps=8 if block >= 8192 else 4)
     return q, scales.view(torch.float8_e8m0fnu)
 
 
@@ -215,10 +239,14 @@ class MXFP8Linear(nn.Module):
 
     def project(self, x: torch.Tensor) -> tuple[torch.Tensor, ...]:
         from torch.nn.functional import ScalingType, SwizzleType, scaled_mm
-        q, scale = quantize_mxfp8(x.to(torch.bfloat16).reshape(-1, self.in_features))
+        rocm = torch.version.hip is not None
+        swizzle = SwizzleType.NO_SWIZZLE if rocm else SwizzleType.SWIZZLE_32_4_4
+        x2 = x.to(torch.bfloat16).reshape(-1, self.in_features)
+        q, scale = quantize_mxfp8(x2)
         y = scaled_mm(q, self.weight.t(), scale, ScalingType.BlockWise1x32, self.weight_scale, ScalingType.BlockWise1x32,
-                      swizzle_a=SwizzleType.SWIZZLE_32_4_4, swizzle_b=SwizzleType.SWIZZLE_32_4_4,
-                      bias=self.bias, output_dtype=torch.bfloat16)
+                      swizzle_a=swizzle, swizzle_b=swizzle, bias=None if rocm else self.bias, output_dtype=torch.bfloat16)
+        if rocm:
+            y = y[:x2.shape[0]] + self.bias
         y = y.view(*x.shape[:-1], self.parts * self.out_features)
         if self.parts == 1:
             return (y,)
@@ -250,6 +278,8 @@ def build_linear(fmt: str, linears: list[nn.Linear]) -> nn.Module:
     if fmt == "int8":
         return Int8Linear(linears).eval()
     if fmt == "mxfp8":
+        if not mxfp8_supported():
+            return _Fused(linears, fp8=False).eval()
         return MXFP8Linear(linears).eval()
     if fmt in ("fp8", "bf16"):
         return _Fused(linears, fp8=fmt == "fp8").eval()
